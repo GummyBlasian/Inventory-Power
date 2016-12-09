@@ -1,12 +1,12 @@
 {
     "1.11": {    
-        "r1.11-003": "See https://github.com/GummyBlasian/InventoryRepair/releases/tag/r1.11-001",
-        "r1.11-002": "See https://github.com/GummyBlasian/InventoryRepair/releases/tag/r1.11-001",
-        "r1.11-001": "See https://github.com/GummyBlasian/InventoryRepair/releases/tag/r1.11-001",
+        "1.11003": "See https://github.com/GummyBlasian/InventoryRepair/releases/tag/r1.11-001",
+        "1.11002": "See https://github.com/GummyBlasian/InventoryRepair/releases/tag/r1.11-001",
+        "1.11001": "See https://github.com/GummyBlasian/InventoryRepair/releases/tag/r1.11-001",
     },
     "homepage": "https://minecraft.curseforge.com/projects/botania-unofficial",
     "promos": {
-        "1.11-latest": "r1.11-003",
-        "1.11-recommended": "r1.11-003",
+        "1.11-latest": "1.11003",
+        "1.11-recommended": "1.11003",
     }
 }

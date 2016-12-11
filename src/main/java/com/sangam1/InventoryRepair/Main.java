@@ -19,12 +19,14 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod(modid = StartupRef.MODID, version = StartupRef.VERSION, updateJSON = StartupRef.UPDATEURL, name = StartupRef.MODID, guiFactory = StartupRef.GUIFACTORY)
 public class Main {
 	
 	public static final CreativeTabs sangam1ir = new CreativeTabs("sangam1ir"){
-	    @Override public ItemStack getTabIconItem() {
+	    @Override @SideOnly(Side.CLIENT) public ItemStack getTabIconItem() {
 	        return new ItemStack(ItemsList.ItemAutoSmelter);
 	    }
 	};

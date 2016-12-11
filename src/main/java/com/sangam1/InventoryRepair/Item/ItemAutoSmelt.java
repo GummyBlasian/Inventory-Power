@@ -22,12 +22,6 @@ public class ItemAutoSmelt extends Item {
 		this.setUnlocalizedName("ItemAutoSmelterTool");
 		this.setCreativeTab(Main.sangam1ir);
 	}
-
-	@Override
-	public String getUnlocalizedName(ItemStack itemstack)
-	{
-		return this.getUnlocalizedName();
-	}
 	
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer stack, World playerIn, BlockPos worldIn, EnumHand pos, EnumFacing hand, float facing, float hitX, float hitY)

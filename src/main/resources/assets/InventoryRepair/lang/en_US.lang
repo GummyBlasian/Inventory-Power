@@ -1,0 +1,5 @@
+inventoryrepair.tile.yourBlock.name=Whatever You Want To Name Your Block (this is for blocks)
+
+inventoryrepair.item.ItemAutoSmelterTool.name=Auto Smelter
+
+inventoryrepair.itemGroup.sangam1ir=InventoryRepair

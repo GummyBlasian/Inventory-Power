@@ -1,5 +1,3 @@
-tile.yourBlock.name=Whatever You Want To Name Your Block (this is for blocks)
+item.ItemAutoSmelterTool.name = Auto Smelter
 
-item.ItemAutoSmelterTool.name=Auto Smelter
-
-itemGroup.sangam1ir=InventoryRepair
+itemGroup.sangam1ir = InventoryRepair

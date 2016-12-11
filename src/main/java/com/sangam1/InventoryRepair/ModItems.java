@@ -15,6 +15,6 @@ public final class ModItems {
 	}
 
 	private static void setupItems() {
-		ItemsList.ItemAutoSmelter.setRegistryName(new ResourceLocation(StartupRef.MODID, "ItemAutoSmelterTool"));
+		ItemsList.ItemAutoSmelter.setRegistryName(new ResourceLocation(StartupRef.MODID , "ItemAutoSmelterTool"));
 	}
 }

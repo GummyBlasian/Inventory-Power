@@ -14,19 +14,27 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemAutoSmelt extends Item {
+	
+	private boolean active;
 
-	public ItemAutoSmelt() {
+	public ItemAutoSmelt(String name) {
 		super();
 
 		this.setMaxDamage(0);
-		this.setUnlocalizedName("ItemAutoSmelterTool");
+		this.setUnlocalizedName(name);
 		this.setCreativeTab(Main.sangam1ir);
+		active = false;
 	}
 	
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer stack, World playerIn, BlockPos worldIn, EnumHand pos, EnumFacing hand, float facing, float hitX, float hitY)
     {
 		System.out.println("I was clicked!");
+		if(active) {
+			active = false;
+		} else {
+			active = true;
+		}		
         return EnumActionResult.SUCCESS;
     }
 

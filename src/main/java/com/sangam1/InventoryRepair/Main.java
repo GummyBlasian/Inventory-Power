@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = StartupRef.MODID, version = StartupRef.VERSION, updateJSON = StartupRef.UPDATEURL, name = StartupRef.MODID, guiFactory = StartupRef.GUIFACTORY)
 public class Main {
 	
-	public static final CreativeTabs sangam1ir = new CreativeTabs("sangam1ir"){
+	public static final CreativeTabs sangam1ir = new CreativeTabs("inventoryrepair:sangam1ir"){
 	    @Override public ItemStack getTabIconItem() {
 	        return new ItemStack(ItemsList.ItemAutoSmelter);
 	    }

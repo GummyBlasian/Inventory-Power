@@ -6,6 +6,6 @@ import net.minecraft.item.Item;
 
 public class ItemsList {
 
-	public static Item ItemAutoSmelter  = new ItemAutoSmelt("ItemAutoSmelterTool");
+	public static Item ItemAutoSmelter  = new ItemAutoSmelt("itemautosmeltertool");
 
 }

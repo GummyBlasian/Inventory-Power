@@ -40,7 +40,7 @@ public class ItemGoSmeltTool extends ItemBase {
             if (player instanceof EntityPlayer)
             {
             	player.displayGUIChest(furnace);
-            	player.addStat(StatList.FURNACE_INTERACTION);
+            	//player.addStat(StatList.FURNACE_INTERACTION);
             }
             return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
         }

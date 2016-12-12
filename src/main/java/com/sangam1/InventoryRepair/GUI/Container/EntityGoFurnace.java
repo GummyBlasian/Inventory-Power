@@ -202,7 +202,7 @@ public class EntityGoFurnace extends TileEntityLockable implements ITickable, IS
     {
         boolean flag = this.isBurning();
         boolean flag1 = false;
-
+        System.out.println(this.isBurning() + " " + furnaceBurnTime);
         if (this.isBurning())
         {
             --this.furnaceBurnTime;

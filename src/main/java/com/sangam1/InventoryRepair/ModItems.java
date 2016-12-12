@@ -1,17 +1,18 @@
 package com.sangam1.InventoryRepair;
 
-import com.sangam1.InventoryRepair.Item.ItemBase;
+import com.sangam1.InventoryRepair.Item.ItemAutoSmeltTool;
 import com.sangam1.InventoryRepair.Item.ItemModelProvider;
+import com.sangam1.InventoryRepair.References.ItemsList;
+import com.sangam1.InventoryRepair.References.StartupRef;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public final class ModItems {
-	public static ItemBase ingotCopper;
 
 	public static void init() {
-		ingotCopper = register(new ItemBase("ingotCopper").setCreativeTab(Main.creativeTab));
+		ItemsList.autosmelttool = register(
+				new ItemAutoSmeltTool(StartupRef.MODID + ".autosmelttool").setCreativeTab(Main.creativeTab));
 	}
 
 	private static <T extends Item> T register(T item) {

@@ -1,9 +1,6 @@
 package com.sangam1.InventoryRepair.References;
 
-import com.sangam1.InventoryRepair.ModItems;
-
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class CreativeTabsList extends CreativeTabs{
@@ -15,7 +12,7 @@ public class CreativeTabsList extends CreativeTabs{
 
 	@Override
 	public ItemStack getTabIconItem() {
-		return new ItemStack(ModItems.ingotCopper); //shown icon on creative tab
+		return new ItemStack(ItemsList.autosmelttool); //shown icon on creative tab
 	}
 	
 	 @Override

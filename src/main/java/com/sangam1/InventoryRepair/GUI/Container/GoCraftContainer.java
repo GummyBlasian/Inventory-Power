@@ -76,7 +76,7 @@ public class GoCraftContainer extends Container
 
                 if (!itemstack.func_190926_b())
                 {
-                    playerIn.dropItem(itemstack, false);
+                    //playerIn.dropItem(itemstack, false);
                 }
             }
         }

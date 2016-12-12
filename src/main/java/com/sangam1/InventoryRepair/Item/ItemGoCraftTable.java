@@ -27,7 +27,7 @@ public class ItemGoCraftTable extends ItemBase{
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand playerIn) {
 		if(world.isRemote){
 			System.out.println("Click!");
-			drawGUI(world, player);
+			//drawGUI(world, player);
 			return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
 		}
 		System.out.println("Click!");
@@ -36,7 +36,7 @@ public class ItemGoCraftTable extends ItemBase{
 	}
 	
 	private void drawGUI(World world, EntityPlayer player){
-		player.displayGui(new BlockWorkbench.InterfaceCraftingTable(world, player.getPosition()));
+		player.displayGui(new ItemGoCraftTable.InterfaceCraftingTable(world, player.getPosition()));
         if(world.isRemote) return;
 		player.addStat(StatList.CRAFTING_TABLE_INTERACTION);
 	}

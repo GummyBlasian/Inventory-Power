@@ -1,6 +1,9 @@
 package com.sangam1.InventoryRepair.GUI;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiCrafting;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.client.GuiNotification;
@@ -21,6 +24,14 @@ public class RenderGUIHandler {
 		if (event.getType() != ElementType.EXPERIENCE) return;
 		new GUIToolDurability(Minecraft.getMinecraft());
 		new GUILookAt(Minecraft.getMinecraft());
+	}
+
+	public Object getServerGuiElement(int iD, EntityPlayer player, World world, int x, int y, int z) {
+		if (iD == 3){
+			return new GuiCrafting(player.inventory, world);
+		} else{
+			return null;			
+		}
 	}
 	
 }

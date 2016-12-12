@@ -25,6 +25,7 @@ public class ItemGoCraftTable extends ItemBase{
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand playerIn) {
+		if(!world.isRemote) return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
 		System.out.println("Click!");
 		drawGUI(world, player);
 		return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));

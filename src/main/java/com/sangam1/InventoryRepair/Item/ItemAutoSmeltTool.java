@@ -56,7 +56,8 @@ public class ItemAutoSmeltTool extends ItemBase {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World itemStackIn, EntityPlayer worldIn, EnumHand playerIn) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer worldIn, EnumHand playerIn) {
+		if(!world.isRemote) return new ActionResult(EnumActionResult.PASS, worldIn.getHeldItem(playerIn));
 		System.out.println("Click!");
 		if (active) {
 			active = false;

@@ -20,20 +20,20 @@ public class CommonProxy implements IGuiHandler {
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if(ID == 20){
-			System.out.println("Hello ServerGUI");
+			//System.out.println("Hello ServerGUI");
 			return new GoCraftContainer(player.inventory, world, player.getPosition());
 		}
-		System.out.println("BYE ServerGUI");
+		//System.out.println("BYE ServerGUI");
 		return null;
 	}
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == 20){
-			System.out.println("Hello ClientGUI");
+			//System.out.println("Hello ClientGUI");
 			return new GuiCrafting(player.inventory, world);
 		}
-		System.out.println("BYE ClientGUI");
+		//System.out.println("BYE ClientGUI");
 		return null;
 	}
 	

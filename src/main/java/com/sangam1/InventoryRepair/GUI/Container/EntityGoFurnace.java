@@ -1,5 +1,7 @@
 package com.sangam1.InventoryRepair.GUI.Container;
 
+import com.sangam1.InventoryRepair.Item.ItemGoSmeltTool;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.material.Material;
@@ -14,14 +16,13 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBoat;
-import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
@@ -31,7 +32,6 @@ import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.tileentity.*;
 
 public class EntityGoFurnace extends TileEntityLockable implements ITickable, ISidedInventory
 {
@@ -46,6 +46,7 @@ public class EntityGoFurnace extends TileEntityLockable implements ITickable, IS
     private int cookTime;
     private int totalCookTime;
     private String furnaceCustomName;
+    private ItemGoSmeltTool tool;
 
     /**
      * Returns the number of slots in the inventory.
@@ -258,10 +259,10 @@ public class EntityGoFurnace extends TileEntityLockable implements ITickable, IS
                 this.cookTime = MathHelper.clamp_int(this.cookTime - 2, 0, this.totalCookTime);
             }
 
-            if (flag != this.isBurning())
+            if (flag != this.isBurning() && tool != null)
             {
                 flag1 = true;
-                //BlockFurnace.setState(this.isBurning(), this.worldObj, this.pos);
+                tool.setState(this.isBurning(), this.worldObj, this.pos);
             }
         }
 
@@ -269,6 +270,10 @@ public class EntityGoFurnace extends TileEntityLockable implements ITickable, IS
         {
             this.markDirty();
         }
+    }
+    
+    public void setUp(ItemGoSmeltTool item){
+		tool = item;
     }
 
     public int getCookTime(ItemStack stack)

@@ -3,6 +3,7 @@ package com.sangam1.InventoryRepair.proxy;
 import com.sangam1.InventoryRepair.GUI.RenderGUIHandler;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ContainerWorkbench;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -17,7 +18,10 @@ public class CommonProxy implements IGuiHandler {
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		return guiHandler.getServerGuiElement(ID, player, world, x, y, z);
+		if(ID == 10){
+			return new ContainerWorkbench(player.inventory, world, player.getPosition());
+		}
+		return null;
 	}
 
 	@Override

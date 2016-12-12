@@ -37,7 +37,8 @@ public class ItemGoCraftTable extends ItemBase{
 	
 	private void drawGUI(World world, EntityPlayer player){
 		player.displayGui(new BlockWorkbench.InterfaceCraftingTable(world, player.getPosition()));
-        player.addStat(StatList.CRAFTING_TABLE_INTERACTION);
+        if(world.isRemote) return;
+		player.addStat(StatList.CRAFTING_TABLE_INTERACTION);
 	}
 
 	public static class InterfaceCraftingTable implements IInteractionObject

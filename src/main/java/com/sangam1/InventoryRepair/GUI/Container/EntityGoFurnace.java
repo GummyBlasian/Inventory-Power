@@ -268,7 +268,7 @@ public class EntityGoFurnace extends TileEntityLockable implements ITickable, IS
 
         if (flag1)
         {
-            this.markDirty();
+            //this.markDirty();
         }
     }
     
@@ -516,6 +516,7 @@ public class EntityGoFurnace extends TileEntityLockable implements ITickable, IS
         this.furnaceItemStacks.clear();
     }
 
+    /*
     net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
     net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
     net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.WEST);
@@ -533,4 +534,5 @@ public class EntityGoFurnace extends TileEntityLockable implements ITickable, IS
                 return (T) handlerSide;
         return super.getCapability(capability, facing);
     }
+    */
 }

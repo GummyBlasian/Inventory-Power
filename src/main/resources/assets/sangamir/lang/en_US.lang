@@ -1,4 +1,5 @@
 # Items
 item.sangamir.autosmelttool.name=Auto Smelt Tool
+item.sangamir.gocraft.name=Active Crafting Table
 
 itemGroup.sangamir=InventoryRepair

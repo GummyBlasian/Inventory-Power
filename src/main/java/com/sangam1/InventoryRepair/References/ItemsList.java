@@ -4,7 +4,7 @@ import com.sangam1.InventoryRepair.Item.ItemBase;
 
 public class ItemsList {
 
-
 	public static ItemBase autosmelttool;
+	public static ItemBase gocraft;
 
 }

@@ -31,7 +31,7 @@ public class ItemAutoSmeltTool extends ItemBase {
 		EntityPlayer player = (EntityPlayer) par3Entity;
 		if (player == null || world.isRemote)
 			return;
-		System.out.println("Hello");
+		//System.out.println("Hello");
 		InventoryPlayer inventory = player.inventory;
 		if (active) {
 			if (burnTimeLeft == 0) {
@@ -48,8 +48,7 @@ public class ItemAutoSmeltTool extends ItemBase {
 					inventory.removeStackFromSlot(i);
 					for(int a = 0; a < smelt.getItemDamage(); i ++){
 						inventory.addItemStackToInventory(FurnaceRecipes.instance().getSmeltingResult(smelt));
-					}
-					
+					}					
 					return;
 				}
 			}

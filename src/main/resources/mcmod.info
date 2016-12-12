@@ -1,8 +1,8 @@
 [
 {
   "modid": "sangamir",
-  "name": "InventoryRepair",
-  "description": "Repair tools in your inventory automatically.",
+  "name": "Inventory Power",
+  "description": "Increase the power of the player inventory.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",

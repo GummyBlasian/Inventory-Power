@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = "r1.11-004"
 group= "com.sangam1.InventoryRepair" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "InventoryRepair"
+archivesBaseName = "Inventory Power"
 
 sourceCompatibility = targetCompatibility = "1.6" // Need this here so eclipse task generates correctly.
 compileJava {

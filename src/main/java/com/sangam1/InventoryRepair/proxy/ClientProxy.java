@@ -15,15 +15,5 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomModelResourceLocation(item, meta,
 				new ModelResourceLocation(StartupRef.MODID + ":" + id, "inventory"));
 	}
-
-	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world,int x, int y, int z)
-	{
-		if (ID == 3){
-			return new GuiCrafting(player.inventory, world);
-		} else{
-			return null;			
-		}
-	}
-
+	
 }

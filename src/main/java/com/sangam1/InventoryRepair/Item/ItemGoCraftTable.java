@@ -27,26 +27,20 @@ public class ItemGoCraftTable extends ItemBase {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand playerIn) {
 		if (!world.isRemote) {
-			// If player not sneaking, open the inventory gui
-			if (!player.isSneaking()) {
-				player.openGui(Main.instance, 20, world, 0, 0, 0);
-				return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
-			}
+			System.out.println("Opening");
+			player.openGui(Main.instance, 20, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
 		}
-		return new ActionResult(EnumActionResult.FAIL, player.getHeldItem(playerIn));
+		return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
 
 		/*
-		if (world.isRemote) {
-			// System.out.println("Click!");
-			// drawGUI(world, player);
-			return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
-		}
-		System.out.println("Click!");
-		drawGUI(world, player);
-		return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
-		*/
-		
+		 * if (world.isRemote) { // System.out.println("Click!"); //
+		 * drawGUI(world, player); return new
+		 * ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn)); }
+		 * System.out.println("Click!"); drawGUI(world, player); return new
+		 * ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
+		 */
+
 	}
 
 	private void drawGUI(World world, EntityPlayer player) {

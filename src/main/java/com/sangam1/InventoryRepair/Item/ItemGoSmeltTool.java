@@ -21,12 +21,13 @@ public class ItemGoSmeltTool extends ItemBase {
 	EntityGoFurnace furnace;
 	private final boolean isBurning;
 	private static boolean keepInventory;
+	private boolean used;
 
 	public ItemGoSmeltTool(String name) {
 		super(name);
-		this.furnace = new EntityGoFurnace();
 		this.setMaxStackSize(1);
 		this.isBurning = false;
+		this.used = false;
 	}
 
 	@Override
@@ -34,6 +35,8 @@ public class ItemGoSmeltTool extends ItemBase {
 		if (world.isRemote) {
 			return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
 		} else {
+			if(!used) 
+				this.furnace = new EntityGoFurnace();
 			System.out.println("Hello " + this.furnace == null);
 			player.displayGUIChest(furnace);
 			// player.addStat(StatList.FURNACE_INTERACTION);

@@ -1,8 +1,5 @@
 {
     "parent":"builtin/generated",
-    "textures": {
-        "layer0":"sangamir:items/tutorial_item"
-    },
     "display": {
         "thirdperson": {
             "rotation": [ -90, 0, 0 ],

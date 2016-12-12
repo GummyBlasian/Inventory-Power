@@ -11,7 +11,7 @@ public final class ModItems {
 	public static ItemBase ingotCopper;
 
 	public static void init() {
-		ingotCopper = register(new ItemBase("ingotCopper").setCreativeTab(CreativeTabs.MATERIALS));
+		ingotCopper = register(new ItemBase("ingotCopper").setCreativeTab(Main.creativeTab));
 	}
 
 	private static <T extends Item> T register(T item) {

@@ -29,7 +29,7 @@ public class ItemGoCraftTable extends ItemBase {
 		if (!world.isRemote) {
 			// If player not sneaking, open the inventory gui
 			if (!player.isSneaking()) {
-				player.openGui(Main.instance, 10, world, 0, 0, 0);
+				player.openGui(Main.instance, 20, world, 0, 0, 0);
 				return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
 			}
 			return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));

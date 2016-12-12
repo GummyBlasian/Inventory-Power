@@ -19,7 +19,7 @@ public class CommonProxy implements IGuiHandler {
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		if(ID == 10){
+		if(ID == 20){
 			return new ContainerWorkbench(player.inventory, world, player.getPosition());
 		}
 		return null;
@@ -27,7 +27,7 @@ public class CommonProxy implements IGuiHandler {
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		if (ID == 3){
+		if (ID == 20){
 			return new GuiCrafting(player.inventory, world);
 		} else{
 			return null;			

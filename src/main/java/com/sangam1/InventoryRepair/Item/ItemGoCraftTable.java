@@ -31,6 +31,7 @@ public class ItemGoCraftTable extends ItemBase {
 			player.openGui(Main.instance, 20, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
 		}
+		System.out.println("Nothing");
 		return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
 
 		/*

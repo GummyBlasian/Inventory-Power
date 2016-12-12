@@ -1,10 +1,10 @@
 package com.sangam1.InventoryRepair.proxy;
 
 import com.sangam1.InventoryRepair.GUI.RenderGUIHandler;
+import com.sangam1.InventoryRepair.GUI.Container.GoCraftContainer;
 
 import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ContainerWorkbench;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -21,8 +21,9 @@ public class CommonProxy implements IGuiHandler {
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if(ID == 20){
 			System.out.println("Hello ServerGUI");
-			return new ContainerWorkbench(player.inventory, world, player.getPosition());
+			return new GoCraftContainer(player.inventory, world, player.getPosition());
 		}
+		System.out.println("BYE ServerGUI");
 		return null;
 	}
 
@@ -31,9 +32,9 @@ public class CommonProxy implements IGuiHandler {
 		if (ID == 20){
 			System.out.println("Hello ClientGUI");
 			return new GuiCrafting(player.inventory, world);
-		} else{
-			return null;			
 		}
+		System.out.println("BYE ClientGUI");
+		return null;
 	}
 	
 }

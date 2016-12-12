@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class RecipeRegister {
 
 	public static void Register() {
-		GameRegistry.addRecipe(new ItemStack(ItemsList.ItemAutoSmelter, 1), "A A", "BBB","A A", 'A', Blocks.COBBLESTONE, 'B', Items.COAL);
+		//GameRegistry.addRecipe(new ItemStack(ItemsList.ItemAutoSmelter, 1), "A A", "BBB","A A", 'A', Blocks.COBBLESTONE, 'B', Items.COAL);
 	}
 
 }

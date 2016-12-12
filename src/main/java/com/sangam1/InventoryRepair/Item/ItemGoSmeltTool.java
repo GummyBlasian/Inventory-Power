@@ -35,11 +35,13 @@ public class ItemGoSmeltTool extends ItemBase {
 		if (world.isRemote) {
 			return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
 		} else {
-			if(!used) 
-				this.furnace = new EntityGoFurnace();
-			System.out.println("Hello " + this.furnace == null);
+			if(!used || this.furnace == null){
+				//System.out.println("Pew");
+				this.furnace = new EntityGoFurnace();				
+			}
+			//System.out.println("Hello " + this.furnace == null);
 			player.displayGUIChest(furnace);
-			// player.addStat(StatList.FURNACE_INTERACTION);
+			player.addStat(StatList.FURNACE_INTERACTION);
 			return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
 		}
 	}

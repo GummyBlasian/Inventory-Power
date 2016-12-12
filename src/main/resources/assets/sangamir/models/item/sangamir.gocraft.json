@@ -1,6 +1,6 @@
 {
-    "parent":"tutorial:item/standard_item",
+    "parent":"sangamir:item/standard_item",
     "textures": {
-        "layer0":"tutorial:items/tutorial_item"
+        "layer0":"sangamir:items/sangamir.gocraft"
     }
 }

@@ -14,12 +14,12 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class ItemAutoSmeltTool extends ItemBase {
+public class ItemGoSmeltTool extends ItemBase {
 
 	private boolean active;
 	private int burnTimeLeft;
 
-	public ItemAutoSmeltTool(String name) {
+	public ItemGoSmeltTool(String name) {
 		super(name);
 		active = false;
 		burnTimeLeft = 0;

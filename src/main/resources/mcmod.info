@@ -1,6 +1,6 @@
 [
 {
-  "modid": "inventoryrepair",
+  "modid": "sangamir",
   "name": "InventoryRepair",
   "description": "Repair tools in your inventory automatically.",
   "version": "${version}",

@@ -15,11 +15,14 @@ import net.minecraft.world.World;
 public class ItemGoSmeltTool extends ItemBase {
 	
 	EntityGoFurnace furnace;
+    private final boolean isBurning;
+    private static boolean keepInventory;
 
 	public ItemGoSmeltTool(String name) {
 		super(name);
 		this.furnace = new EntityGoFurnace();
 		this.setMaxStackSize(1);
+		this.isBurning = false;
 	}	
 
 	@Override

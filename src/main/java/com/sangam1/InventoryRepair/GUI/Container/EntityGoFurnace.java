@@ -262,7 +262,7 @@ public class EntityGoFurnace extends TileEntityLockable implements ITickable, IS
             if (flag != this.isBurning() && tool != null)
             {
                 flag1 = true;
-                tool.setState(this.isBurning(), this.worldObj, this.pos);
+                //tool.setState(this.isBurning(), this.worldObj, this.pos);
             }
         }
 

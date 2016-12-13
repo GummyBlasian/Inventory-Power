@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -27,9 +28,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemGoSmeltTool extends ItemBase{
+public class ItemGoSmeltTool extends ItemBase {
 
-	EntityGoFurnace furnace;
+	private EntityGoFurnace furnace;
 	private static final int[] SLOTS_TOP = new int[] { 0 };
 	private static final int[] SLOTS_BOTTOM = new int[] { 2, 1 };
 	private static final int[] SLOTS_SIDES = new int[] { 1 };
@@ -56,6 +57,7 @@ public class ItemGoSmeltTool extends ItemBase{
 		if (!world.isRemote) {
 			// System.out.println("Opening");
 			player.openGui(Main.instance, 21, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+			player.displayGUIChest(furnace);
 			return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
 		}
 		// System.out.println("Nothing");
@@ -66,7 +68,7 @@ public class ItemGoSmeltTool extends ItemBase{
 	public void onUpdate(ItemStack par1ItemStack, World world, Entity par3Entity, int par4, boolean par5) {
 		boolean flag = this.isBurning();
 		boolean flag1 = false;
-		System.out.println(this.isBurning() + " " + furnaceBurnTime);
+		//System.out.println(this.isBurning() + " " + furnaceBurnTime);
 		if (this.isBurning()) {
 			--this.furnaceBurnTime;
 		}
@@ -114,11 +116,21 @@ public class ItemGoSmeltTool extends ItemBase{
 			if (flag != this.isBurning() && tool != null) {
 				flag1 = true;
 			}
+			writeNBT();
 		}
 
 		if (flag1) {
 			// this.markDirty();
 		}
+	}
+
+	public void writeNBT() {
+		NBTTagCompound compound = new NBTTagCompound();
+		compound.setInteger("BurnTime", (short) this.furnaceBurnTime);
+		compound.setInteger("CookTime", (short) this.cookTime);
+		compound.setInteger("CookTimeTotal", (short) this.totalCookTime);
+		ItemStackHelper.func_191282_a(compound, this.furnaceItemStacks);
+		this.updateItemStackNBT(compound);
 	}
 
 	public ItemStack getStackInSlot(int index) {

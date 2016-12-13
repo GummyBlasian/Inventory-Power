@@ -4,6 +4,7 @@ import com.sangam1.InventoryRepair.GUI.RenderGUIHandler;
 import com.sangam1.InventoryRepair.GUI.Container.GoCraftContainer;
 
 import net.minecraft.client.gui.inventory.GuiCrafting;
+import net.minecraft.client.gui.inventory.GuiFurnace;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
@@ -35,9 +36,6 @@ public class CommonProxy implements IGuiHandler {
 		if (ID == 20){
 			//System.out.println("Hello ClientGUI");
 			return new GuiCrafting(player.inventory, world);
-		} else if(ID == 21){
-			//System.out.println("Hello ServerGUI");
-			return new GoCraftContainer(player.inventory, world, player.getPosition());
 		}
 		//System.out.println("BYE ClientGUI");
 		return null;

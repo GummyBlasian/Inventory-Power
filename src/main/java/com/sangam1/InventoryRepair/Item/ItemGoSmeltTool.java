@@ -51,14 +51,19 @@ public class ItemGoSmeltTool extends ItemBase {
 	public ItemGoSmeltTool(String name) {
 		super(name);
 	}
+	
+	public IInventory getInventory(){
+		return (IInventory) furnaceItemStacks;		
+	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand playerIn) {
 		if (!world.isRemote) {
 			// System.out.println("Opening");
-			player.openGui(Main.instance, 21, world, (int) player.posX, (int) player.posY, (int) player.posZ);
-			player.displayGUIChest(furnace);
-			return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
+			//if(furnace instanceof ){
+				player.openGui(Main.instance, 21, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+				return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
+			//}
 		}
 		// System.out.println("Nothing");
 		return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));

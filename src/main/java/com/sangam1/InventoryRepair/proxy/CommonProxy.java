@@ -2,6 +2,7 @@ package com.sangam1.InventoryRepair.proxy;
 
 import com.sangam1.InventoryRepair.GUI.RenderGUIHandler;
 import com.sangam1.InventoryRepair.GUI.Container.GoCraftContainer;
+import com.sangam1.InventoryRepair.Item.ItemGoSmeltTool;
 
 import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.client.gui.inventory.GuiFurnace;
@@ -36,6 +37,9 @@ public class CommonProxy implements IGuiHandler {
 		if (ID == 20){
 			//System.out.println("Hello ClientGUI");
 			return new GuiCrafting(player.inventory, world);
+		} else if(ID == 21){
+	    	ItemGoSmeltTool furnace = (ItemGoSmeltTool)player.inventory.getCurrentItem().getItem();
+	    	return new GuiFurnace(player.inventory, furnace.getInventory());
 		}
 		//System.out.println("BYE ClientGUI");
 		return null;

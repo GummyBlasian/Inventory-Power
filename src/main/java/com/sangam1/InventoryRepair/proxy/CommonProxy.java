@@ -22,6 +22,9 @@ public class CommonProxy implements IGuiHandler {
 		if(ID == 20){
 			//System.out.println("Hello ServerGUI");
 			return new GoCraftContainer(player.inventory, world, player.getPosition());
+		} else if(ID == 21){
+			//System.out.println("Hello ServerGUI");
+			return new GoCraftContainer(player.inventory, world, player.getPosition());
 		}
 		//System.out.println("BYE ServerGUI");
 		return null;
@@ -32,6 +35,9 @@ public class CommonProxy implements IGuiHandler {
 		if (ID == 20){
 			//System.out.println("Hello ClientGUI");
 			return new GuiCrafting(player.inventory, world);
+		} else if(ID == 21){
+			//System.out.println("Hello ServerGUI");
+			return new GoCraftContainer(player.inventory, world, player.getPosition());
 		}
 		//System.out.println("BYE ClientGUI");
 		return null;

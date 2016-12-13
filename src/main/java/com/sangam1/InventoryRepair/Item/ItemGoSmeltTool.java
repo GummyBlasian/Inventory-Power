@@ -24,11 +24,12 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemGoSmeltTool extends ItemBase {
+public class ItemGoSmeltTool extends ItemBase implements IInventory {
 
 	private EntityGoFurnace furnace;
 	private static final int[] SLOTS_TOP = new int[] { 0 };
@@ -51,19 +52,19 @@ public class ItemGoSmeltTool extends ItemBase {
 	public ItemGoSmeltTool(String name) {
 		super(name);
 	}
-	
-	public IInventory getInventory(){
-		return (IInventory) furnaceItemStacks;		
+
+	public IInventory getInventory() {
+		return this;
 	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand playerIn) {
 		if (!world.isRemote) {
 			// System.out.println("Opening");
-			//if(furnace instanceof ){
-				player.openGui(Main.instance, 21, world, (int) player.posX, (int) player.posY, (int) player.posZ);
-				return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
-			//}
+			// if(furnace instanceof ){
+			player.openGui(Main.instance, 21, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+			return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
+			// }
 		}
 		// System.out.println("Nothing");
 		return new ActionResult(EnumActionResult.PASS, player.getHeldItem(playerIn));
@@ -73,7 +74,7 @@ public class ItemGoSmeltTool extends ItemBase {
 	public void onUpdate(ItemStack par1ItemStack, World world, Entity par3Entity, int par4, boolean par5) {
 		boolean flag = this.isBurning();
 		boolean flag1 = false;
-		//System.out.println(this.isBurning() + " " + furnaceBurnTime);
+		// System.out.println(this.isBurning() + " " + furnaceBurnTime);
 		if (this.isBurning()) {
 			--this.furnaceBurnTime;
 		}
@@ -340,6 +341,55 @@ public class ItemGoSmeltTool extends ItemBase {
 
 	public void clear() {
 		this.furnaceItemStacks.clear();
+	}
+
+	@Override
+	public String getName() {
+		return "portableFurnace";
+	}
+
+	@Override
+	public boolean hasCustomName() {
+		return false;
+	}
+
+	@Override
+	public ITextComponent getDisplayName() {
+		return this.getDisplayName();
+	}
+
+	@Override
+	public int getSizeInventory() {
+		return this.furnaceItemStacks.size();
+	}
+
+	@Override
+	public boolean func_191420_l() {
+		for (ItemStack itemstack : this.furnaceItemStacks) {
+			if (!itemstack.func_190926_b()) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	@Override
+	public void markDirty() {
+
+	}
+
+	@Override
+	public boolean isUseableByPlayer(EntityPlayer player) {
+		return true;
+	}
+
+	@Override
+	public void openInventory(EntityPlayer player) {
+	}
+
+	@Override
+	public void closeInventory(EntityPlayer player) {
 	}
 
 }

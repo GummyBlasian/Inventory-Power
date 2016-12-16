@@ -82,7 +82,7 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 			--this.furnaceBurnTime;
 		}
 
-		if (!world.isRemote) {
+		if (world.isRemote) {
 			//System.out.println("Hello");
 			ItemStack itemstack = (ItemStack) this.furnaceItemStacks.get(1);
 

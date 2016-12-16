@@ -1,5 +1,7 @@
 package com.sangam1.InventoryRepair.GUI.Container;
 
+import com.sangam1.InventoryRepair.Item.ItemGoSmeltTool;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -10,7 +12,6 @@ import net.minecraft.inventory.SlotFurnaceFuel;
 import net.minecraft.inventory.SlotFurnaceOutput;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -132,7 +133,7 @@ public class PortableFurnaceContainer extends Container
                         return ItemStack.field_190927_a;
                     }
                 }
-                else if (TileEntityFurnace.isItemFuel(itemstack1))
+                else if (ItemGoSmeltTool.isItemFuel(itemstack1))
                 {
                     if (!this.mergeItemStack(itemstack1, 1, 2, false))
                     {

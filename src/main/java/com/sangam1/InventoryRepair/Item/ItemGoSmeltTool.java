@@ -82,7 +82,7 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 			--this.furnaceBurnTime;
 		}
 
-		if (world.isRemote) {
+		if (!world.isRemote) {
 			//System.out.println("Hello");
 			ItemStack itemstack = (ItemStack) this.furnaceItemStacks.get(1);
 
@@ -156,6 +156,7 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 	}
 
 	public void setInventorySlotContents(int index, ItemStack stack) {
+		if(Minecraft.getMinecraft().theWorld.isRemote) return;
 		ItemStack itemstack = (ItemStack) this.furnaceItemStacks.get(index);
 		boolean flag = !stack.func_190926_b() && stack.isItemEqual(itemstack)
 				&& ItemStack.areItemStackTagsEqual(stack, itemstack);
@@ -213,7 +214,7 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 	}
 
 	public void smeltItem() {
-		if (this.canSmelt()) {
+		if (this.canSmelt() && !Minecraft.getMinecraft().theWorld.isRemote) {
 			ItemStack itemstack = (ItemStack) this.furnaceItemStacks.get(0);
 			ItemStack itemstack1 = FurnaceRecipes.instance().getSmeltingResult(itemstack);
 			ItemStack itemstack2 = (ItemStack) this.furnaceItemStacks.get(2);
@@ -338,11 +339,13 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 		this.furnaceItemStacks.clear();
 	}
 	
+	/*
 	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
     {
         return new PortableFurnaceContainer(playerInventory, this);
     }
-
+	 */
+	
 	@Override
 	public String getName() {
 		return this.hasCustomName() ? this.furnaceCustomName : "portableFurnace";

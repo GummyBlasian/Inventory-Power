@@ -110,7 +110,7 @@ public class PortableFurnaceContainer extends Container
         ItemStack itemstack = ItemStack.field_190927_a;
         Slot slot = (Slot)this.inventorySlots.get(index);
 
-        if (slot != null && slot.getHasStack())
+        if (slot != null && slot.getHasStack() && !playerIn.worldObj.isRemote)
         {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();

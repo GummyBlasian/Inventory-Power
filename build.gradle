@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
 
 
-version = "r1.11-005"
+version = "r1.11-006"
 group= "com.sangam1.InventoryRepair" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Inventory Power"
 

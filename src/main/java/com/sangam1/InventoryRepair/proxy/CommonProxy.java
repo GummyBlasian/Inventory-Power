@@ -28,7 +28,7 @@ public class CommonProxy implements IGuiHandler {
 		} else if(ID == 21){
 			//System.out.println("Hello ServerGUI");
 	    	ItemGoSmeltTool furnace = (ItemGoSmeltTool)player.inventory.getCurrentItem().getItem();
-			return new PortableFurnaceContainer(player.inventory, furnace);
+			return new PortableFurnaceContainer(player.inventory, furnace.getInventory());
 		}
 		//System.out.println("BYE ServerGUI");
 		return null;

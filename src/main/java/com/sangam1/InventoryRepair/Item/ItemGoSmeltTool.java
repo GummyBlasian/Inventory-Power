@@ -2,13 +2,17 @@ package com.sangam1.InventoryRepair.Item;
 
 import com.sangam1.InventoryRepair.Main;
 import com.sangam1.InventoryRepair.GUI.Container.EntityGoFurnace;
+import com.sangam1.InventoryRepair.GUI.Container.PortableFurnaceContainer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.SlotFurnaceFuel;
@@ -74,12 +78,12 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 	public void onUpdate(ItemStack par1ItemStack, World world, Entity par3Entity, int par4, boolean par5) {
 		boolean flag = this.isBurning();
 		boolean flag1 = false;
-		// System.out.println(this.isBurning() + " " + furnaceBurnTime);
 		if (this.isBurning()) {
 			--this.furnaceBurnTime;
 		}
 
 		if (!world.isRemote) {
+			//System.out.println("Hello");
 			ItemStack itemstack = (ItemStack) this.furnaceItemStacks.get(1);
 
 			if (this.isBurning()
@@ -203,16 +207,7 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 				if (!itemstack1.isItemEqual(itemstack))
 					return false;
 				int result = itemstack1.func_190916_E() + itemstack.func_190916_E();
-				return result <= getInventoryStackLimit() && result <= itemstack1.getMaxStackSize(); // Forge
-																										// fix:
-																										// make
-																										// furnace
-																										// respect
-																										// stack
-																										// sizes
-																										// in
-																										// furnace
-																										// recipes
+				return result <= getInventoryStackLimit() && result <= itemstack1.getMaxStackSize(); // Forge																							// recipes
 			}
 		}
 	}
@@ -342,20 +337,26 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 	public void clear() {
 		this.furnaceItemStacks.clear();
 	}
+	
+	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
+    {
+        return new PortableFurnaceContainer(playerInventory, this);
+    }
 
 	@Override
 	public String getName() {
-		return "portableFurnace";
+		return this.hasCustomName() ? this.furnaceCustomName : "portableFurnace";
 	}
 
 	@Override
 	public boolean hasCustomName() {
-		return false;
+		return this.furnaceCustomName != null && !this.furnaceCustomName.isEmpty();
 	}
 
 	@Override
 	public ITextComponent getDisplayName() {
-		return this.getDisplayName();
+		//return this.getDisplayName();
+		return null;
 	}
 
 	@Override

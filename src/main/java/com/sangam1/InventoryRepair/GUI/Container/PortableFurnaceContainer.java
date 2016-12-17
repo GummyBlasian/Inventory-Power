@@ -111,7 +111,7 @@ public class PortableFurnaceContainer extends Container
         ItemStack itemstack = ItemStack.field_190927_a;
         FurnaceSlots slot = (FurnaceSlots)this.inventorySlots.get(index);
 
-        if (slot != null && slot.getHasStack() && playerIn.worldObj.isRemote)
+        if (slot != null && slot.getHasStack() && !playerIn.worldObj.isRemote)
         {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();

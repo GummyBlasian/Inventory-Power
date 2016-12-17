@@ -2,17 +2,13 @@ package com.sangam1.InventoryRepair.Item;
 
 import com.sangam1.InventoryRepair.Main;
 import com.sangam1.InventoryRepair.GUI.Container.EntityGoFurnace;
-import com.sangam1.InventoryRepair.GUI.Container.PortableFurnaceContainer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.SlotFurnaceFuel;

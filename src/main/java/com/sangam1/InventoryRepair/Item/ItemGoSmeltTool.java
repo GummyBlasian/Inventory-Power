@@ -81,7 +81,7 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 		if (!world.isRemote) {
 			//System.out.println("Hello");
 			ItemStack itemstack = (ItemStack) this.furnaceItemStacks.get(1);
-
+			System.out.println("Stack " + this.furnaceItemStacks.get(1).getDisplayName());
 			if (this.isBurning()
 					|| !itemstack.func_190926_b() && !((ItemStack) this.furnaceItemStacks.get(0)).func_190926_b()) {
 				if (!this.isBurning() && this.canSmelt()) {

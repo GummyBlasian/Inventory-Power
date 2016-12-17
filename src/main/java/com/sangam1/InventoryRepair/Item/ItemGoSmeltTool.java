@@ -5,6 +5,7 @@ import com.sangam1.InventoryRepair.GUI.Container.EntityGoFurnace;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -81,7 +82,7 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 		if (!world.isRemote) {
 			//System.out.println("Hello");
 			ItemStack itemstack = (ItemStack) this.furnaceItemStacks.get(1);
-			System.out.println("Stack " + this.furnaceItemStacks.get(1).getDisplayName());
+			System.out.println("Stack " + this.furnaceItemStacks.get(2).getDisplayName());
 			if (this.isBurning()
 					|| !itemstack.func_190926_b() && !((ItemStack) this.furnaceItemStacks.get(0)).func_190926_b()) {
 				if (!this.isBurning() && this.canSmelt()) {
@@ -152,7 +153,7 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 	}
 
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		//if(Minecraft.getMinecraft().theWorld.isRemote) return;
+		if(Minecraft.getMinecraft().theWorld.isRemote) return;
 		ItemStack itemstack = (ItemStack) this.furnaceItemStacks.get(index);
 		boolean flag = !stack.func_190926_b() && stack.isItemEqual(itemstack)
 				&& ItemStack.areItemStackTagsEqual(stack, itemstack);

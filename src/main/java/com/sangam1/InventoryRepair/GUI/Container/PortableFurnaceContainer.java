@@ -1,5 +1,6 @@
 package com.sangam1.InventoryRepair.GUI.Container;
 
+import com.sangam1.InventoryRepair.GUI.Slots.FurnaceSlots;
 import com.sangam1.InventoryRepair.Item.ItemGoSmeltTool;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -108,9 +109,9 @@ public class PortableFurnaceContainer extends Container
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
         ItemStack itemstack = ItemStack.field_190927_a;
-        Slot slot = (Slot)this.inventorySlots.get(index);
+        FurnaceSlots slot = (FurnaceSlots)this.inventorySlots.get(index);
 
-        if (slot != null && slot.getHasStack() && !playerIn.worldObj.isRemote)
+        if (slot != null && slot.getHasStack() && playerIn.worldObj.isRemote)
         {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();

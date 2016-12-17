@@ -2,14 +2,16 @@ package com.sangam1.InventoryRepair.Item;
 
 import com.sangam1.InventoryRepair.Main;
 import com.sangam1.InventoryRepair.GUI.Container.EntityGoFurnace;
+import com.sangam1.InventoryRepair.GUI.Container.PortableFurnaceContainer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.SlotFurnaceFuel;
@@ -48,7 +50,6 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 	private int cookTime;
 	private int totalCookTime;
 	private String furnaceCustomName;
-	private ItemGoSmeltTool tool;
 
 	public ItemGoSmeltTool(String name) {
 		super(name);
@@ -120,7 +121,7 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 				this.cookTime = MathHelper.clamp_int(this.cookTime - 2, 0, this.totalCookTime);
 			}
 
-			if (flag != this.isBurning() && tool != null) {
+			if (flag != this.isBurning()) {
 				flag1 = true;
 			}
 			writeNBT();
@@ -128,6 +129,7 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 
 		if (flag1) {
 			// this.markDirty();
+			writeNBT();
 		}
 	}
 
@@ -153,7 +155,7 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 	}
 
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		if(Minecraft.getMinecraft().theWorld.isRemote) return;
+		//if(Minecraft.getMinecraft().theWorld.isRemote) return;
 		ItemStack itemstack = (ItemStack) this.furnaceItemStacks.get(index);
 		boolean flag = !stack.func_190926_b() && stack.isItemEqual(itemstack)
 				&& ItemStack.areItemStackTagsEqual(stack, itemstack);
@@ -336,12 +338,10 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 		this.furnaceItemStacks.clear();
 	}
 	
-	/*
 	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
     {
         return new PortableFurnaceContainer(playerInventory, this);
     }
-	 */
 	
 	@Override
 	public String getName() {

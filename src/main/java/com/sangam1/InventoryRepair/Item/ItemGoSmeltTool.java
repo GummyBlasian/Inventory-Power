@@ -168,6 +168,7 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 		if (index == 0 && !flag) {
 			this.totalCookTime = this.getCookTime(stack);
 			this.cookTime = 0;
+			writeNBT();
 		}
 	}
 

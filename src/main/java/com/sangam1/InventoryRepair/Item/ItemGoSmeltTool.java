@@ -78,6 +78,7 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 		boolean flag1 = false;
 		if (this.isBurning()) {
 			--this.furnaceBurnTime;
+			writeNBT();
 		}
 
 		if (!world.isRemote) {

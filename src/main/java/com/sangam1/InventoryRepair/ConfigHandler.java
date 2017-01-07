@@ -28,7 +28,7 @@ public class ConfigHandler {
         enableBlockIdGUI = config.getBoolean("enableBlockIdGUI", category, true, "Allows GUI for displaying what a player is looking at. Disable if you don't want the GUI.");
         enableItemIdGUI = config.getBoolean("enableItemIdGUI", category, true, "Allows GUI for displaying what a player is holding. Disable if you don't want the GUI.");
         enableItemRepair = config.getBoolean("enableItemRepair", category, true, "Allows item auto-repair. Disable if you don't want item auto-repair.");
-        enablePortableFurnace = config.getBoolean("enablePortableFurnace", category, true, "Allow portable furnace. Disable if you don't want portable furnace.");
+        enablePortableFurnace = config.getBoolean("enablePortableFurnace", category, false, "Allow portable furnace. Disable if you don't want portable furnace.");
         enableGoCraft = config.getBoolean("enableGoCraft", category, true, "Allow portable crafting table. Disable if you don't want portable crafting table.");
 
         config.save();

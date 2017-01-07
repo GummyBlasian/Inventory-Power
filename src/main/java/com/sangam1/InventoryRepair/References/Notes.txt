@@ -1,0 +1,3 @@
+For ItemPortableFurnace NBT Data 
+    if block is input, then "0:" + BlockID
+    if item is input, then "1:" + ItemID

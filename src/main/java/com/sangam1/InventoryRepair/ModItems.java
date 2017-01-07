@@ -3,6 +3,7 @@ package com.sangam1.InventoryRepair;
 import com.sangam1.InventoryRepair.Item.ItemGoCraftTable;
 import com.sangam1.InventoryRepair.Item.ItemGoSmeltTool;
 import com.sangam1.InventoryRepair.Item.ItemModelProvider;
+import com.sangam1.InventoryRepair.Item.ItemPortableFurnace;
 import com.sangam1.InventoryRepair.References.ItemsList;
 import com.sangam1.InventoryRepair.References.StartupRef;
 
@@ -16,6 +17,8 @@ public final class ModItems {
 				new ItemGoSmeltTool(StartupRef.MODID + ".autosmelttool").setCreativeTab(Main.creativeTab));
 		ItemsList.gocraft = register(
 				new ItemGoCraftTable(StartupRef.MODID + ".gocraft").setCreativeTab(Main.creativeTab));
+		ItemsList.portablefurnace = register(
+				new ItemPortableFurnace(StartupRef.MODID + ".portablefurnace").setCreativeTab(Main.creativeTab));
 	}
 
 	private static <T extends Item> T register(T item) {

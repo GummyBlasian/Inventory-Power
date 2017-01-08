@@ -120,5 +120,8 @@ public class ItemPortableFurnace extends ItemBase{
 				break;
 			}
 		}
+		if(this.burnTimer > 0){
+			this.burnTimer--;
+		}
 	}
 }

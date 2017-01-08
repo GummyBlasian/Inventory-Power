@@ -13,12 +13,18 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public final class ModItems {
 
 	public static void init() {
-		ItemsList.autosmelttool = register(
-				new ItemGoSmeltTool(StartupRef.MODID + ".autosmelttool").setCreativeTab(Main.creativeTab));
-		ItemsList.gocraft = register(
-				new ItemGoCraftTable(StartupRef.MODID + ".gocraft").setCreativeTab(Main.creativeTab));
-		ItemsList.portablefurnace = register(
-				new ItemPortableFurnace(StartupRef.MODID + ".portablefurnace").setCreativeTab(Main.creativeTab));
+		if (ConfigHandler.enableGoSmelt) {
+			ItemsList.autosmelttool = register(
+					new ItemGoSmeltTool(StartupRef.MODID + ".autosmelttool").setCreativeTab(Main.creativeTab));
+		}
+		if (ConfigHandler.enableGoCraft) {
+			ItemsList.gocraft = register(
+					new ItemGoCraftTable(StartupRef.MODID + ".gocraft").setCreativeTab(Main.creativeTab));
+		}
+		if (ConfigHandler.enablePortableFurnace) {
+			ItemsList.portablefurnace = register(
+					new ItemPortableFurnace(StartupRef.MODID + ".portablefurnace").setCreativeTab(Main.creativeTab));
+		}
 	}
 
 	private static <T extends Item> T register(T item) {

@@ -94,12 +94,14 @@ public class ItemPortableFurnace extends ItemBase{
 	
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity player, int par4, boolean par5) {
+		if(stack == null) return;
+		if(!stack.hasTagCompound()) return;
 		if(this.burnTimer == 0){
 			String info = this.getNBTString(stack, Keys.S3S.key());
 			String sizeS = this.getNBTString(stack, Keys.S3SN.key());
-			System.out.println(info + " ,, " + sizeS);
-			System.out.println(info + " info " + Integer.valueOf(info)); 
-			System.out.println(sizeS + " sizeS " + Integer.valueOf(sizeS)); 			
+			//System.out.println(info + " ,, " + sizeS);
+			//System.out.println(info + " info " + Integer.valueOf(info)); 
+			//System.out.println(sizeS + " sizeS " + Integer.valueOf(sizeS)); 			
 			int size = Integer.parseInt(sizeS);
 			int id = Integer.parseInt(info.split(":")[1]);
 			int type = Integer.parseInt(info.split(":")[0]);
@@ -118,6 +120,5 @@ public class ItemPortableFurnace extends ItemBase{
 				break;
 			}
 		}
-		System.out.println(this.burnTimer);
 	}
 }

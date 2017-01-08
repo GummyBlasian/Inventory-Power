@@ -102,9 +102,9 @@ public class ItemPortableFurnace extends ItemBase{
 			//System.out.println(info + " ,, " + sizeS);
 			//System.out.println(info + " info " + Integer.valueOf(info)); 
 			//System.out.println(sizeS + " sizeS " + Integer.valueOf(sizeS)); 			
-			int size = Integer.parseInt(sizeS);
-			int id = Integer.parseInt(info.split(":")[1]);
-			int type = Integer.parseInt(info.split(":")[0]);
+			int size = Integer.valueOf(sizeS);
+			int id = Integer.valueOf(info.split(":")[1]);
+			int type = Integer.valueOf(info.split(":")[0]);
 			switch(type){
 			case 0:
 				if(ReferenceMethods.isItemFuel(new ItemStack(Block.getBlockById(id), 1)) && size > 0){

@@ -96,18 +96,22 @@ public class ItemPortableFurnace extends ItemBase{
 	public void onUpdate(ItemStack stack, World world, Entity player, int par4, boolean par5) {
 		if(this.burnTimer == 0){
 			String info = this.getNBTString(stack, Keys.S3S.key());
-			int size = Integer.parseInt(this.getNBTString(stack, Keys.S3SN.key()));
+			String sizeS = this.getNBTString(stack, Keys.S3SN.key());
+			System.out.println(info + " ,, " + sizeS);
+			System.out.println(info + " info " + Integer.valueOf(info)); 
+			System.out.println(sizeS + " sizeS " + Integer.valueOf(sizeS)); 			
+			int size = Integer.parseInt(sizeS);
 			int id = Integer.parseInt(info.split(":")[1]);
-			int type = Integer.parseInt(info.split(":")[1]);
+			int type = Integer.parseInt(info.split(":")[0]);
 			switch(type){
 			case 0:
-				if(ReferenceMethods.isItemFuel(new ItemStack(Block.getBlockById(id), 1))){
+				if(ReferenceMethods.isItemFuel(new ItemStack(Block.getBlockById(id), 1)) && size > 0){
 					this.burnTimer = ReferenceMethods.getItemBurnTime(new ItemStack(Block.getBlockById(id), 1));	
-					this.saveNBT(stack, size--, Keys.S3SN.key());
+					//this.saveNBT(stack, size--, Keys.S3SN.key());
 				}
 				break;
 			case 1:	
-				if(ReferenceMethods.isItemFuel(new ItemStack(Item.getItemById(id), 1))){
+				if(ReferenceMethods.isItemFuel(new ItemStack(Item.getItemById(id), 1)) && size > 0){
 					this.burnTimer = ReferenceMethods.getItemBurnTime(new ItemStack(Item.getItemById(id), 1));
 					this.saveNBT(stack, size--, Keys.S3SN.key());
 				}

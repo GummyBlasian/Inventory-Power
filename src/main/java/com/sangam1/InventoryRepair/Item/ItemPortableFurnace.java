@@ -45,7 +45,7 @@ public class ItemPortableFurnace extends ItemBase{
 		this.saveNBT(stack, "0:" + 0, Keys.S2S.key());
 		this.saveNBT(stack, 1, Keys.S2SN.key());
 		this.saveNBT(stack, "0:" + 173, Keys.S3S.key());
-		this.saveNBT(stack, 5, Keys.S3SN.key());
+		this.saveNBT(stack, 10, Keys.S3SN.key());
     }
 	
 	@Override
@@ -99,10 +99,10 @@ public class ItemPortableFurnace extends ItemBase{
 		if(this.burnTimer == 0){
 			String info = this.getNBTString(stack, Keys.S3S.key());
 			String sizeS = this.getNBTString(stack, Keys.S3SN.key());
-			//System.out.println(info + " ,, " + sizeS);
+			System.out.println(info + " ,, " + sizeS);
 			//System.out.println(info + " info " + Integer.valueOf(info)); 
 			//System.out.println(sizeS + " sizeS " + Integer.valueOf(sizeS)); 			
-			int size = Integer.valueOf(sizeS);
+			int size = 0;// Integer.valueOf(sizeS);
 			int id = Integer.valueOf(info.split(":")[1]);
 			int type = Integer.valueOf(info.split(":")[0]);
 			switch(type){
@@ -115,7 +115,7 @@ public class ItemPortableFurnace extends ItemBase{
 			case 1:	
 				if(ReferenceMethods.isItemFuel(new ItemStack(Item.getItemById(id), 1)) && size > 0){
 					this.burnTimer = ReferenceMethods.getItemBurnTime(new ItemStack(Item.getItemById(id), 1));
-					this.saveNBT(stack, size--, Keys.S3SN.key());
+					//this.saveNBT(stack, size--, Keys.S3SN.key());
 				}
 				break;
 			}

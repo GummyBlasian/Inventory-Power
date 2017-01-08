@@ -1,5 +1,6 @@
 # Items
-item.sangamir.autosmelttool.name=Auto Smelt Tool
+item.sangamir.autosmelttool.name=Portable Furnace (Broken)
 item.sangamir.gocraft.name=Active Crafting Table
+item.sangamir.portablefurnace.name=Portable Furnace (Testing)
 
 itemGroup.sangamir=InventoryRepair

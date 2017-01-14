@@ -4,6 +4,7 @@ import com.sangam1.InventoryRepair.GUI.GUIPortableFurnace;
 import com.sangam1.InventoryRepair.GUI.RenderGUIHandler;
 import com.sangam1.InventoryRepair.GUI.Container.GoCraftContainer;
 import com.sangam1.InventoryRepair.GUI.Container.PortableFurnaceContainer;
+import com.sangam1.InventoryRepair.GUI.Inventory.FurnaceInventory;
 import com.sangam1.InventoryRepair.Item.ItemGoSmeltTool;
 
 import net.minecraft.client.gui.inventory.GuiCrafting;
@@ -28,7 +29,10 @@ public class CommonProxy implements IGuiHandler {
 		} else if(ID == 21){
 			//System.out.println("Hello ServerGUI");
 	    	ItemGoSmeltTool furnace = (ItemGoSmeltTool)player.inventory.getCurrentItem().getItem();
-			return new PortableFurnaceContainer(player.inventory, furnace.getInventory());
+			//return new PortableFurnaceContainer(player.inventory, furnace.getInventory());
+		} else if(ID == 22){
+			//System.out.println("Hello ServerGUI");
+			return new PortableFurnaceContainer(player.inventory, player.inventory.getCurrentItem(), new FurnaceInventory(player.inventory.getCurrentItem()));
 		}
 		//System.out.println("BYE ServerGUI");
 		return null;
@@ -41,7 +45,9 @@ public class CommonProxy implements IGuiHandler {
 			return new GuiCrafting(player.inventory, world);
 		} else if(ID == 21){
 	    	ItemGoSmeltTool furnace = (ItemGoSmeltTool)player.inventory.getCurrentItem().getItem();
-	    	return new GUIPortableFurnace(player.inventory, furnace.getInventory());
+	    	//return new GUIPortableFurnace(player.inventory, furnace.getInventory());
+		} else if(ID == 22){
+	    	return new GUIPortableFurnace(player.inventory, player.inventory.getCurrentItem());
 		}
 		//System.out.println("BYE ClientGUI");
 		return null;

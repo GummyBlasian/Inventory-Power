@@ -1,3 +1,12 @@
 For ItemPortableFurnace NBT Data 
     if block is input, then "0:" + BlockID
     if item is input, then "1:" + ItemID
+    
+To determine if block or item in ItemStack, use ItemStack.getItem; Then use Block.getBlockfromItem();
+    If null, then Item,
+    If not null, then Block.
+    
+Number system for furnace
+    0 is input slot
+    1 is fuel slot
+    2 is output slot

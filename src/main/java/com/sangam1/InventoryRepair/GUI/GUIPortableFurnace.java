@@ -1,13 +1,14 @@
 package com.sangam1.InventoryRepair.GUI;
 
-import com.sangam1.InventoryRepair.Item.ItemGoSmeltTool;
+import com.sangam1.InventoryRepair.GUI.Container.PortableFurnaceContainer;
+import com.sangam1.InventoryRepair.GUI.Inventory.FurnaceInventory;
+import com.sangam1.InventoryRepair.Item.ItemPortableFurnace;
+import com.sangam1.InventoryRepair.References.Keys;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ContainerFurnace;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -18,13 +19,13 @@ public class GUIPortableFurnace extends GuiContainer
     private static final ResourceLocation FURNACE_GUI_TEXTURES = new ResourceLocation("textures/gui/container/furnace.png");
     /** The player inventory bound to this GUI. */
     private final InventoryPlayer playerInventory;
-    private final IInventory tileFurnace;
+    private final ItemStack stack;
 
-    public GUIPortableFurnace(InventoryPlayer playerInv, IInventory furnaceInv)
+    public GUIPortableFurnace(InventoryPlayer playerInv, ItemStack stack)
     {
-        super(new ContainerFurnace(playerInv, furnaceInv));
+        super(new PortableFurnaceContainer(playerInv, stack, new FurnaceInventory(stack)));
         this.playerInventory = playerInv;
-        this.tileFurnace = furnaceInv;
+        this.stack = stack;
     }
 
     /**
@@ -48,7 +49,7 @@ public class GUIPortableFurnace extends GuiContainer
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 
-        if (ItemGoSmeltTool.isBurning(this.tileFurnace))
+        if (((ItemPortableFurnace)this.stack.getItem()).isBurning())
         {
             int k = this.getBurnLeftScaled(13);
             this.drawTexturedModalRect(i + 56, j + 36 + 12 - k, 176, 12 - k, 14, k + 1);
@@ -60,20 +61,20 @@ public class GUIPortableFurnace extends GuiContainer
 
     private int getCookProgressScaled(int pixels)
     {
-        int i = this.tileFurnace.getField(2);
-        int j = this.tileFurnace.getField(3);
+        int i = ((ItemPortableFurnace)this.stack.getItem()).getNBTInt(stack, Keys.PROG.key());
+        int j = 200;
         return j != 0 && i != 0 ? i * pixels / j : 0;
     }
 
     private int getBurnLeftScaled(int pixels)
     {
-        int i = this.tileFurnace.getField(1);
+        int i = ((ItemPortableFurnace)this.stack.getItem()).getNBTInt(stack, Keys.BT.key());
 
         if (i == 0)
         {
             i = 200;
         }
 
-        return this.tileFurnace.getField(0) * pixels / i;
+        return ((ItemPortableFurnace)this.stack.getItem()).getNBTInt(stack, Keys.FT.key()) * pixels / i;
     }
 }

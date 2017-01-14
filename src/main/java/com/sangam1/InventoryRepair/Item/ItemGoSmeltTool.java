@@ -83,8 +83,11 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 
 		if (!world.isRemote) {
 			//System.out.println("Hello");
+			//System.out.println("1 /: " + ((ItemStack) this.furnaceItemStacks.get(0)).toString());
+			//System.out.println("2 /: " + ((ItemStack) this.furnaceItemStacks.get(1)).toString());
+			//System.out.println("3 /: " + ((ItemStack) this.furnaceItemStacks.get(2)).toString());
 			ItemStack itemstack = (ItemStack) this.furnaceItemStacks.get(1);
-			System.out.println("Stack " + this.furnaceItemStacks.get(2).getDisplayName());
+			//System.out.println("Stack " + this.furnaceItemStacks.get(2).getDisplayName());
 			if (this.isBurning()
 					|| !itemstack.func_190926_b() && !((ItemStack) this.furnaceItemStacks.get(0)).func_190926_b()) {
 				if (!this.isBurning() && this.canSmelt()) {
@@ -342,7 +345,8 @@ public class ItemGoSmeltTool extends ItemBase implements IInventory {
 	
 	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
     {
-        return new PortableFurnaceContainer(playerInventory, this);
+        //return new PortableFurnaceContainer(playerInventory, this);
+		return null;
     }
 	
 	@Override

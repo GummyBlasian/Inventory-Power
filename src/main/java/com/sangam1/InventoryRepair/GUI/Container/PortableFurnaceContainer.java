@@ -1,7 +1,12 @@
 package com.sangam1.InventoryRepair.GUI.Container;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+import com.sangam1.InventoryRepair.GUI.Slots.FurnaceFuelSlots;
+import com.sangam1.InventoryRepair.GUI.Slots.FurnaceOutputSlots;
 import com.sangam1.InventoryRepair.GUI.Slots.FurnaceSlots;
-import com.sangam1.InventoryRepair.Item.ItemGoSmeltTool;
+import com.sangam1.InventoryRepair.Item.ItemPortableFurnace;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -9,27 +14,29 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotFurnaceFuel;
-import net.minecraft.inventory.SlotFurnaceOutput;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PortableFurnaceContainer extends Container
 {
     private final IInventory tileFurnace;
-    private int cookTime;
+	private int cookTime;
     private int totalCookTime;
     private int furnaceBurnTime;
     private int currentItemBurnTime;
+    public List<FurnaceSlots> inventorySlots = Lists.<FurnaceSlots>newArrayList();
+    private final ItemStack stack;
 
-    public PortableFurnaceContainer(InventoryPlayer playerInventory, IInventory furnaceInventory)
+    public PortableFurnaceContainer(InventoryPlayer playerInventory, ItemStack stack, IInventory furnace)
     {
-        this.tileFurnace = furnaceInventory;
-        this.addSlotToContainer(new Slot(furnaceInventory, 0, 56, 17));
-        this.addSlotToContainer(new SlotFurnaceFuel(furnaceInventory, 1, 56, 53));
-        this.addSlotToContainer(new SlotFurnaceOutput(playerInventory.player, furnaceInventory, 2, 116, 35));
+    	this.tileFurnace = furnace;
+        this.stack = stack;
+        //this.addSlotToContainer(new FurnaceSlots((ItemPortableFurnace)stack.getItem(), 0, 56, 17));
+        //this.addSlotToContainer(new FurnaceFuelSlots((ItemPortableFurnace)stack.getItem(), 1, 56, 53));
+        //this.addSlotToContainer(new FurnaceOutputSlots(playerInventory.player, (ItemPortableFurnace)stack.getItem(), 2, 116, 35));
 
         for (int i = 0; i < 3; ++i)
         {
@@ -43,6 +50,14 @@ public class PortableFurnaceContainer extends Container
         {
             this.addSlotToContainer(new Slot(playerInventory, k, 8 + k * 18, 142));
         }
+    }
+    
+    private FurnaceSlots addSlotToContainer(FurnaceSlots slotIn)
+    {
+        slotIn.slotNumber = this.inventorySlots.size();
+        this.inventorySlots.add(slotIn);
+        this.inventoryItemStacks.add(ItemStack.field_190927_a);
+        return slotIn;
     }
 
     public void addListener(IContainerListener listener)
@@ -62,37 +77,37 @@ public class PortableFurnaceContainer extends Container
         {
             IContainerListener icontainerlistener = (IContainerListener)this.listeners.get(i);
 
-            if (this.cookTime != this.tileFurnace.getField(2))
+            if (this.cookTime != ((ItemPortableFurnace)this.stack.getItem()).getField(2))
             {
-                icontainerlistener.sendProgressBarUpdate(this, 2, this.tileFurnace.getField(2));
+                icontainerlistener.sendProgressBarUpdate(this, 2, ((ItemPortableFurnace)this.stack.getItem()).getField(2));
             }
 
-            if (this.furnaceBurnTime != this.tileFurnace.getField(0))
+            if (this.furnaceBurnTime != ((ItemPortableFurnace)this.stack.getItem()).getField(0))
             {
-                icontainerlistener.sendProgressBarUpdate(this, 0, this.tileFurnace.getField(0));
+                icontainerlistener.sendProgressBarUpdate(this, 0, ((ItemPortableFurnace)this.stack.getItem()).getField(0));
             }
 
-            if (this.currentItemBurnTime != this.tileFurnace.getField(1))
+            if (this.currentItemBurnTime != ((ItemPortableFurnace)this.stack.getItem()).getField(1))
             {
-                icontainerlistener.sendProgressBarUpdate(this, 1, this.tileFurnace.getField(1));
+                icontainerlistener.sendProgressBarUpdate(this, 1, ((ItemPortableFurnace)this.stack.getItem()).getField(1));
             }
 
-            if (this.totalCookTime != this.tileFurnace.getField(3))
+            if (this.totalCookTime != ((ItemPortableFurnace)this.stack.getItem()).getField(3))
             {
-                icontainerlistener.sendProgressBarUpdate(this, 3, this.tileFurnace.getField(3));
+                icontainerlistener.sendProgressBarUpdate(this, 3, ((ItemPortableFurnace)this.stack.getItem()).getField(3));
             }
         }
 
-        this.cookTime = this.tileFurnace.getField(2);
-        this.furnaceBurnTime = this.tileFurnace.getField(0);
-        this.currentItemBurnTime = this.tileFurnace.getField(1);
-        this.totalCookTime = this.tileFurnace.getField(3);
+        this.cookTime = ((ItemPortableFurnace)this.stack.getItem()).getField(2);
+        this.furnaceBurnTime = ((ItemPortableFurnace)this.stack.getItem()).getField(0);
+        this.currentItemBurnTime = ((ItemPortableFurnace)this.stack.getItem()).getField(1);
+        this.totalCookTime = ((ItemPortableFurnace)this.stack.getItem()).getField(3);
     }
 
     @SideOnly(Side.CLIENT)
     public void updateProgressBar(int id, int data)
     {
-        this.tileFurnace.setField(id, data);
+    	((ItemPortableFurnace)this.stack.getItem()).setField(id, data);
     }
 
     /**
@@ -111,7 +126,7 @@ public class PortableFurnaceContainer extends Container
         ItemStack itemstack = ItemStack.field_190927_a;
         FurnaceSlots slot = (FurnaceSlots)this.inventorySlots.get(index);
 
-        if (slot != null && slot.getHasStack() && !playerIn.worldObj.isRemote)
+        if (slot != null && slot.getHasStack())
         {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
@@ -134,7 +149,7 @@ public class PortableFurnaceContainer extends Container
                         return ItemStack.field_190927_a;
                     }
                 }
-                else if (ItemGoSmeltTool.isItemFuel(itemstack1))
+                else if (TileEntityFurnace.isItemFuel(itemstack1))
                 {
                     if (!this.mergeItemStack(itemstack1, 1, 2, false))
                     {
@@ -164,7 +179,7 @@ public class PortableFurnaceContainer extends Container
             }
             else
             {
-                slot.onSlotChanged();
+                slot.onSlotChanged(itemstack);
             }
 
             if (itemstack1.func_190916_E() == itemstack.func_190916_E())

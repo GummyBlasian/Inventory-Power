@@ -34,9 +34,9 @@ public class PortableFurnaceContainer extends Container
     {
     	this.tileFurnace = furnace;
         this.stack = stack;
-        //this.addSlotToContainer(new FurnaceSlots((ItemPortableFurnace)stack.getItem(), 0, 56, 17));
-        //this.addSlotToContainer(new FurnaceFuelSlots((ItemPortableFurnace)stack.getItem(), 1, 56, 53));
-        //this.addSlotToContainer(new FurnaceOutputSlots(playerInventory.player, (ItemPortableFurnace)stack.getItem(), 2, 116, 35));
+        this.addSlotToContainer(new FurnaceSlots((ItemPortableFurnace)stack.getItem(), 0, 56, 17));
+        this.addSlotToContainer(new FurnaceFuelSlots((ItemPortableFurnace)stack.getItem(), 1, 56, 53));
+        this.addSlotToContainer(new FurnaceOutputSlots(playerInventory.player, (ItemPortableFurnace)stack.getItem(), 2, 116, 35));
 
         for (int i = 0; i < 3; ++i)
         {

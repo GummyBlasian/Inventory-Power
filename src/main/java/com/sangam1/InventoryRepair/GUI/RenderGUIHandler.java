@@ -1,8 +1,5 @@
 package com.sangam1.InventoryRepair.GUI;
 
-import com.sangam1.InventoryRepair.Item.ItemGoSmeltTool;
-import com.sangam1.InventoryRepair.Item.ItemPortableFurnace;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,11 +29,6 @@ public class RenderGUIHandler {
 	public Object getServerGuiElement(int iD, EntityPlayer player, World world, int x, int y, int z) {
 		if (iD == 20) {
 			return new GuiCrafting(player.inventory, world);
-		} else if (iD == 21) {
-			ItemGoSmeltTool furnace = (ItemGoSmeltTool) player.inventory.getCurrentItem().getItem();
-			//return new GUIPortableFurnace(player.inventory, furnace.getInventory());
-		} else if (iD == 22) {
-			return new GUIPortableFurnace(player.inventory, player.inventory.getCurrentItem());
 		}
 		return null;
 	}

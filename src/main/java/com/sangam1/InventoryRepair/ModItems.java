@@ -1,9 +1,7 @@
 package com.sangam1.InventoryRepair;
 
 import com.sangam1.InventoryRepair.Item.ItemGoCraftTable;
-import com.sangam1.InventoryRepair.Item.ItemGoSmeltTool;
 import com.sangam1.InventoryRepair.Item.ItemModelProvider;
-import com.sangam1.InventoryRepair.Item.ItemPortableFurnace;
 import com.sangam1.InventoryRepair.References.ItemsList;
 import com.sangam1.InventoryRepair.References.StartupRef;
 
@@ -13,17 +11,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public final class ModItems {
 
 	public static void init() {
-		if (ConfigHandler.enableGoSmelt) {
-			ItemsList.autosmelttool = register(
-					new ItemGoSmeltTool(StartupRef.MODID + ".autosmelttool").setCreativeTab(Main.creativeTab));
-		}
 		if (ConfigHandler.enableGoCraft) {
 			ItemsList.gocraft = register(
 					new ItemGoCraftTable(StartupRef.MODID + ".gocraft").setCreativeTab(Main.creativeTab));
-		}
-		if (ConfigHandler.enablePortableFurnace) {
-			ItemsList.portablefurnace = register(
-					new ItemPortableFurnace(StartupRef.MODID + ".portablefurnace").setCreativeTab(Main.creativeTab));
 		}
 	}
 

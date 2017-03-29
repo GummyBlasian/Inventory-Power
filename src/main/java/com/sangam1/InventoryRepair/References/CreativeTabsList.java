@@ -12,7 +12,7 @@ public class CreativeTabsList extends CreativeTabs{
 
 	@Override
 	public ItemStack getTabIconItem() {
-		return new ItemStack(ItemsList.autosmelttool); //shown icon on creative tab
+		return new ItemStack(ItemsList.gocraft); //shown icon on creative tab
 	}
 	
 	 @Override

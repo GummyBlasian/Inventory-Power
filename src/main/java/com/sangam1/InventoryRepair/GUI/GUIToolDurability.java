@@ -53,7 +53,7 @@ public class GUIToolDurability extends Gui {
 		float timeHour = val/1000;
 		float timeDay = val/24000;
 		float timeChangeHour = timeHour - (((int) timeDay)*(24000/1000));
-		float timeChangeMin = timeMin - (((int) timeHour)*(1000/16.6f)) - (((int) timeDay)*(24000/1000));
+		float timeChangeMin = timeMin - (((int) timeHour)*(1000/16.6f));// - (((int) timeDay)*(24000/1000));
 		int timeHourCorrect = 0;
 		if(timeChangeHour > 12){
 			timeHourCorrect = (((int) timeChangeHour) - 12);
@@ -61,8 +61,9 @@ public class GUIToolDurability extends Gui {
 		System.out.println(((int) timeChangeMin));
 		if(timeChangeHour > 13){
 			return "Time: " + timeHourCorrect + ":" + String.format("%02d", ((int) timeChangeMin)) + " PM";
+		} else {
+			return "Time: " + timeHourCorrect + ":" + String.format("%02d", ((int) timeChangeMin)) + " AM";
 		}
-		return "Time: " + timeHourCorrect + ":" + String.format("%02d", ((int) timeChangeMin)) + " AM";
 	}
 
 	public static void setItemInHandText(String name, String damage) {

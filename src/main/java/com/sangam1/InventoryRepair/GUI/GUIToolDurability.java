@@ -27,13 +27,14 @@ public class GUIToolDurability extends Gui {
 			int width = scaled.getScaledWidth();
 			int height = scaled.getScaledHeight();
 			
-			drawString(mc.fontRendererObj, ItemInHandTextName, 4, height - 55, Integer.parseInt("FFAA00", 16));
-			drawString(mc.fontRendererObj, ItemInHandTextDamage, 4, height - 45, Integer.parseInt("FFAA00", 16));
-			drawString(mc.fontRendererObj, mc.theWorld.getBiome(new BlockPos(mc.thePlayer)).getBiomeName(), 4, height - 35, Integer.parseInt("FFAA00", 16));
-			drawString(mc.fontRendererObj, getTimeClockDay(mc), 4, height - 25, Integer.parseInt("FFAA00", 16));
-			drawString(mc.fontRendererObj, getTimeClockHour(mc), 4, height - 15, Integer.parseInt("FFAA00", 16));
-			drawString(mc.fontRendererObj, "Player Health: " + mc.thePlayer.getHealth(), 4, height - 5, Integer.parseInt("FFAA00", 16));		
-
+			drawString(mc.fontRendererObj, ItemInHandTextName, 4, height - 65, Integer.parseInt("FFAA00", 16));
+			drawString(mc.fontRendererObj, ItemInHandTextDamage, 4, height - 55, Integer.parseInt("FFAA00", 16));
+			drawString(mc.fontRendererObj, mc.theWorld.getBiome(new BlockPos(mc.thePlayer)).getBiomeName(), 4, height - 45, Integer.parseInt("FFAA00", 16));
+			drawString(mc.fontRendererObj, getTimeClockDay(mc), 4, height - 35, Integer.parseInt("FFAA00", 16));
+			drawString(mc.fontRendererObj, getTimeClockHour(mc), 4, height - 25, Integer.parseInt("FFAA00", 16));
+			drawString(mc.fontRendererObj, "Player Health: " + mc.thePlayer.getHealth(), 4, height - 15, Integer.parseInt("FFAA00", 16));		
+			drawString(mc.fontRendererObj, "Player Food: " + mc.thePlayer.getFoodStats().getFoodLevel(), 4, height - 5, Integer.parseInt("FFAA00", 16));	
+			
 			GL11.glPopMatrix();
 		}
 	}
@@ -55,14 +56,14 @@ public class GUIToolDurability extends Gui {
 		float timeChangeHour = timeHour - (((int) timeDay)*(24000/1000));
 		float timeChangeMin = timeMin - (((int) timeHour)*(1000/16.6f));// - (((int) timeDay)*(24000/1000));
 		int timeHourCorrect = 0;
-		if(timeChangeHour > 12){
+		if(timeChangeHour >= 13){
 			timeHourCorrect = (((int) timeChangeHour) - 12);
 		}
-		System.out.println(((int) timeChangeMin));
+		//System.out.println(((int) timeChangeHour) + " " + ((int) timeHourCorrect));
 		if(timeChangeHour > 13){
-			return "Time: " + timeHourCorrect + ":" + String.format("%02d", ((int) timeChangeMin)) + " PM";
+			return "Time: " + (int)timeHourCorrect + ":" + String.format("%02d", ((int) timeChangeMin)) + " PM";
 		} else {
-			return "Time: " + timeHourCorrect + ":" + String.format("%02d", ((int) timeChangeMin)) + " AM";
+			return "Time: " + (int)timeChangeHour + ":" + String.format("%02d", ((int) timeChangeMin)) + " AM";
 		}
 	}
 

@@ -15,10 +15,7 @@ public class GUILookAt extends Gui {
 			ScaledResolution scaled = new ScaledResolution(mc);
 			int width = scaled.getScaledWidth();
 			int height = scaled.getScaledHeight();
-			drawString(mc.fontRendererObj, ItemLookingTextName, width / 2, 20, Integer.parseInt("FFAA00", 16));
-			// drawCenteredString(mc.fontRendererObj, ItemInHandText, width / 2,
-			// (height / 2) - 4, Integer.parseInt("FFAA00", 16));
-
+			drawString(mc.fontRendererObj, ItemLookingTextName, (width / 2) - (mc.fontRendererObj.getStringWidth(ItemLookingTextName)/2), 20, Integer.parseInt("FFAA00", 16));
 		}
 	}
 

@@ -2,6 +2,7 @@ package com.sangam1.InventoryRepair;
 
 import java.io.File;
 
+import com.sangam1.InventoryRepair.Events.ArmorDurabilityTickEvent;
 import com.sangam1.InventoryRepair.Events.LookTickEvent;
 import com.sangam1.InventoryRepair.Events.OnTickEvent;
 import com.sangam1.InventoryRepair.Events.ServerTickEvent;
@@ -39,6 +40,7 @@ public class Main {
 		ConfigHandler.init(new File(StartupRef.configDir.getPath(), StartupRef.MODID + ".cfg"));
 		ModItems.init();
 		MinecraftForge.EVENT_BUS.register(new OnTickEvent());
+		MinecraftForge.EVENT_BUS.register(new ArmorDurabilityTickEvent());
 		MinecraftForge.EVENT_BUS.register(new LookTickEvent());
 		MinecraftForge.EVENT_BUS.register(new RenderGUIHandler());
 		MinecraftForge.EVENT_BUS.register(new ServerTickEventOnly());

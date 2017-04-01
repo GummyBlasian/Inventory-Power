@@ -24,6 +24,7 @@ public class RenderGUIHandler {
 			return;
 		new GUIToolDurability(Minecraft.getMinecraft());
 		new GUILookAt(Minecraft.getMinecraft());
+		new GUIArmorDurability(Minecraft.getMinecraft());
 	}
 
 	public Object getServerGuiElement(int iD, EntityPlayer player, World world, int x, int y, int z) {

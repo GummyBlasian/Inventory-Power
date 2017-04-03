@@ -51,7 +51,6 @@ public class Main {
 		DifferentBlocks.init();
 		RecipeRegister.Register();
 		System.out.println("InventoryRepair: Pre-Init Complete");
-		
 	}
 
 	@EventHandler

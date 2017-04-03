@@ -1,4 +1,4 @@
-package com.sangam1.InventoryRepair.Events;
+package com.sangam1.InventoryRepair.Events.Server;
 
 import com.sangam1.InventoryRepair.ConfigHandler;
 

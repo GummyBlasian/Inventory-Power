@@ -1,4 +1,4 @@
-package com.sangam1.InventoryRepair.Events;
+package com.sangam1.InventoryRepair.Events.Client;
 
 import com.sangam1.InventoryRepair.GUI.GUIArmorDurability;
 import com.sangam1.InventoryRepair.GUI.GUIToolDurability;

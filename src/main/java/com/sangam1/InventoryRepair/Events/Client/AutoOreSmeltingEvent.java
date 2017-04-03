@@ -1,4 +1,4 @@
-package com.sangam1.InventoryRepair.Events;
+package com.sangam1.InventoryRepair.Events.Client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;

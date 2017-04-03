@@ -2,11 +2,12 @@ package com.sangam1.InventoryRepair;
 
 import java.io.File;
 
-import com.sangam1.InventoryRepair.Events.ArmorDurabilityTickEvent;
-import com.sangam1.InventoryRepair.Events.LookTickEvent;
-import com.sangam1.InventoryRepair.Events.OnTickEvent;
-import com.sangam1.InventoryRepair.Events.ServerTickEvent;
-import com.sangam1.InventoryRepair.Events.ServerTickEventOnly;
+import com.sangam1.InventoryRepair.Events.Client.LookTickEvent;
+import com.sangam1.InventoryRepair.Events.Client.OnTickEvent;
+import com.sangam1.InventoryRepair.Events.Client.RenderModeButtonsTickEvent;
+import com.sangam1.InventoryRepair.Events.Server.ServerGamemodeTickEvent;
+import com.sangam1.InventoryRepair.Events.Server.ServerTickEvent;
+import com.sangam1.InventoryRepair.Events.Server.ServerTickEventOnly;
 import com.sangam1.InventoryRepair.GUI.RenderGUIHandler;
 import com.sangam1.InventoryRepair.References.CreativeTabsList;
 import com.sangam1.InventoryRepair.References.DifferentBlocks;
@@ -40,11 +41,13 @@ public class Main {
 		ConfigHandler.init(new File(StartupRef.configDir.getPath(), StartupRef.MODID + ".cfg"));
 		ModItems.init();
 		MinecraftForge.EVENT_BUS.register(new OnTickEvent());
-		MinecraftForge.EVENT_BUS.register(new ArmorDurabilityTickEvent());
+		//MinecraftForge.EVENT_BUS.register(new ArmorDurabilityTickEvent());
 		MinecraftForge.EVENT_BUS.register(new LookTickEvent());
+		//MinecraftForge.EVENT_BUS.register(new RenderModeButtonsTickEvent());
 		MinecraftForge.EVENT_BUS.register(new RenderGUIHandler());
 		MinecraftForge.EVENT_BUS.register(new ServerTickEventOnly());
 		MinecraftForge.EVENT_BUS.register(new ServerTickEvent());
+		//MinecraftForge.EVENT_BUS.register(new ServerGamemodeTickEvent());
 		DifferentBlocks.init();
 		RecipeRegister.Register();
 		System.out.println("InventoryRepair: Pre-Init Complete");

@@ -31,6 +31,9 @@ public class RenderGUIHandler {
 		if (iD == 20) {
 			return new GuiCrafting(player.inventory, world);
 		}
+		if (iD == 21) {
+			return new PlayerInventoryGUISurvival(player);
+		}
 		return null;
 	}
 

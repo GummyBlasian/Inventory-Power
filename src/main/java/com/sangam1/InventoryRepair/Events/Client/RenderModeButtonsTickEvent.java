@@ -1,13 +1,9 @@
 package com.sangam1.InventoryRepair.Events.Client;
 
-import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-
 import java.lang.reflect.Field;
-import java.util.EnumSet;
 import java.util.List;
 
+import com.sangam1.InventoryRepair.Main;
 import com.sangam1.InventoryRepair.Events.Server.ServerGamemodeTickEvent;
 import com.sangam1.InventoryRepair.GUI.ButtonGUICustom;
 
@@ -17,9 +13,21 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.world.GameType;
+import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 
 public class RenderModeButtonsTickEvent {
+	
+	@SubscribeEvent
+	public void guiOpenEvent(GuiOpenEvent event){
+		System.out.println(event.getGui());
+		if(event.getGui() instanceof GuiInventory){
+			event.setCanceled(true);
+			Minecraft.getMinecraft().thePlayer.openGui(Main.instance, 21, Minecraft.getMinecraft().theWorld, (int) Minecraft.getMinecraft().thePlayer.posX, (int) Minecraft.getMinecraft().thePlayer.posY, (int) Minecraft.getMinecraft().thePlayer.posZ);
+		}
+	}
 	
 	@SubscribeEvent
 	public void onRenderTick(TickEvent.RenderTickEvent event) {

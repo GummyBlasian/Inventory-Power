@@ -43,7 +43,7 @@ public class Main {
 		MinecraftForge.EVENT_BUS.register(new OnTickEvent());
 		//MinecraftForge.EVENT_BUS.register(new ArmorDurabilityTickEvent());
 		MinecraftForge.EVENT_BUS.register(new LookTickEvent());
-		//MinecraftForge.EVENT_BUS.register(new RenderModeButtonsTickEvent());
+		MinecraftForge.EVENT_BUS.register(new RenderModeButtonsTickEvent());
 		MinecraftForge.EVENT_BUS.register(new RenderGUIHandler());
 		MinecraftForge.EVENT_BUS.register(new ServerTickEventOnly());
 		MinecraftForge.EVENT_BUS.register(new ServerTickEvent());

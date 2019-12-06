@@ -24,7 +24,6 @@ import net.minecraftforge.fml.client.config.GuiUtils;
 public class GUI_LookingAt{
 
     private final Minecraft mc = Minecraft.getInstance();
-    private final World world = mc.world;
 
 	private static final Random random = new Random();
 	
@@ -36,7 +35,8 @@ public class GUI_LookingAt{
     	Minecraft.getInstance().gameSettings.heldItemTooltips = false;
     }
 
-    @SubscribeEvent
+    @SuppressWarnings("unused")
+	@SubscribeEvent
     public void onRenderTick(RenderGameOverlayEvent.Post event) {
     	
         FontRenderer textRenderer = mc.fontRenderer;
@@ -121,7 +121,6 @@ public class GUI_LookingAt{
 	         
 	         mc.getItemRenderer().renderItemAndEffectIntoGUI(Main.Clock, 10, guiPosY-4);
 	         
-	         //textRenderer.drawStringWithShadow(day, 30, guiPosY-4, TextFormatting.GOLD.getColor());
 	         textRenderer.drawStringWithShadow(time, 30, guiPosY, TextFormatting.GOLD.getColor());
 
 	         textRenderer.drawStringWithShadow(looking_at, guiPosX/2 - txt1width/2, 2, TextFormatting.GOLD.getColor());

@@ -1,4 +1,3 @@
-# Items
-item.sangamir.gocraft.name=Portable Crafting Table
-
-itemGroup.sangamir=InventoryRepair
+{
+	"world.worldnamerandomizer.name" : "World #"
+}

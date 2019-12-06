@@ -1,15 +1,9 @@
 package com.sangam1.InventoryRepair.References;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.sangam1.InventoryRepair.API.ListOfSpecialBlocks;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import scala.Array;
+import net.minecraft.block.Blocks;
 
 public class DifferentBlocks {
 
@@ -23,7 +17,6 @@ public class DifferentBlocks {
 
 	public static void addDoorName() {
 		ListOfSpecialBlocks.addToList(Blocks.IRON_TRAPDOOR, "Iron Trapdoor");
-		ListOfSpecialBlocks.addToList(Blocks.TRAPDOOR, "Trapdoor");
 		ListOfSpecialBlocks.addToList(Blocks.ACACIA_DOOR, "Acacia Door");
 		ListOfSpecialBlocks.addToList(Blocks.BIRCH_DOOR, "Birch Door");
 		ListOfSpecialBlocks.addToList(Blocks.DARK_OAK_DOOR, "Dark Oak Door");
@@ -38,7 +31,7 @@ public class DifferentBlocks {
 		ListOfSpecialBlocks.addToList(Blocks.CARROTS, "Carrots");
 		ListOfSpecialBlocks.addToList(Blocks.BEETROOTS, "Beetroots");
 		ListOfSpecialBlocks.addToList(Blocks.COCOA, "Cocoa");
-		ListOfSpecialBlocks.addToList(Blocks.MELON_BLOCK, "Melon");
+		ListOfSpecialBlocks.addToList(Blocks.MELON, "Melon");
 		ListOfSpecialBlocks.addToList(Blocks.MELON_STEM, "Melon Stem");
 		ListOfSpecialBlocks.addToList(Blocks.PUMPKIN, "Pumpkin");
 		ListOfSpecialBlocks.addToList(Blocks.PUMPKIN_STEM, "Pumpkin Stem");
@@ -47,12 +40,12 @@ public class DifferentBlocks {
 	}
 
 	public static void addBlockWater() {
-		ListOfSpecialBlocks.addToList(Blocks.FLOWING_WATER, "Flowing Water");
+		ListOfSpecialBlocks.addToList(Block.getStateById(8), "Flowing Water");
 		ListOfSpecialBlocks.addToList(Blocks.WATER, "Water");
 	}
 
 	public static void addBlockLava() {
-		ListOfSpecialBlocks.addToList(Blocks.FLOWING_LAVA, "Flowing Lava");
+		ListOfSpecialBlocks.addToList(Block.getStateById(10), "Flowing Lava");
 		ListOfSpecialBlocks.addToList(Blocks.LAVA, "Lava");
 	}
 

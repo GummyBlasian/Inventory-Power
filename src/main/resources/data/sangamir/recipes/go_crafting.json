@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shaped",
+	
+	"pattern":
+	[
+		"I I",
+		"IAI",
+		"I I"
+	],
+	
+	"key":
+	{
+		"I": { "item": "minecraft:plank" },
+		"A": { "item": "minecraft:crafting_table" }
+	},
+	
+	"result": { "item": "sangamir:gocraft" }
+}

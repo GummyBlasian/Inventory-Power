@@ -56,7 +56,7 @@ public class GUI_LookingAt{
 			String made_by = Looking_At.get_made_by();
 			long game_time = 0;
 			if(mc.world != null)
-				game_time = mc.world.getGameTime();
+				game_time = mc.world.getDayTime();
 			
 			long sec_tick = Math.round(game_time/20);
 			long min_tick = sec_tick/60;
@@ -122,7 +122,7 @@ public class GUI_LookingAt{
 	         mc.getItemRenderer().renderItemAndEffectIntoGUI(Main.Clock, 10, guiPosY-4);
 	         
 	         //textRenderer.drawStringWithShadow(day, 30, guiPosY-4, TextFormatting.GOLD.getColor());
-	         textRenderer.drawStringWithShadow(time, 30, guiPosY-2, TextFormatting.GOLD.getColor());
+	         textRenderer.drawStringWithShadow(time, 30, guiPosY, TextFormatting.GOLD.getColor());
 
 	         textRenderer.drawStringWithShadow(looking_at, guiPosX/2 - txt1width/2, 2, TextFormatting.GOLD.getColor());
 	         textRenderer.drawStringWithShadow(made_by, guiPosX/2 - txt2width/2, 12, TextFormatting.GOLD.getColor());

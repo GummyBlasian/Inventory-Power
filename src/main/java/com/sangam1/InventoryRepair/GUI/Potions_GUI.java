@@ -53,13 +53,17 @@ public class Potions_GUI {
 		         GlStateManager.pushMatrix();
 		         
 		         GlStateManager.scalef(scale, scale, scale);
-		         /*
-		         for(int i = 0; i < potions.size(); i++) {		        	
-		        	String potion_info = potions.get(i).getEffectName() + " " + potions.get(i).getDuration();
-		        	int a = mc.fontRenderer.getStringWidth(potion_info);
-		        	textRenderer.drawStringWithShadow(potion_info, a, 4 + (i*10), TextFormatting.GOLD.getColor());
+		         
+		         for(int i = 0; i < potions.size(); i++) {		  
+		        	EffectInstance effect = potions.get(i);
+		        	String name = effect.getPotion().getDisplayName().getString();
+		        	int tick_sec = Math.round(potions.get(i).getDuration()/20);
+		        	int min = Math.round(tick_sec/60);
+		        	int sec = Math.round(tick_sec - (min*60));
+		        	String duration = name + " : " + min + ":" + sec;
+		        	textRenderer.drawStringWithShadow(duration, 3, 4 + (i*10), TextFormatting.GOLD.getColor());
 		         }
-		         */
+		         
 		         GlStateManager.popMatrix();
     }
 }

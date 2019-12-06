@@ -54,9 +54,23 @@ public class GUI_LookingAt{
 			
 			String looking_at = Looking_At.get_looking_at();
 			String made_by = Looking_At.get_made_by();
-			String day_time = " ";
-			if(world != null)
-				day_time = world.getDayTime() + " : " + world.getGameTime();
+			long game_time = 0;
+			if(mc.world != null)
+				game_time = mc.world.getGameTime();
+			
+			long sec_tick = Math.round(game_time/20);
+			long min_tick = sec_tick/60;
+			long hour_tick = min_tick/60;
+			long day_tick = hour_tick/24;
+			
+			long hours = hour_tick - (day_tick*24);
+			long mins = min_tick - (hour_tick*60);
+			long secs = sec_tick - (min_tick*60);
+			
+			String day = day_tick + "";
+			String time = hours + ":" + mins + ":" + secs;
+			
+			String day_time = day + " " +time;
 			
 		    if (Minecraft.getInstance().world.dimension.getType().getId() == 1) {
 		    	String alt_text = "";
@@ -107,7 +121,8 @@ public class GUI_LookingAt{
 	         
 	         mc.getItemRenderer().renderItemAndEffectIntoGUI(Main.Clock, 10, guiPosY-4);
 	         
-	         textRenderer.drawStringWithShadow(day_time, 30, guiPosY-4, TextFormatting.GOLD.getColor());
+	         //textRenderer.drawStringWithShadow(day, 30, guiPosY-4, TextFormatting.GOLD.getColor());
+	         textRenderer.drawStringWithShadow(time, 30, guiPosY-2, TextFormatting.GOLD.getColor());
 
 	         textRenderer.drawStringWithShadow(looking_at, guiPosX/2 - txt1width/2, 2, TextFormatting.GOLD.getColor());
 	         textRenderer.drawStringWithShadow(made_by, guiPosX/2 - txt2width/2, 12, TextFormatting.GOLD.getColor());

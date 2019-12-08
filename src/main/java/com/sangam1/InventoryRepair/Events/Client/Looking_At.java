@@ -33,6 +33,7 @@ public class Looking_At {
 	private static ItemStack targetStack;
 	private static String looking_at;
 	private static String made_by;
+	private static boolean can_mine;
 
 	public static String get_looking_at() {
 		
@@ -40,6 +41,7 @@ public class Looking_At {
 		
 		looking_at = " ";
 		made_by = " ";
+		can_mine = false;
 		
 		if (target != null && target.getType() == RayTraceResult.Type.BLOCK) {
 			BlockPos abc = new BlockPos(target.getHitVec());
@@ -69,6 +71,9 @@ public class Looking_At {
 				looking_at = " " + ListOfSpecialBlocks.getFromList(mcBlock);
 				made_by = " " + mcBlock.getRegistryName().getNamespace();
 			} else {
+				if (Armor_Durability.getHand_Icon().canHarvestBlock(world.getBlockState(abc))) {
+					can_mine = true;
+				}
 				Item abcd = Item.BLOCK_TO_ITEM.get(world.getBlockState(abc).getBlock());
 				ItemStack bcd = new ItemStack(abcd);
 				if (abcd != null && !ItemStack.areItemStacksEqual(bcd, new ItemStack(Item.BLOCK_TO_ITEM.get(Blocks.AIR)))) {
@@ -91,8 +96,8 @@ public class Looking_At {
 		}
 		return looking_at;
 	}
-	
-    public static Entity getIdentifierEntity() {
+
+	public static Entity getIdentifierEntity() {
         if (target == null || target.getType() != RayTraceResult.Type.ENTITY)
             return null;
 
@@ -152,5 +157,9 @@ public class Looking_At {
 
 	public static String get_made_by() {
 		return made_by;
+	}
+	
+	public static boolean can_mine() {
+		return can_mine;
 	}
 }

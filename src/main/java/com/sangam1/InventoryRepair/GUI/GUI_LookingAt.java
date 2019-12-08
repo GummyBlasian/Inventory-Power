@@ -13,7 +13,6 @@ import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -119,9 +118,9 @@ public class GUI_LookingAt{
 	         
 	         GlStateManager.scalef(scale, scale, scale);
 	         
-	         mc.getItemRenderer().renderItemAndEffectIntoGUI(Main.Clock, 10, guiPosY-4);
+	         mc.getItemRenderer().renderItemAndEffectIntoGUI(Main.Clock, 5, guiPosY-4);
 	         
-	         textRenderer.drawStringWithShadow(time, 30, guiPosY, TextFormatting.GOLD.getColor());
+	         textRenderer.drawStringWithShadow(time, 25, guiPosY, TextFormatting.GOLD.getColor());
 
 	         textRenderer.drawStringWithShadow(looking_at, guiPosX/2 - txt1width/2, 2, TextFormatting.GOLD.getColor());
 	         textRenderer.drawStringWithShadow(made_by, guiPosX/2 - txt2width/2, 12, TextFormatting.GOLD.getColor());

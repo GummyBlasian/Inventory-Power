@@ -3,6 +3,7 @@ package com.sangam1.InventoryRepair.GUI;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.sangam1.InventoryRepair.Config.ConfigHandler;
 import com.sangam1.InventoryRepair.Events.Client.Armor_Durability;
+import com.sangam1.InventoryRepair.Events.Client.Looking_At;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -86,6 +87,8 @@ public class Armor_GUI_Event {
 		    	mc.getItemRenderer().renderItemAndEffectIntoGUI(Armor_Durability.getHand_Icon(), guiPosX - txtwidth_armor_head - 20, guiPosY-20);
 	        textRenderer.drawStringWithShadow(armor_head, guiPosX - txtwidth_armor_head, guiPosY - 15, TextFormatting.GOLD.getColor());
 	        textRenderer.drawStringWithShadow(armor_head_durability, guiPosX - txtwidth_armor_head_durability, guiPosY - 5, TextFormatting.GOLD.getColor()); 
+	        if (Looking_At.can_mine())
+		        textRenderer.drawStringWithShadow("can mine", guiPosX - txtwidth_armor_head_durability, guiPosY , TextFormatting.GOLD.getColor()); 
 	    }
 	    
 	    private void headGUI(FontRenderer textRenderer) {

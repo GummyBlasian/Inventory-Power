@@ -71,8 +71,10 @@ public class Looking_At {
 				looking_at = " " + ListOfSpecialBlocks.getFromList(mcBlock);
 				made_by = " " + mcBlock.getRegistryName().getNamespace();
 			} else {
-				if (Armor_Durability.getHand_Icon().canHarvestBlock(world.getBlockState(abc))) {
-					can_mine = true;
+				if (Armor_Durability.getHand_Icon().getToolTypes().contains(world.getBlockState(abc).getHarvestTool())) {
+					if(Armor_Durability.getHand_Icon().canHarvestBlock(world.getBlockState(abc))) {
+						can_mine = true;
+					}
 				}
 				Item abcd = Item.BLOCK_TO_ITEM.get(world.getBlockState(abc).getBlock());
 				ItemStack bcd = new ItemStack(abcd);

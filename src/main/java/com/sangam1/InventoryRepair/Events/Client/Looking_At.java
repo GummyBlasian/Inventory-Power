@@ -3,7 +3,7 @@ package com.sangam1.InventoryRepair.Events.Client;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import com.sangam1.InventoryRepair.Main;
+import com.sangam1.InventoryRepair.API.Harvest_Level_API;
 import com.sangam1.InventoryRepair.API.ListOfSpecialBlocks;
 
 import net.minecraft.block.Block;
@@ -24,7 +24,6 @@ import net.minecraft.world.World;
 public class Looking_At {
 	
 	private static final Minecraft mc = Minecraft.getInstance();
-	@SuppressWarnings("unused")
 	private static final PlayerEntity p = mc.player;
 	private static final World world = mc.world;
 
@@ -34,6 +33,7 @@ public class Looking_At {
 	private static String looking_at;
 	private static String made_by;
 	private static boolean can_mine;
+	private static String harvest_level;
 
 	public static String get_looking_at() {
 		
@@ -42,18 +42,17 @@ public class Looking_At {
 		looking_at = " ";
 		made_by = " ";
 		can_mine = false;
+		harvest_level = " ";
 		
 		if (target != null && target.getType() == RayTraceResult.Type.BLOCK) {
 			BlockPos abc = new BlockPos(target.getHitVec());
 			BlockPos abc1 = new BlockPos(abc.getX(), abc.getY() - 1, abc.getZ());
 			BlockState mcBlockState = world.getBlockState(abc);
 			Block mcBlock = world.getBlockState(abc).getBlock();
-			//Main.LOGGER.info("in get_looking_at " + mcBlock.getRegistryName().toString());
 			if(mcBlock == Blocks.AIR) {
 				made_by = " ";
 				return looking_at = " ";
 			}
-			Main.LOGGER.info(mcBlock.toString());
 			if (mcBlock.toString().contains("double_plant")) {
 				if (mcBlockState.toString().contains("half=upper")) {
 					BlockState ad = world.getBlockState(abc1);
@@ -71,11 +70,14 @@ public class Looking_At {
 				looking_at = " " + ListOfSpecialBlocks.getFromList(mcBlock);
 				made_by = " " + mcBlock.getRegistryName().getNamespace();
 			} else {
-				if (Armor_Durability.getHand_Icon().getToolTypes().contains(world.getBlockState(abc).getHarvestTool())) {
-					if(Armor_Durability.getHand_Icon().canHarvestBlock(world.getBlockState(abc))) {
-						can_mine = true;
+				if (Armor_Durability.getHand_Icon() != null) {
+					if (Armor_Durability.getHand_Icon().getToolTypes().contains(world.getBlockState(abc).getHarvestTool())) {
+						if(Armor_Durability.getHand_Icon().canHarvestBlock(world.getBlockState(abc))) {
+							can_mine = true;
+						}
 					}
 				}
+				getHarvest_level(abc);
 				Item abcd = Item.BLOCK_TO_ITEM.get(world.getBlockState(abc).getBlock());
 				ItemStack bcd = new ItemStack(abcd);
 				if (abcd != null && !ItemStack.areItemStacksEqual(bcd, new ItemStack(Item.BLOCK_TO_ITEM.get(Blocks.AIR)))) {
@@ -97,6 +99,10 @@ public class Looking_At {
 			looking_at = " ";
 		}
 		return looking_at;
+	}
+
+	private static void getHarvest_level(BlockPos abc) {
+		harvest_level = Harvest_Level_API.get_level(world.getBlockState(abc).getHarvestLevel());
 	}
 
 	public static Entity getIdentifierEntity() {
@@ -163,5 +169,9 @@ public class Looking_At {
 	
 	public static boolean can_mine() {
 		return can_mine;
+	}
+	
+	public static String get_harvest_level() {
+		return harvest_level;
 	}
 }

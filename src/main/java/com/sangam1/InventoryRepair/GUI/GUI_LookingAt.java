@@ -53,6 +53,8 @@ public class GUI_LookingAt{
 			
 			String looking_at = Looking_At.get_looking_at();
 			String made_by = Looking_At.get_made_by();
+			String harvest_level = Looking_At.get_harvest_level();
+			
 			long game_time = 0;
 			if(mc.world != null)
 				game_time = mc.world.getDayTime();
@@ -82,35 +84,36 @@ public class GUI_LookingAt{
 	        
 	        int txt1width = mc.fontRenderer.getStringWidth(looking_at);
 	        int txt2width = mc.fontRenderer.getStringWidth(made_by);
+	        int txt3width = mc.fontRenderer.getStringWidth(harvest_level);	        
 	        	        
 	        float scale = (float) ConfigHandler.LOOK_HUD_SCALE.getValue();
 	        
-	         if (ConfigHandler.LOOK_HUD_BACKGROUND_ENABLED.getValue()) {
+	        if (ConfigHandler.LOOK_HUD_BACKGROUND_ENABLED.getValue()) {
 	         
-	         GlStateManager.pushMatrix();
+	        	 GlStateManager.pushMatrix();
 
-	         GlStateManager.disableLighting();
-	         GlStateManager.enableAlphaTest();
+	        	 GlStateManager.disableLighting();
+	        	 GlStateManager.enableAlphaTest();
 	         
-	         GlStateManager.alphaFunc(516, 0.1F);
-	         GlStateManager.enableBlend();
-	         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+	        	 GlStateManager.alphaFunc(516, 0.1F);
+	        	 GlStateManager.enableBlend();
+	        	 GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 	         
-	         GlStateManager.pushMatrix();
+	        	 GlStateManager.pushMatrix();
 	        
-	         GlStateManager.scalef(scale, scale, scale);
+	        	 GlStateManager.scalef(scale, scale, scale);
 	        
-	         mc.getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/gui/clock_hud_rect.png"));
-	         GlStateManager.color3f(1.0F, 1.0F, 1.0F);
-          	 GuiUtils.drawTexturedModalRect(0, guiPosY-10, 0, 0, 66, 28, 0F); 
+	        	 mc.getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/gui/clock_hud_rect.png"));
+	        	 GlStateManager.color3f(1.0F, 1.0F, 1.0F);
+	        	 GuiUtils.drawTexturedModalRect(0, guiPosY-10, 0, 0, 66, 28, 0F); 
          
          
-          	 GlStateManager.popMatrix();
+	        	 GlStateManager.popMatrix();
 	        
-          	 GlStateManager.disableAlphaTest();
-          	 RenderHelper.enableGUIStandardItemLighting();
+	        	 GlStateManager.disableAlphaTest();
+	        	 RenderHelper.enableGUIStandardItemLighting();
 	         
-	         GlStateManager.popMatrix();
+	        	 GlStateManager.popMatrix();
 	         
 	         }
 	         
@@ -124,6 +127,12 @@ public class GUI_LookingAt{
 
 	         textRenderer.drawStringWithShadow(looking_at, guiPosX/2 - txt1width/2, 2, TextFormatting.GOLD.getColor());
 	         textRenderer.drawStringWithShadow(made_by, guiPosX/2 - txt2width/2, 12, TextFormatting.GOLD.getColor());
+
+	         GlStateManager.pushMatrix();
+          	 
+	         GlStateManager.scalef(0.8f, 0.8f, 0.8f);
+	         
+	         textRenderer.drawStringWithShadow(harvest_level, guiPosX - txt3width/2, 10, TextFormatting.GOLD.getColor());
 	         
 	         GlStateManager.popMatrix();
 		 

@@ -6,8 +6,6 @@ import java.util.Set;
 
 import org.apache.logging.log4j.Logger;
 
-import com.sangam1.InventoryRepair.References.ItemList;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -72,6 +70,7 @@ public class Registry {
     	return new ResourceLocation(MODID, name);
     }
 	
+	@SuppressWarnings("unused")
 	private static ResourceLocation locationItems (String name) {
     	return new ResourceLocation(MODID +":items/" + name);
     }

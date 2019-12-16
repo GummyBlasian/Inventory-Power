@@ -105,7 +105,7 @@ public class GUI_LookingAt{
 	        
 	        	 mc.getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/gui/clock_hud_rect.png"));
 	        	 GlStateManager.color3f(1.0F, 1.0F, 1.0F);
-	        	 GuiUtils.drawTexturedModalRect(0, guiPosY-10, 0, 0, 66, 28, 0F); 
+	        	 GuiUtils.drawTexturedModalRect(0, guiPosY-10, 0, 0, 78, 28, 0F); 
          
          
 	        	 GlStateManager.popMatrix();

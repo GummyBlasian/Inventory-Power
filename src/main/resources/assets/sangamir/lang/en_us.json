@@ -1,3 +1,5 @@
 {
-	"item.sangamir.gocraft" : "Portable Crafting Table"
+	"item.sangamir.gocraft" : "Portable Crafting Table",
+	
+	"itemGroup.sangamir": "Inventory Power"
 }

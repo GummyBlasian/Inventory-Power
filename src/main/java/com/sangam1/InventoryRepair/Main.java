@@ -9,11 +9,15 @@ import com.sangam1.InventoryRepair.GUI.GUI_LookingAt;
 import com.sangam1.InventoryRepair.GUI.Potions_GUI;
 import com.sangam1.InventoryRepair.References.DifferentBlocks;
 import com.sangam1.InventoryRepair.References.ItemGroup_IRGroup;
+import com.sangam1.InventoryRepair.proxy.ClientProxy;
+import com.sangam1.InventoryRepair.proxy.IProxy;
+import com.sangam1.InventoryRepair.proxy.ServerProxy;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -31,6 +35,8 @@ public class Main {
     
     public static ItemStack Clock;
 	public static GUI_LookingAt handler;
+
+    public static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
     
     public Main() {
     	instance = this;
@@ -47,7 +53,8 @@ public class Main {
     
     private void setup(final FMLCommonSetupEvent event)
     {
-
+        proxy.init();
+        LOGGER.info("setup complete!");
     }
 
     private void onLoadComplete(final FMLClientSetupEvent event) 

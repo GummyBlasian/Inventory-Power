@@ -7,12 +7,15 @@ import com.sangam1.InventoryRepair.Config.ConfigHandler;
 import com.sangam1.InventoryRepair.GUI.Armor_GUI_Event;
 import com.sangam1.InventoryRepair.GUI.GUI_LookingAt;
 import com.sangam1.InventoryRepair.GUI.Potions_GUI;
+import com.sangam1.InventoryRepair.References.ContainerList;
 import com.sangam1.InventoryRepair.References.DifferentBlocks;
 import com.sangam1.InventoryRepair.References.ItemGroup_IRGroup;
+import com.sangam1.InventoryRepair.Screen.PCT_Screen;
 import com.sangam1.InventoryRepair.proxy.ClientProxy;
 import com.sangam1.InventoryRepair.proxy.IProxy;
 import com.sangam1.InventoryRepair.proxy.ServerProxy;
 
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -44,11 +47,16 @@ public class Main {
 		handler = new GUI_LookingAt();
 		
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientInit);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onLoadComplete);
 
         MinecraftForge.EVENT_BUS.register(this);
 
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT);
+    }
+    
+    private void clientInit(final FMLClientSetupEvent event) {
+        ScreenManager.registerFactory(ContainerList.PCT_CONTAINER, PCT_Screen::new);
     }
     
     private void setup(final FMLCommonSetupEvent event)

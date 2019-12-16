@@ -61,7 +61,7 @@ public class Potions_GUI {
 		        	int tick_sec = Math.round(potions.get(i).getDuration()/20);
 		        	int min = Math.round(tick_sec/60);
 		        	int sec = Math.round(tick_sec - (min*60));
-		        	String duration = name + " : " + min + ":" + sec;
+		        	String duration = name + " : " + String.format("%02d\n", min) + ":" + String.format("%02d\n", sec);
 		        	textRenderer.drawStringWithShadow(duration, 3, 4 + (i*10), TextFormatting.GOLD.getColor());
 		         }
 		         

@@ -68,8 +68,8 @@ public class GUI_LookingAt{
 			long mins = min_tick - (hour_tick*60);
 			long secs = sec_tick - (min_tick*60);
 			
-			String day = String.format("%02d\n", day_tick);
-			String time = String.format("%02d\n", hours) + ":" + String.format("%02d\n", mins) + ":" + String.format("%02d\n", secs);
+			String day = String.format("%02d", day_tick);
+			String time = String.format("%02d", hours) + ":" + String.format("%02d", mins) + ":" + String.format("%02d", secs);
 			
 			String day_time = day + " " +time;
 			

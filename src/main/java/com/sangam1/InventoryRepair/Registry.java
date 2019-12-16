@@ -1,9 +1,5 @@
 package com.sangam1.InventoryRepair;
 
-import java.util.HashSet;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import org.apache.logging.log4j.Logger;
 
 import com.sangam1.InventoryRepair.GUI.Container.PCT_Container;
@@ -28,8 +24,6 @@ public class Registry {
 	public static final ItemGroup IRGroup = Main.IRGroup;
 	public static final Logger LOGGER = Main.LOGGER;
 	public static final String MODID = Main.MODID;
-	public static Set<Entry<ResourceLocation,Item>> ItemsList = new HashSet<Entry<ResourceLocation,Item>>();
-	public static Set<Entry<ResourceLocation,Block>> BlocksList = new HashSet<Entry<ResourceLocation,Block>>();
 	
 	/* New Items require:
 	 * a model
@@ -45,12 +39,6 @@ public class Registry {
     	);
 		
     	LOGGER.info("Items registered!");
-    	
-		ItemsList = event.getRegistry().getEntries();
-
-		//LOGGER.info("MudBall ITEM: " + ItemList.gocraft.getRegistryName());
-		//LOGGER.info("WetSand ITEM: " + ItemList.item_block_wetsand.getRegistryName());
-
 	}
 	
 	/* New Blocks require:
@@ -66,17 +54,14 @@ public class Registry {
     	
     	);
     	
-		//LOGGER.info("WetSand BLOCK: " + BlockList.block_wetsand.getRegistryName());
     	LOGGER.info("Blocks registered!");
-    	
-		BlocksList = event.getRegistry().getEntries();
 	}
 	
 	@SubscribeEvent
 	public static void registerContainer(final RegistryEvent.Register<ContainerType<?>> event) {
 		event.getRegistry().registerAll(
 
-				IForgeContainerType.create((windowId, playerInventory, data) -> new PCT_Container(windowId, playerInventory, data)).setRegistryName(locationGUI("portable_crafting_table"))
+				IForgeContainerType.create((windowId, playerInventory, data) -> new PCT_Container(windowId, playerInventory, data)).setRegistryName(locationGUI("gocraft"))
 		
 		);
 	}

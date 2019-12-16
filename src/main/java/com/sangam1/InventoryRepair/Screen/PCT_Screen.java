@@ -15,7 +15,6 @@ public class PCT_Screen extends ContainerScreen<PCT_Container>{
 
 	public PCT_Screen(PCT_Container container, PlayerInventory inv, ITextComponent name) {
 		super(container, inv, name);
-		Main.LOGGER.info("Name " + name);
 	}
 	
 	@Override

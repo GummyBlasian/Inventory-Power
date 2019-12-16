@@ -37,8 +37,8 @@ public class Registry {
     		ItemList.gocraft = new item_portable_crafting(new Item.Properties().group(IRGroup).maxStackSize(1)).setRegistryName(locationItems("gocraft"))
    	
     	);
-		
-    	LOGGER.info("Items registered!");
+
+        Main.LOGGER.info(Main.MODID +" : " + "Items Registered!");
 	}
 	
 	/* New Blocks require:
@@ -53,8 +53,8 @@ public class Registry {
     	(
     	
     	);
-    	
-    	LOGGER.info("Blocks registered!");
+
+        Main.LOGGER.info(Main.MODID +" : " + "Blocks Registered!");
 	}
 	
 	@SubscribeEvent
@@ -64,6 +64,8 @@ public class Registry {
 				IForgeContainerType.create((windowId, playerInventory, data) -> new PCT_Container(windowId, playerInventory, data)).setRegistryName(locationGUI("gocraft"))
 		
 		);
+
+        Main.LOGGER.info(Main.MODID +" : " + "Containers Registered!");
 	}
 	
 	@SuppressWarnings("unused")

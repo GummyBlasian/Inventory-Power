@@ -1,16 +1,16 @@
 modLoader="javafml" #mandatory
 loaderVersion="[28,)" #mandatory (28 is current forge version)
 issueTrackerURL="https://github.com/GummyBlasian/Sangam1-Core/issues/" #optional
+logoFile="logo.png" #optional
 [[mods]] #mandatory
 modId="sangamir" #mandatory
 version="${file.jarVersion}" #mandatory
 displayName="Inventory Power" #mandatory
 displayURL="https://github.com/GummyBlasian/Sangam1-Core/" #optional
-logoFile="examplemod.png" #optional
 credits="Thanks to the Minecraft Forge Community for the help!" #optional
 authors="Sangam1" #optional
 description='''
-Core mod for Sangam1 Mods (S1M)
+Power to the inventory! (and hud)
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.examplemod]] #optional

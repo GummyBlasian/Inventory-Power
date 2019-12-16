@@ -49,12 +49,14 @@ public class Main {
         MinecraftForge.EVENT_BUS.register(this);
 
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT);
+
+        Main.LOGGER.info(Main.MODID +" : " + "setup done!");
     }
     
     private void setup(final FMLCommonSetupEvent event)
     {
         proxy.init();
-        LOGGER.info("setup complete!");
+        Main.LOGGER.info(Main.MODID +" : " + "setup done!");
     }
 
     private void onLoadComplete(final FMLClientSetupEvent event) 
@@ -71,6 +73,7 @@ public class Main {
     	
     	gui_registry();
 
+        Main.LOGGER.info(Main.MODID +" : " + "onLoadComplete done!");
     }
     
     private void gui_registry() {

@@ -56,7 +56,7 @@ public class Main {
     }
     
     private void clientInit(final FMLClientSetupEvent event) {
-        ScreenManager.registerFactory(ContainerList.PCT_CONTAINER, PCT_Screen::new);
+        //ScreenManager.registerFactory(ContainerList.PCT_CONTAINER, PCT_Screen::new);
     }
     
     private void setup(final FMLCommonSetupEvent event)

@@ -12,7 +12,7 @@ public class ClientProxy implements IProxy {
 
     @Override
     public void init() {
-       // ScreenManager.registerFactory(ContainerList.PCT_CONTAINER, PCT_Screen::new);
+       ScreenManager.registerFactory(ContainerList.PCT_CONTAINER, PCT_Screen::new);
     }
 
     @Override

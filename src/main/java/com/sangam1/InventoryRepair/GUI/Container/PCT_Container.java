@@ -1,25 +1,27 @@
 package com.sangam1.InventoryRepair.GUI.Container;
 
 import com.sangam1.InventoryRepair.References.ContainerList;
+import com.sangam1.InventoryRepair.References.ItemList;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.World;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class PCT_Container extends Container{
 
     @SuppressWarnings("unused")
 	private PlayerEntity playerEntity;
-    private IItemHandler playerInventory;
+    @SuppressWarnings("unused")
+	private IItemHandler playerInventory;
     @SuppressWarnings("unused")
 	private World world;
 
@@ -29,7 +31,7 @@ public class PCT_Container extends Container{
 		this.playerInventory = new InvWrapper(playerInv);
 		this.world = world;
 		
-		layoutPlayerInventorySlots(10, 70);
+		layoutPlayerInventorySlots(playerInv);
 		
 	}
 	
@@ -44,8 +46,8 @@ public class PCT_Container extends Container{
 
 	@Override
 	public boolean canInteractWith(PlayerEntity player) {
-		//return player.getHeldItemMainhand().getItem() == ItemList.gocraft;
-		return true;
+		return player.getHeldItemMainhand().getItem() == ItemList.gocraft;
+		//return true;
 	}
 	
 	@Override
@@ -53,54 +55,36 @@ public class PCT_Container extends Container{
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
         if (slot != null && slot.getHasStack()) {
-            ItemStack stack = slot.getStack();
-            itemstack = stack.copy();
-            if (index == 0) {
-                if (!this.mergeItemStack(stack, 1, 37, true)) {
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
+            int countSlots = 27;
+            if (index < countSlots) {
+                if (!mergeItemStack(itemstack1, countSlots + 1, this.inventorySlots.size() - 9, false) && !mergeItemStack(itemstack1, this.inventorySlots.size() - 9, this.inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-                slot.onSlotChange(stack, itemstack);
-            } else {
-                if (stack.getItem() == Items.DIAMOND) {
-                    if (!this.mergeItemStack(stack, 0, 1, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (index < 28) {
-                    if (!this.mergeItemStack(stack, 28, 37, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (index < 37 && !this.mergeItemStack(stack, 1, 28, false)) {
-                    return ItemStack.EMPTY;
-                }
+            } else if (!mergeItemStack(itemstack1, 0, countSlots, false)) {
+                return ItemStack.EMPTY;
             }
 
-            if (stack.isEmpty()) {
+            if (itemstack1.isEmpty()) {
                 slot.putStack(ItemStack.EMPTY);
             } else {
                 slot.onSlotChanged();
             }
-
-            if (stack.getCount() == itemstack.getCount()) {
-                return ItemStack.EMPTY;
-            }
-
-            slot.onTake(playerIn, stack);
         }
-
         return itemstack;
     }
 	
-	
-	private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {
+	private int addSlotRange(PlayerInventory handler, int index, int x, int y, int amount, int dx) {
         for (int i = 0 ; i < amount ; i++) {
-            addSlot(new SlotItemHandler(handler, index, x, y));
+            addSlot(new Slot(handler, index, x, y));
             x += dx;
             index++;
         }
         return index;
     }
 	
-	private int addSlotBox(IItemHandler handler, int index, int x, int y, int horAmount, int dx, int verAmount, int dy) {
+	private int addSlotBox(PlayerInventory handler, int index, int x, int y, int horAmount, int dx, int verAmount, int dy) {
         for (int j = 0 ; j < verAmount ; j++) {
             index = addSlotRange(handler, index, x, y, horAmount, dx);
             y += dy;
@@ -108,13 +92,28 @@ public class PCT_Container extends Container{
         return index;
     }
 
-	private void layoutPlayerInventorySlots(int leftCol, int topRow) {
+	private void layoutPlayerInventorySlots(PlayerInventory playerInv) {
+		// Crafting Grid
+		
+		
+		int leftCol = 8, topRow = 84;
         // Player inventory
-        addSlotBox(playerInventory, 9, leftCol, topRow, 9, 18, 3, 18);
+        addSlotBox(playerInv, 9, leftCol, topRow, 9, 18, 3, 18);
 
         // Hotbar
         topRow += 58;
-        addSlotRange(playerInventory, 0, leftCol, topRow, 9, 18);
+        addSlotRange(playerInv, 0, leftCol, topRow, 9, 18);
     }
+	
+	/*
+	private int addCraftingSlot(PlayerInventory handler, int index, int x, int y, int amount, int dx) {
+        for (int i = 0 ; i < amount ; i++) {
+            addSlot(new CraftingSlot(handler, index, x, y));
+            x += dx;
+            index++;
+        }
+        return index;
+    }
+    */
 	
 }

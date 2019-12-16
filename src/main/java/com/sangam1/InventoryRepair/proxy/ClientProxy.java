@@ -13,6 +13,7 @@ public class ClientProxy implements IProxy {
 
     @Override
     public void init() {
+    	
        ScreenManager.registerFactory(ContainerList.PCT_CONTAINER, PCT_Screen::new);
 
        Main.LOGGER.info(Main.MODID +" : " + "Client proxy done!");

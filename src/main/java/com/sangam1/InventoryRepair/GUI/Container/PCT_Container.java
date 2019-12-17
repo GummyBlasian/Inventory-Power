@@ -129,7 +129,7 @@ public class PCT_Container extends Container {
 	public void onContainerClosed(PlayerEntity playerIn)
     {
         super.onContainerClosed(playerIn);
-        
+        PlayerInventory inv = playerIn.inventory;
         if (!this.world.isRemote)
         {
             for (int i = 0; i < 9; ++i)
@@ -137,10 +137,24 @@ public class PCT_Container extends Container {
             	ItemStack itemstack = this.crafting_matrix.removeStackFromSlot(i);
                 if (!itemstack.isEmpty())
                 {
-                	//if (playerIn.inventory.hasItemStack(itemstack))
-                	//	playerIn.inventory.addItemStackToInventory(itemstack);
-                	//else
+                	if (inv.hasItemStack(itemstack)) {
+                		playerIn.inventory.addItemStackToInventory(itemstack);
+                	} else {
                 		playerIn.dropItem(itemstack, false);
+                	}
+                }
+            }
+        } else {
+            for (int i = 0; i < 9; ++i)
+            {
+            	ItemStack itemstack = this.crafting_matrix.removeStackFromSlot(i);
+                if (!itemstack.isEmpty())
+                {
+                	if (inv.hasItemStack(itemstack)) {
+                		playerIn.inventory.addItemStackToInventory(itemstack);
+                	} else {
+                		playerIn.dropItem(itemstack, false);
+                	}
                 }
             }
         }

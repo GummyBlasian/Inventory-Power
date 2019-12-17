@@ -1,15 +1,12 @@
 package com.sangam1.InventoryRepair.GUI.Container;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.sangam1.InventoryRepair.GUI.Inventory.PCT_Inventory;
 import com.sangam1.InventoryRepair.References.ContainerList;
 import com.sangam1.InventoryRepair.References.ItemList;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftResultInventory;
+import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.CraftingResultSlot;
@@ -21,15 +18,13 @@ import net.minecraft.world.World;
 public class PCT_Container extends Container {
 
 	private PlayerEntity playerEntity;
-	private PCT_Inventory crafting_matrix;
+	private CraftingInventory crafting_matrix;
 	private CraftResultInventory craft_result;
-	private Map<Integer, Slot> all_slots;
 
 	public PCT_Container(int window_id, World world, PlayerEntity player, PlayerInventory playerInv) {
 		super(ContainerList.PCT_CONTAINER, window_id);
 		this.playerEntity = player;
-		all_slots = new HashMap<Integer, Slot>();
-		crafting_matrix = new PCT_Inventory(this);
+		crafting_matrix = new CraftingInventory(this, 3, 3);
 		craft_result = new CraftResultInventory();
 		layoutPlayerInventorySlots(playerInv);
 
@@ -78,9 +73,7 @@ public class PCT_Container extends Container {
 
 	private int addSlotRange(PlayerInventory handler, int index, int x, int y, int amount, int dx) {
 		for (int i = 0; i < amount; i++) {
-			Slot a = new Slot(handler, index, x, y);
-			all_slots.put(index, a);
-			addSlot(a);
+			addSlot(new Slot(handler, index, x, y));
 			x += dx;
 			index++;
 		}
@@ -96,56 +89,33 @@ public class PCT_Container extends Container {
 		return index;
 	}	
 	
-	private int addCraftingSlot(PCT_Inventory handler, int index, int x, int y, int dx, int dy) { 
+	private int addCraftingSlot(CraftingInventory handler, int index, int x, int y, int dx, int dy) { 
+		int x_int = x;
 		for(int a = 0; a<3;a++) {
+			x = x_int;
 			for (int i = 0 ; i < 3 ; i++) { 
-				Slot b = new Slot(handler, index, x, y);
-				all_slots.put(index, b);
-			 	addSlot(b);
+			 	addSlot(new Slot(handler, index, x, y));
 			 	x += dx; index++;
 		 	}
 			y += dy;
 		}
+
+		addSlot(new CraftingResultSlot(playerEntity, crafting_matrix, craft_result, 0, 50, 35));
+		
 		return index; 
 	 }
 
 	private void layoutPlayerInventorySlots(PlayerInventory playerInv) {
 		// Crafting Grid
-		addCraftingSlot(crafting_matrix,45,20,20,18,18);
-
-		addSlot(new CraftingResultSlot(playerEntity, crafting_matrix, craft_result, 0, 124, 35));
+		addCraftingSlot(crafting_matrix,46,30,10,18,18);
 		
 		int leftCol = 8, topRow = 84;
 		// Player inventory
-		addSlotBox(playerInv, 9, leftCol, topRow, 9, 18, 3, 18);
+		addSlotBox(playerInv, 10, leftCol, topRow, 9, 18, 3, 18);
 
 		// Hotbar
 		topRow += 58;
-		addSlotRange(playerInv, 0, leftCol, topRow, 9, 18);
+		addSlotRange(playerInv, 1, leftCol, topRow, 9, 18);
 	}
-
-
-	public ItemStack getStackInSlot(int index) {
-		if(all_slots.containsKey(index))
-			return all_slots.get(index).getStack();
-		return ItemStack.EMPTY;
-	}
-
-	public ItemStack decrStackSize(int index, int count) {
-		if(all_slots.containsKey(index)) {
-			all_slots.get(index).getStack().setCount(all_slots.get(index).getStack().getCount()-count);
-			return getStackInSlot(index);
-		}
-		return ItemStack.EMPTY;
-	}
-
-	public void setInventorySlotContents(int index, ItemStack stack) {
-		if(all_slots.containsKey(index)) {
-			Slot slot = all_slots.get(index);
-			slot.putStack(stack);
-			all_slots.replace(index, slot);
-		}
-	}
-	 
 
 }

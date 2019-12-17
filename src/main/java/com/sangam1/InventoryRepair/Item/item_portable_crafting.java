@@ -17,26 +17,21 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class item_portable_crafting extends Item{
+public class item_portable_crafting extends Item {
 
 	  	public item_portable_crafting(Properties id) {
-
+	  		
 	  		super(id);
 	        
 	    }
 	  
 	  	@Override
 		public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-			
 			if (!world.isRemote && hand == Hand.MAIN_HAND) {
-				//System.out.println("Opening");
-				//Main.LOGGER.info(new TranslationTextComponent(getTranslationKey()).getFormattedText());
 			
 				NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
 					@Override
 		            public ITextComponent getDisplayName() {
-						//return new TranslationTextComponent(getTranslationKey());
-						//return new StringTextComponent(getType().getRegistryName().getPath());
 						return new TranslationTextComponent(getRegistryName().getPath());
 		            }
 
@@ -47,9 +42,7 @@ public class item_portable_crafting extends Item{
 		        });
 				return new ActionResult<ItemStack>(ActionResultType.PASS, player.getHeldItem(hand));
 			}
-			//System.out.println("Nothing");
 			return new ActionResult<ItemStack>(ActionResultType.FAIL, player.getHeldItem(hand));
-			
-		}
+	  	}
 	  	
 }

@@ -30,12 +30,14 @@ public class PCT_Container extends Container {
 	private CraftResultInventory craft_result;
 	private final IWorldPosCallable pos;
 	private World world;
+	private PlayerEntity player;
 
 	public PCT_Container(int window_id, World world, PlayerEntity player, PlayerInventory playerInv) {
 		super(ContainerList.PCT_CONTAINER, window_id);
 		this.playerEntity = player;
 		this.pos = IWorldPosCallable.of(world, player.getPosition());
 		this.world = world;
+		this.player = player;
 		crafting_matrix = new CraftingInventory(this, 3, 3);
 		craft_result = new CraftResultInventory();
 		layoutPlayerInventorySlots(playerInv);
@@ -84,51 +86,24 @@ public class PCT_Container extends Container {
 		return itemstack;
 	}
 
-	private int addSlotRange(PlayerInventory handler, int index, int x, int y, int amount, int dx) {
-		for (int i = 0; i < amount; i++) {
-			addSlot(new Slot(handler, index, x, y));
-			x += dx;
-			index++;
-		}
-		return index;
-	}
-
-	private int addSlotBox(PlayerInventory handler, int index, int x, int y, int horAmount, int dx, int verAmount,
-			int dy) {
-		for (int j = 0; j < verAmount; j++) {
-			index = addSlotRange(handler, index, x, y, horAmount, dx);
-			y += dy;
-		}
-		return index;
-	}	
-	
-	private int addCraftingSlot(CraftingInventory handler, int index, int x, int y, int dx, int dy) { 
-		int x_int = x;
-		for(int a = 0; a<3;a++) {
-			x = x_int;
-			for (int i = 0 ; i < 3 ; i++) { 
-			 	addSlot(new Slot(handler, index, x, y));
-			 	x += dx; index++;
-		 	}
-			y += dy;
-		}
-
-		addSlot(new CraftingResultSlot(playerEntity, crafting_matrix, craft_result, 0, 120, 35));
-		
-		return index; 
-	 }
-
 	private void layoutPlayerInventorySlots(PlayerInventory playerInv) {
-		// Crafting Grid
-		addCraftingSlot(crafting_matrix,46,30,5,18,18);
+		crafting_matrix.openInventory(player);
 		
-		int leftCol = 8, topRow = 84;
-		// Player inventory
-		addSlotBox(playerInv, 10, leftCol, topRow, 9, 18, 3, 18);
+		addSlot(new CraftingResultSlot(player, crafting_matrix, craft_result, 0, 124, 35));
+		for (int i = 0; i < 3; ++i) {
+			for (int j = 0; j < 3; ++j) {
+				addSlot(new Slot(crafting_matrix, j + i * 3, 30 + j * 18, 17 + i * 18));
+			}
+		}
+		for (int k = 0; k < 3; ++k) {
+			for (int i1 = 0; i1 < 9; ++i1) {
+				addSlot(new Slot(player.inventory, i1 + k * 9 + 9, 8 + i1 * 18, 84 + k * 18));
+			}
+		}
 
-		// Hotbar
-		topRow += 58;
-		addSlotRange(playerInv, 1, leftCol, topRow, 9, 18);
+		for (int l = 0; l < 9; ++l) {
+			addSlot(new Slot(player.inventory, l, 8 + l * 18, 142));
+		}
 	}
 	
 	@Override
@@ -154,16 +129,18 @@ public class PCT_Container extends Container {
 	public void onContainerClosed(PlayerEntity playerIn)
     {
         super.onContainerClosed(playerIn);
-
+        
         if (!this.world.isRemote)
         {
             for (int i = 0; i < 9; ++i)
             {
-                ItemStack itemstack = this.crafting_matrix.removeStackFromSlot(i);
-
+            	ItemStack itemstack = this.crafting_matrix.removeStackFromSlot(i);
                 if (!itemstack.isEmpty())
                 {
-                    playerIn.dropItem(itemstack, false);
+                	//if (playerIn.inventory.hasItemStack(itemstack))
+                	//	playerIn.inventory.addItemStackToInventory(itemstack);
+                	//else
+                		playerIn.dropItem(itemstack, false);
                 }
             }
         }

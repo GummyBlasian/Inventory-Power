@@ -7,7 +7,7 @@ public class ItemGroup_IRGroup extends ItemGroup
 {
 	public ItemGroup_IRGroup() 
 	{
-		super("S1C");
+		super("S1IR");
 	}
 
 	@Override

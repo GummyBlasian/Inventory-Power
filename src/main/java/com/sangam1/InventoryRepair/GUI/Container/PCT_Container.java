@@ -1,18 +1,26 @@
 package com.sangam1.InventoryRepair.GUI.Container;
 
+import java.util.Optional;
+
 import com.sangam1.InventoryRepair.References.ContainerList;
 import com.sangam1.InventoryRepair.References.ItemList;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.CraftResultInventory;
 import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.ICraftingRecipe;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.server.SSetSlotPacket;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.world.World;
 
 public class PCT_Container extends Container {
@@ -20,14 +28,19 @@ public class PCT_Container extends Container {
 	private PlayerEntity playerEntity;
 	private CraftingInventory crafting_matrix;
 	private CraftResultInventory craft_result;
+	private final IWorldPosCallable pos;
+	private World world;
 
 	public PCT_Container(int window_id, World world, PlayerEntity player, PlayerInventory playerInv) {
 		super(ContainerList.PCT_CONTAINER, window_id);
 		this.playerEntity = player;
+		this.pos = IWorldPosCallable.of(world, player.getPosition());
+		this.world = world;
 		crafting_matrix = new CraftingInventory(this, 3, 3);
 		craft_result = new CraftResultInventory();
 		layoutPlayerInventorySlots(playerInv);
 
+		onCraftMatrixChanged(crafting_matrix);
 	}
 
 	@Override
@@ -100,14 +113,14 @@ public class PCT_Container extends Container {
 			y += dy;
 		}
 
-		addSlot(new CraftingResultSlot(playerEntity, crafting_matrix, craft_result, 0, 50, 35));
+		addSlot(new CraftingResultSlot(playerEntity, crafting_matrix, craft_result, 0, 120, 35));
 		
 		return index; 
 	 }
 
 	private void layoutPlayerInventorySlots(PlayerInventory playerInv) {
 		// Crafting Grid
-		addCraftingSlot(crafting_matrix,46,30,10,18,18);
+		addCraftingSlot(crafting_matrix,46,30,5,18,18);
 		
 		int leftCol = 8, topRow = 84;
 		// Player inventory
@@ -117,5 +130,49 @@ public class PCT_Container extends Container {
 		topRow += 58;
 		addSlotRange(playerInv, 1, leftCol, topRow, 9, 18);
 	}
+	
+	@Override
+	public void onCraftMatrixChanged(final IInventory inventory) {
+		pos.consume((world, pos) -> {
+			if (!world.isRemote) {
+				final ServerPlayerEntity playerMp = (ServerPlayerEntity) playerEntity;
+				ItemStack stack = ItemStack.EMPTY;
+				final Optional<ICraftingRecipe> optional = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, crafting_matrix, world);
+				if (optional.isPresent()) {
+					final ICraftingRecipe icraftingrecipe = optional.get();
+					if (craft_result.canUseRecipe(world, playerMp, icraftingrecipe)) {
+						stack = icraftingrecipe.getCraftingResult(crafting_matrix);
+					}
+				}
+				craft_result.setInventorySlotContents(0, stack);
+				playerMp.connection.sendPacket(new SSetSlotPacket(windowId, 0, stack));
+			}
+		});
+	}
+	
+	@Override
+	public void onContainerClosed(PlayerEntity playerIn)
+    {
+        super.onContainerClosed(playerIn);
+
+        if (!this.world.isRemote)
+        {
+            for (int i = 0; i < 9; ++i)
+            {
+                ItemStack itemstack = this.crafting_matrix.removeStackFromSlot(i);
+
+                if (!itemstack.isEmpty())
+                {
+                    playerIn.dropItem(itemstack, false);
+                }
+            }
+        }
+    }
+	
+	@Override
+	public boolean canMergeSlot(ItemStack stack, Slot slotIn)
+    {
+        return slotIn.inventory != this.craft_result && super.canMergeSlot(stack, slotIn);
+    }
 
 }

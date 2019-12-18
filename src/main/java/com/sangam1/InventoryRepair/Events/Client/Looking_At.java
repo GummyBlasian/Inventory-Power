@@ -180,12 +180,26 @@ public class Looking_At {
 	}
 
 	private static RayTraceResult rayTrace(Entity entity, double par1, float par3) {
+		
+		final RayTraceContext.FluidMode FLUID_MODE = RayTraceContext.FluidMode.ANY;
+        final RayTraceContext.BlockMode BLOCK_MODE = RayTraceContext.BlockMode.COLLIDER;
+        final Vec3d EYES_POSITION = p.getEyePosition(1f);
+        final Vec3d LOOK_DIRECTION = p.getLook(1f);
+        float range = 10.0f;
+        Vec3d endOfLook = EYES_POSITION.add(LOOK_DIRECTION.x * range, LOOK_DIRECTION.y * range, LOOK_DIRECTION.z * range);
+        
+        RayTraceResult targetedBlock = world.rayTraceBlocks(new RayTraceContext(EYES_POSITION, endOfLook, BLOCK_MODE, FLUID_MODE, p));
+
+        Main.LOGGER.info(p.REACH_DISTANCE.getDefaultValue() + " " + world.getBlockState(new BlockPos(targetedBlock.getHitVec())).getBlock().toString());
+        /*
 		Vec3d vec3 = entity.getEyePosition(par3);
 		@SuppressWarnings("unused")
 		Vec3d vec31 = entity.getLook(par3);
 		Vec3d vec32 = vec3.add(par1, par1, par1);
 		
 		return entity.world.rayTraceBlocks(new RayTraceContext(vec3, vec32, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.ANY, entity));
+		*/
+        return targetedBlock;
 	}
 
 	public static String get_made_by() {

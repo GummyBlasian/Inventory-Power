@@ -1,5 +1,7 @@
 {
 	"item.sangamir.gocraft" : "Portable Crafting Table",
 	
-	"itemGroup.S1IR": "Inventory Power"
+	"itemGroup.S1IR": "Inventory Power",
+	
+	"sangam1ir.menu.commands" : "Commands"
 }

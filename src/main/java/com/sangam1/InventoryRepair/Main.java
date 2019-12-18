@@ -3,7 +3,9 @@ package com.sangam1.InventoryRepair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.sangam1.InventoryRepair.API.Harvest_Level_API;
 import com.sangam1.InventoryRepair.Config.ConfigHandler;
+import com.sangam1.InventoryRepair.Events.Server.Auto_Repair_Event;
 import com.sangam1.InventoryRepair.GUI.Armor_GUI_Event;
 import com.sangam1.InventoryRepair.GUI.GUI_LookingAt;
 import com.sangam1.InventoryRepair.GUI.Potions_GUI;
@@ -56,10 +58,15 @@ public class Main {
     private void setup(final FMLCommonSetupEvent event)
     {
         proxy.init();
+        APT_Setup();
         Main.LOGGER.info(Main.MODID +" : " + "setup done!");
     }
 
-    private void onLoadComplete(final FMLClientSetupEvent event) 
+    private void APT_Setup() {
+		Harvest_Level_API.setup();
+	}
+
+	private void onLoadComplete(final FMLClientSetupEvent event) 
     {
     	DifferentBlocks.init();
     	if (!ConfigHandler.CONFIG_VERSION.get().equals(ConfigHandler.CURRENT_VERSION)) {
@@ -72,6 +79,8 @@ public class Main {
     	Clock = new ItemStack(Items.CLOCK);
     	
     	gui_registry();
+    	
+    	MinecraftForge.EVENT_BUS.register(new Auto_Repair_Event());
 
         Main.LOGGER.info(Main.MODID +" : " + "onLoadComplete done!");
     }

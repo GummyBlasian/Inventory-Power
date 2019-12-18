@@ -149,7 +149,7 @@ public class Looking_At {
     }
 	
 	private static void fire() {
-		Main.LOGGER.info(mc.objectMouseOver.getType().toString());
+		rayTrace(p, mc.playerController.getBlockReachDistance(), 0);
 		
 		if (mc.objectMouseOver != null && mc.objectMouseOver.getType() == RayTraceResult.Type.ENTITY) {
 			target = mc.objectMouseOver;
@@ -172,14 +172,14 @@ public class Looking_At {
 			return;
 		}		
 
-		target = rayTrace(p, mc.playerController.getBlockReachDistance(), 0);
+		//target = rayTrace(p, mc.playerController.getBlockReachDistance(), 0);
 
 		if (target == null) {
 			return;
 		}
 	}
 
-	private static RayTraceResult rayTrace(Entity entity, double par1, float par3) {
+	private static void rayTrace(Entity entity, double par1, float par3) {
 		
 		final RayTraceContext.FluidMode FLUID_MODE = RayTraceContext.FluidMode.ANY;
         final RayTraceContext.BlockMode BLOCK_MODE = RayTraceContext.BlockMode.COLLIDER;
@@ -199,7 +199,7 @@ public class Looking_At {
 		
 		return entity.world.rayTraceBlocks(new RayTraceContext(vec3, vec32, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.ANY, entity));
 		*/
-        return targetedBlock;
+        //return targetedBlock;
 	}
 
 	public static String get_made_by() {

@@ -11,7 +11,6 @@ import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 
@@ -23,12 +22,6 @@ public class Potions_GUI {
 	int guiPosY = mc.mainWindow.getScaledHeight() - ConfigHandler.LOOK_HUD_Y.getValue();
 
 	private ArrayList<EffectInstance> potions = new ArrayList<EffectInstance>();
-
-	@SubscribeEvent
-	public void onRenderTickPre(RenderGameOverlayEvent.Pre event) {
-		if (event.getType() == ElementType.POTION_ICONS)
-			event.setCanceled(true);
-	}
 
 	//Stops the default tooltip from being displayed
 	@SubscribeEvent

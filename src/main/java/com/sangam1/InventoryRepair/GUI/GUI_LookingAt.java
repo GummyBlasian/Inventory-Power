@@ -29,15 +29,10 @@ public class GUI_LookingAt{
 	int guiPosX = mc.mainWindow.getScaledWidth();
 	int guiPosY = mc.mainWindow.getScaledHeight() - ConfigHandler.LOOK_HUD_Y.getValue();
 
-	@SubscribeEvent
-	public void onRenderTickPre(RenderGameOverlayEvent.Pre event) {
-		Minecraft.getInstance().gameSettings.heldItemTooltips = false;
-	}
-
 	@SuppressWarnings("unused")
 	@SubscribeEvent
 	public void onRenderTick(RenderGameOverlayEvent.Pre event) {
-
+		
 		FontRenderer textRenderer = mc.fontRenderer;
 
 		if (event.getType() != RenderGameOverlayEvent.ElementType.ALL || !ConfigHandler.LOOK_HUD_ENABLED.getValue())
@@ -50,13 +45,15 @@ public class GUI_LookingAt{
 		if (ConfigHandler.LOOK_HUD_ONLY_IN_FULLSCREEN.getValue())
 			if (!Minecraft.getInstance().mainWindow.isFullscreen())
 				return;
-
-		String looking_at = Looking_At.get_looking_at();
-		String made_by = Looking_At.get_made_by();
+		
+		Looking_At.get_data();
+		
+		String looking_at = Looking_At.getLookingAt();
+		String made_by = Looking_At.getMadeBy();
 		String harvest_level = " ";
-		if(!Looking_At.get_harvest_level().isEmpty())
-			harvest_level = "Harvest level: " + Looking_At.get_harvest_level();
-		String biome = "Biome: " + Looking_At.get_biome_name();
+		if(Looking_At.getHarvestLevel().isEmpty())
+			harvest_level = "Harvest level: " + Looking_At.getHarvestLevel();
+		String biome = "Biome: " + Looking_At.getBiome();
 
 		long game_time = 0;
 		if(mc.world != null)

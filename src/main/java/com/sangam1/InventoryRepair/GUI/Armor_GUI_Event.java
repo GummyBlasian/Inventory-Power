@@ -10,9 +10,12 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+@OnlyIn(Dist.CLIENT)
 public class Armor_GUI_Event {
 
 	private final Minecraft mc = Minecraft.getInstance();
@@ -78,9 +81,9 @@ public class Armor_GUI_Event {
 		int txtwidth_can_mine = mc.fontRenderer.getStringWidth("can mine");
 		if(Armor_Durability.getHand_Icon() != null)
 			mc.getItemRenderer().renderItemAndEffectIntoGUI(Armor_Durability.getHand_Icon(), guiPosX - txtwidth_armor_head - 20, guiPosY-20);
-		textRenderer.drawStringWithShadow(armor_head, guiPosX - txtwidth_armor_head, guiPosY - 15, TextFormatting.GOLD.getColor());
-		textRenderer.drawStringWithShadow(armor_head_durability, guiPosX - txtwidth_armor_head_durability, guiPosY - 5, TextFormatting.GOLD.getColor()); 
-		if (Looking_At.can_mine())
+		textRenderer.drawStringWithShadow(armor_head, guiPosX - txtwidth_armor_head, guiPosY - 17, TextFormatting.GOLD.getColor());
+		textRenderer.drawStringWithShadow(armor_head_durability, guiPosX - txtwidth_armor_head_durability, guiPosY - 7, TextFormatting.GOLD.getColor()); 
+		if (Looking_At.isCanMine())
 			textRenderer.drawStringWithShadow("can mine", guiPosX - txtwidth_can_mine, guiPosY + 5 , TextFormatting.GOLD.getColor()); 
 	}
 

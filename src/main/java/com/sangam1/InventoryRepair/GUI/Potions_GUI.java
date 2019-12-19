@@ -23,7 +23,6 @@ public class Potions_GUI {
 
 	private ArrayList<EffectInstance> potions = new ArrayList<EffectInstance>();
 
-	//Stops the default tooltip from being displayed
 	@SubscribeEvent
 	public void onRenderTick(RenderGameOverlayEvent.Post event) {
 		FontRenderer textRenderer = mc.fontRenderer;

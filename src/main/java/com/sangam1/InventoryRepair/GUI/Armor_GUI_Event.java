@@ -2,14 +2,12 @@ package com.sangam1.InventoryRepair.GUI;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.sangam1.InventoryRepair.Config.ConfigHandler;
-import com.sangam1.InventoryRepair.Events.Client.Armor_Durability;
-import com.sangam1.InventoryRepair.Events.Client.Looking_At;
+import com.sangam1.InventoryRepair.GUI.Handlers.Armor_GUI_Handler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -64,76 +62,12 @@ public class Armor_GUI_Event {
 
 		GlStateManager.pushMatrix();
 		GlStateManager.scalef(scale, scale, scale);	         
-		headGUI(textRenderer);
-		bodyGUI(textRenderer);
-		legGUI(textRenderer);
-		bootGUI(textRenderer);		         
-		handGUI (textRenderer);
+		Armor_GUI_Handler.headGUI(textRenderer, mc, guiPosX, guiPosY);
+		Armor_GUI_Handler.bodyGUI(textRenderer, mc, guiPosX, guiPosY);
+		Armor_GUI_Handler.legGUI(textRenderer, mc, guiPosX, guiPosY);
+		Armor_GUI_Handler.bootGUI(textRenderer, mc, guiPosX, guiPosY);		         
+		Armor_GUI_Handler.handGUI (textRenderer, mc, guiPosX, guiPosY);
 		GlStateManager.popMatrix();
 	}
-
-	private void handGUI (FontRenderer textRenderer) {		
-		String armor_head = Armor_Durability.getHand();
-		String armor_head_durability = Armor_Durability.getHand_Durability();
-
-		int txtwidth_armor_head = mc.fontRenderer.getStringWidth(armor_head);
-		int txtwidth_armor_head_durability = mc.fontRenderer.getStringWidth(armor_head_durability);
-		int txtwidth_can_mine = mc.fontRenderer.getStringWidth("can mine");
-		if(Armor_Durability.getHand_Icon() != null)
-			mc.getItemRenderer().renderItemAndEffectIntoGUI(Armor_Durability.getHand_Icon(), guiPosX - txtwidth_armor_head - 20, guiPosY-20);
-		textRenderer.drawStringWithShadow(armor_head, guiPosX - txtwidth_armor_head, guiPosY - 17, TextFormatting.GOLD.getColor());
-		textRenderer.drawStringWithShadow(armor_head_durability, guiPosX - txtwidth_armor_head_durability, guiPosY - 7, TextFormatting.GOLD.getColor()); 
-		if (Looking_At.isCanMine())
-			textRenderer.drawStringWithShadow("can mine", guiPosX - txtwidth_can_mine, guiPosY + 5 , TextFormatting.GOLD.getColor()); 
-	}
-
-	private void headGUI(FontRenderer textRenderer) {
-		String armor_head = Armor_Durability.getHead();
-		String armor_head_durability = Armor_Durability.getHead_Durability();
-
-		int txtwidth_armor_head = mc.fontRenderer.getStringWidth(armor_head);
-		int txtwidth_armor_head_durability = mc.fontRenderer.getStringWidth(armor_head_durability);
-		if(Armor_Durability.getHead_Icon() != null)
-			mc.getItemRenderer().renderItemAndEffectIntoGUI(Armor_Durability.getHead_Icon(), guiPosX - txtwidth_armor_head - 20, guiPosY/2-45);
-		textRenderer.drawStringWithShadow(armor_head, guiPosX - txtwidth_armor_head, guiPosY/2 - 40, TextFormatting.GOLD.getColor());
-		textRenderer.drawStringWithShadow(armor_head_durability, guiPosX - txtwidth_armor_head_durability, guiPosY/2 - 30, TextFormatting.GOLD.getColor()); 
-	}
-
-	private void bodyGUI(FontRenderer textRenderer) {
-		String armor_head = Armor_Durability.getBody();
-		String armor_head_durability = Armor_Durability.getBody_Durability();
-
-		int txtwidth_armor_head = mc.fontRenderer.getStringWidth(armor_head);
-		int txtwidth_armor_head_durability = mc.fontRenderer.getStringWidth(armor_head_durability);
-		if(Armor_Durability.getBody_Icon() != null)
-			mc.getItemRenderer().renderItemAndEffectIntoGUI(Armor_Durability.getBody_Icon(), guiPosX - txtwidth_armor_head - 20, guiPosY/2-25);
-		textRenderer.drawStringWithShadow(armor_head, guiPosX - txtwidth_armor_head, guiPosY/2 - 20, TextFormatting.GOLD.getColor());
-		textRenderer.drawStringWithShadow(armor_head_durability, guiPosX - txtwidth_armor_head_durability, guiPosY/2 - 10, TextFormatting.GOLD.getColor()); 
-	}
-
-	private void legGUI(FontRenderer textRenderer) {
-		String armor_head = Armor_Durability.getLeg();
-		String armor_head_durability = Armor_Durability.getLeg_Durability();
-
-		int txtwidth_armor_head = mc.fontRenderer.getStringWidth(armor_head);
-		int txtwidth_armor_head_durability = mc.fontRenderer.getStringWidth(armor_head_durability);
-		if(Armor_Durability.getLeg_Icon() != null)
-			mc.getItemRenderer().renderItemAndEffectIntoGUI(Armor_Durability.getLeg_Icon(), guiPosX - txtwidth_armor_head - 20, guiPosY/2-5);
-		textRenderer.drawStringWithShadow(armor_head, guiPosX - txtwidth_armor_head, guiPosY/2, TextFormatting.GOLD.getColor());
-		textRenderer.drawStringWithShadow(armor_head_durability, guiPosX - txtwidth_armor_head_durability, guiPosY/2 + 10, TextFormatting.GOLD.getColor()); 
-	}
-
-	private void bootGUI(FontRenderer textRenderer) {
-		String armor_head = Armor_Durability.getBoot();
-		String armor_head_durability = Armor_Durability.getBoot_Durability();
-
-		int txtwidth_armor_head = mc.fontRenderer.getStringWidth(armor_head);
-		int txtwidth_armor_head_durability = mc.fontRenderer.getStringWidth(armor_head_durability);
-		if(Armor_Durability.getBoot_Icon() != null)
-			mc.getItemRenderer().renderItemAndEffectIntoGUI(Armor_Durability.getBoot_Icon(), guiPosX - txtwidth_armor_head - 20, guiPosY/2+20);
-		textRenderer.drawStringWithShadow(armor_head, guiPosX - txtwidth_armor_head, guiPosY/2 + 20, TextFormatting.GOLD.getColor());
-		textRenderer.drawStringWithShadow(armor_head_durability, guiPosX - txtwidth_armor_head_durability, guiPosY/2 + 30, TextFormatting.GOLD.getColor()); 
-	}
-
 
 }

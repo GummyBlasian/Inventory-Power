@@ -59,11 +59,11 @@ public class Main {
 	private void setup(final FMLCommonSetupEvent event)
 	{
 		proxy.init();
-		APT_Setup();
+		API_Setup();
 		Main.LOGGER.info(Main.MODID +" : " + "setup done!");
 	}
 
-	private void APT_Setup() {
+	private void API_Setup() {
 		Harvest_Level_API.setup();
 	}
 

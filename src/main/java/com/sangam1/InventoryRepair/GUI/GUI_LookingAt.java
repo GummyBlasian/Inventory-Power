@@ -26,13 +26,19 @@ public class GUI_LookingAt{
 
 	private static final Random random = new Random();
 
-	int guiPosX = mc.mainWindow.getScaledWidth();
-	int guiPosY = mc.mainWindow.getScaledHeight() - ConfigHandler.LOOK_HUD_Y.getValue();
+	private int guiPosX = mc.mainWindow.getScaledWidth();
+	private int guiPosY = mc.mainWindow.getScaledHeight() - ConfigHandler.LOOK_HUD_Y.getValue();
 
+	private long hours = 0;
+	private long mins = 0;
+	private long secs = 0;
+	private long days = 0;
+	private String amOrPm = " AM";
+	
 	@SuppressWarnings("unused")
 	@SubscribeEvent
 	public void onRenderTick(RenderGameOverlayEvent.Pre event) {
-		
+
 		FontRenderer textRenderer = mc.fontRenderer;
 
 		if (event.getType() != RenderGameOverlayEvent.ElementType.ALL || !ConfigHandler.LOOK_HUD_ENABLED.getValue())
@@ -45,31 +51,19 @@ public class GUI_LookingAt{
 		if (ConfigHandler.LOOK_HUD_ONLY_IN_FULLSCREEN.getValue())
 			if (!Minecraft.getInstance().mainWindow.isFullscreen())
 				return;
-		
+
 		Looking_At.get_data();
-		
+
 		String looking_at = Looking_At.getLookingAt();
 		String made_by = Looking_At.getMadeBy();
-		String harvest_level = " ";
-		if(Looking_At.getHarvestLevel().isEmpty())
-			harvest_level = "Harvest level: " + Looking_At.getHarvestLevel();
+		String harvest_level = "Harvest level: " + Looking_At.getHarvestLevel();
 		String biome = "Biome: " + Looking_At.getBiome();
+		String can_mine = "Can mine: " + Looking_At.isCanMine();
+		
+		getTime();
 
-		long game_time = 0;
-		if(mc.world != null)
-			game_time = mc.world.getDayTime();
-
-		long sec_tick = Math.round(game_time/20);
-		long min_tick = sec_tick/60;
-		long hour_tick = min_tick/60;
-		long day_tick = hour_tick/24;
-
-		long hours = hour_tick - (day_tick*24);
-		long mins = min_tick - (hour_tick*60);
-		long secs = sec_tick - (min_tick*60);
-
-		String day = String.format("%02d", day_tick);
-		String time = String.format("%02d", hours) + ":" + String.format("%02d", mins) + ":" + String.format("%02d", secs);
+		String day = String.format("%02d", days);
+		String time = String.format("%02d", hours) + ":" + String.format("%02d", mins) + ":" + String.format("%02d", secs) + amOrPm;
 
 		String day_time = day + " " +time;
 
@@ -103,7 +97,7 @@ public class GUI_LookingAt{
 			GlStateManager.scalef(scale, scale, scale);	        
 			mc.getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/gui/clock_hud_rect.png"));
 			GlStateManager.color3f(1.0F, 1.0F, 1.0F);
-			GuiUtils.drawTexturedModalRect(0, guiPosY-10, 0, 0, 78, 28, 0F); 
+			GuiUtils.drawTexturedModalRect(0, guiPosY-10, 0, 0, 90, 28, 0F); 
 			GlStateManager.popMatrix();
 
 			GlStateManager.pushMatrix();	        
@@ -116,17 +110,46 @@ public class GUI_LookingAt{
 		GlStateManager.pushMatrix();	         
 		GlStateManager.scalef(scale, scale, scale);	         
 		mc.getItemRenderer().renderItemAndEffectIntoGUI(Main.Clock, 5, guiPosY-4);	         
-		textRenderer.drawStringWithShadow(time, 25, guiPosY, TextFormatting.GOLD.getColor()); //Time
+		textRenderer.drawStringWithShadow(time, 24, guiPosY, TextFormatting.GOLD.getColor()); //Time
 		textRenderer.drawStringWithShadow(looking_at, guiPosX/2 - txt1width/2, 2, TextFormatting.GOLD.getColor()); //Looking at
 		textRenderer.drawStringWithShadow(made_by, guiPosX/2 - txt2width/2, 12, TextFormatting.GOLD.getColor()); //Made by
 		GlStateManager.popMatrix();
 
 		GlStateManager.pushMatrix();
 		GlStateManager.scalef(0.8f, 0.8f, scale);	         
-		textRenderer.drawStringWithShadow(harvest_level, (float)(guiPosX*1.25) - txt3width - 4, (float) ((guiPosY*1.25) + 6), TextFormatting.GOLD.getColor()); //Harvest level
-		textRenderer.drawStringWithShadow(biome, (float)(guiPosX*1.25) - txt4width - 4, (float)(guiPosY*1.25) + 16, TextFormatting.GOLD.getColor()); //Biome
+		textRenderer.drawStringWithShadow(harvest_level, 4, (float) ((guiPosY*1.25)/2 + 4), TextFormatting.GOLD.getColor()); //Harvest level
+		textRenderer.drawStringWithShadow(biome, 4, (float)(guiPosY*1.25)/2 + 16, TextFormatting.GOLD.getColor()); //Biome
+		textRenderer.drawStringWithShadow(can_mine, 4, (float) ((guiPosY*1.25)/2 + 28), TextFormatting.GOLD.getColor()); //Can Mine
 		GlStateManager.popMatrix();
 
+	}
+
+	private void getTime() {
+		long game_time = 0;
+		if(mc.world != null)
+			game_time = mc.world.getDayTime();
+
+		long sec_tick = game_time;
+		long min_tick = sec_tick/60;
+		long hour_tick = min_tick/60;
+		long day_tick = hour_tick/24;
+
+		long hours = hour_tick - (day_tick*24);
+		long mins = min_tick - (hour_tick*60);
+		long secs = sec_tick - (min_tick*60);
+		
+		if (hours <= 12) {
+			this.hours = hours;
+			this.mins = mins;
+			this.secs = secs;
+			this.amOrPm = " PM";
+		} else {
+			this.days = day_tick + 1;
+			this.hours = hours - 12;
+			this.mins = mins;
+			this.secs = secs;
+			this.amOrPm = " AM";
+		}
 	}
 
 

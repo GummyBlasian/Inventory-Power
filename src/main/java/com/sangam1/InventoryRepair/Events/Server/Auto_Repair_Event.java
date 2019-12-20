@@ -13,6 +13,7 @@ public class Auto_Repair_Event {
     	if(Minecraft.getInstance() != null) {
     		if(Minecraft.getInstance().world != null) {
     			if (!Minecraft.getInstance().world.isRemote) {
+    				Main.LOGGER.info("hi");
     				Auto_Repair.check_repair();
     				if(Auto_Repair.can_repair()) {
     					Main.LOGGER.info("Can!");

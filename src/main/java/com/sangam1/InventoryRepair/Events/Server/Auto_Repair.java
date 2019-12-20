@@ -1,5 +1,6 @@
 package com.sangam1.InventoryRepair.Events.Server;
 
+import com.sangam1.InventoryRepair.Main;
 import com.sangam1.InventoryRepair.Events.Client.Armor_Durability;
 
 import net.minecraft.client.Minecraft;
@@ -22,6 +23,7 @@ public class Auto_Repair {
 	
 	public static void check_repair() {
 		if(can_repair) {
+			Main.LOGGER.info("in");
 			itemstack = Armor_Durability.getHand_Icon();
 			item = itemstack.getItem();
 			playerInv= Minecraft.getInstance().player.inventory;
@@ -48,7 +50,7 @@ public class Auto_Repair {
 			if(count == 50) {
 				can_repair = true;
 			}
-			count++;
+			Main.LOGGER.info(count++);
 		}
 	}
 	

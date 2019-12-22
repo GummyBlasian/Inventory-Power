@@ -59,6 +59,7 @@ public class GUI_LookingAt{
 		String harvest_level = "Harvest level: " + Looking_At.getHarvestLevel();
 		String biome = "Biome: " + Looking_At.getBiome();
 		String can_mine = "Can mine: " + Looking_At.isCanMine();
+		String dimension= "Dimension: " + Looking_At.getDimension().getType().getRegistryName().getNamespace();
 		
 		getTime();
 
@@ -80,6 +81,7 @@ public class GUI_LookingAt{
 		int txt2width = mc.fontRenderer.getStringWidth(made_by);
 		int txt3width = mc.fontRenderer.getStringWidth(harvest_level);	   
 		int txt4width = mc.fontRenderer.getStringWidth(biome);
+		int txt5width = mc.fontRenderer.getStringWidth(dimension);
 
 		float scale = (float) ConfigHandler.LOOK_HUD_SCALE.getValue();
 
@@ -117,9 +119,10 @@ public class GUI_LookingAt{
 
 		GlStateManager.pushMatrix();
 		GlStateManager.scalef(0.8f, 0.8f, scale);	         
-		textRenderer.drawStringWithShadow(harvest_level, 4, (float) ((guiPosY*1.25)/2 + 4), TextFormatting.GOLD.getColor()); //Harvest level
-		textRenderer.drawStringWithShadow(biome, 4, (float)(guiPosY*1.25)/2 + 16, TextFormatting.GOLD.getColor()); //Biome
-		textRenderer.drawStringWithShadow(can_mine, 4, (float) ((guiPosY*1.25)/2 + 28), TextFormatting.GOLD.getColor()); //Can Mine
+		textRenderer.drawStringWithShadow(harvest_level, 4, (float) ((guiPosY*1.25)/2 - 2), TextFormatting.GOLD.getColor()); //Harvest level
+		textRenderer.drawStringWithShadow(biome, 4, (float)(guiPosY*1.25)/2 + 10, TextFormatting.GOLD.getColor()); //Biome
+		textRenderer.drawStringWithShadow(can_mine, 4, (float) ((guiPosY*1.25)/2 + 22), TextFormatting.GOLD.getColor()); //Can Mine
+		textRenderer.drawStringWithShadow(dimension, 4, (float) ((guiPosY*1.25)/2 + 34), TextFormatting.GOLD.getColor()); //Dimension
 		GlStateManager.popMatrix();
 
 	}

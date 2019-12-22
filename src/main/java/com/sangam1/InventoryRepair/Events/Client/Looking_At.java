@@ -12,6 +12,7 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.dimension.Dimension;
 
 /*
  * Big thanks to williewillus for all his help!!!
@@ -26,6 +27,7 @@ public class Looking_At {
 	private static boolean canMine;
 	private static String harvestLevel;
 	private static Biome biome;
+	private static Dimension dimension;
 
 	public static void get_data() {
 		world = mc.world;
@@ -34,6 +36,7 @@ public class Looking_At {
 		madeBy = " ";
 		canMine = false;
 		harvestLevel = "";
+		dimension = null;
 
 		getBiomeMC();
 		fire();
@@ -75,6 +78,7 @@ public class Looking_At {
 
 	private static void getBiomeMC() {
 		biome = world.getBiome(mc.player.getPosition());
+		dimension = world.getDimension();
 	}
 
 	@SuppressWarnings("unused")
@@ -106,6 +110,10 @@ public class Looking_At {
 
 	public static String getBiome() {
 		return biome.getDisplayName().getFormattedText();
+	}
+
+	public static Dimension getDimension() {
+		return dimension;
 	}
 
 }

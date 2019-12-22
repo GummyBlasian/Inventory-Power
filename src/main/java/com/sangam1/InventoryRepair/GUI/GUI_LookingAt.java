@@ -59,7 +59,7 @@ public class GUI_LookingAt{
 		String harvest_level = "Harvest level: " + Looking_At.getHarvestLevel();
 		String biome = "Biome: " + Looking_At.getBiome();
 		String can_mine = "Can mine: " + Looking_At.isCanMine();
-		String dimension= "Dimension: " + Looking_At.getDimension().getType().getRegistryName().getNamespace();
+		String dimension= "Dimension: " + Looking_At.getDimension().getType().getRegistryName().toString();
 		
 		getTime();
 

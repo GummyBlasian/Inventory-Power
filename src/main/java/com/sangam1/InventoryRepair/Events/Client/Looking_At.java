@@ -38,7 +38,7 @@ public class Looking_At {
 		harvestLevel = "";
 		dimension = null;
 
-		getBiomeMC();
+		getBiomeAndDimensionMC();
 		fire();
 	}
 
@@ -76,7 +76,7 @@ public class Looking_At {
 
 	}
 
-	private static void getBiomeMC() {
+	private static void getBiomeAndDimensionMC() {
 		biome = world.getBiome(mc.player.getPosition());
 		dimension = world.getDimension();
 	}

@@ -35,11 +35,13 @@ public class Auto_Repair {
 			repair_percentage = (int) Math.rint(max * 0.1);
 			if(x > 0.1) {
 				for(i = 0; i < playerInv.getSizeInventory(); i ++) {
+					Main.LOGGER.info(i + " " + playerInv.getStackInSlot(i));
 					if(item.isRepairable(playerInv.getStackInSlot(i)) && playerInv.getStackInSlot(i) != new ItemStack(Items.AIR)) {
 						can_repair = true;
 						repair_slot = i;
 						Main.LOGGER.info("a " + i);
 						Main.LOGGER.info("b " + (repair_with = playerInv.getStackInSlot(repair_slot)));
+						Main.LOGGER.info("hehe");
 						break;
 					}
 				}

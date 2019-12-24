@@ -7,7 +7,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 
 public class Auto_Repair {
 
@@ -34,28 +33,34 @@ public class Auto_Repair {
 			double x =current/max;
 			repair_percentage = (int) Math.rint(max * 0.1);
 			if(x > 0.1) {
+				Main.LOGGER.info("size: " + playerInv.getSizeInventory());
 				for(i = 0; i < playerInv.getSizeInventory(); i ++) {
-					Main.LOGGER.info(i + " " + playerInv.getStackInSlot(i));
-					if(item.isRepairable(playerInv.getStackInSlot(i)) && playerInv.getStackInSlot(i) != new ItemStack(Items.AIR)) {
+					if(item.isRepairable(playerInv.getStackInSlot(i)) && !playerInv.getStackInSlot(i).toString().contains("air")) {
 						can_repair = true;
-						repair_slot = i;
-						Main.LOGGER.info("a " + i);
-						Main.LOGGER.info("b " + (repair_with = playerInv.getStackInSlot(repair_slot)));
-						Main.LOGGER.info("hehe");
+						//repair_slot = i;
+						//Main.LOGGER.info("a " + i);
+						//Main.LOGGER.info("b " + (repair_with = playerInv.getStackInSlot(repair_slot)));
+						//Main.LOGGER.info("hehe");
 						break;
 					}
 				}
-				if(can_repair) {
-					Main.LOGGER.info("c " + playerInv.getStackInSlot(repair_slot));
-					Main.LOGGER.info("d " + repair_slot);
-					Main.LOGGER.info("e " + repair_with);
+				if(can_repair && !repair_with.toString().contains("air") ) {
+					//Main.LOGGER.info("c " + playerInv.getStackInSlot(repair_slot));
+					//Main.LOGGER.info("d " + repair_slot);
+					//Main.LOGGER.info("e " + repair_with);
 					return;
+				} else {
+					can_repair = false;
+					repair_slot = 0;
+					repair_with = null;
+					//Main.LOGGER.info("false");
 				}
 			}
+		} else {
+			can_repair = false;
+			repair_slot = 0;
+			repair_with = null;
 		}
-		can_repair = false;
-		repair_slot = 0;
-		repair_with = null;
 	}
 
 	public static void set_can_repair(boolean set) {

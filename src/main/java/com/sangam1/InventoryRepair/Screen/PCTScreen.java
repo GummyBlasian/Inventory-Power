@@ -2,18 +2,18 @@ package com.sangam1.InventoryRepair.Screen;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.sangam1.InventoryRepair.Main;
-import com.sangam1.InventoryRepair.GUI.Container.PCT_Container;
+import com.sangam1.InventoryRepair.GUI.Container.PCTContainer;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public class PCT_Screen extends ContainerScreen<PCT_Container>{
+public class PCTScreen extends ContainerScreen<PCTContainer>{
 
     private ResourceLocation GUI = new ResourceLocation(Main.MODID, "textures/gui/gocraft.png");
 
-	public PCT_Screen(PCT_Container container, PlayerInventory inv, ITextComponent name) {
+	public PCTScreen(PCTContainer container, PlayerInventory inv, ITextComponent name) {
 		super(container, inv, name);
 	}
 	

@@ -14,7 +14,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 
-public class Potions_GUI {
+public class PotionsGUI {
 
 	private final Minecraft mc = Minecraft.getInstance();
 

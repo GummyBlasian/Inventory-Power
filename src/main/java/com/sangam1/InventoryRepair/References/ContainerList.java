@@ -1,7 +1,7 @@
 package com.sangam1.InventoryRepair.References;
 
-import com.sangam1.InventoryRepair.GUI.Container.PCT_Container;
 import com.sangam1.InventoryRepair.Main;
+import com.sangam1.InventoryRepair.GUI.Container.PCTContainer;
 
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.registries.ObjectHolder;
@@ -10,6 +10,6 @@ import net.minecraftforge.registries.ObjectHolder;
 public class ContainerList {
 	
 	@ObjectHolder("gocraft")
-	public static final ContainerType<PCT_Container> PCT_CONTAINER = null;
+	public static final ContainerType<PCTContainer> PCT_CONTAINER = null;
 	
 }

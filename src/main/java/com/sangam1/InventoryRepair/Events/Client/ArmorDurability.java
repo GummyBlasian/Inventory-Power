@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
-public class Armor_Durability {
+public class ArmorDurability {
 
 	private static Minecraft mc = Minecraft.getInstance();
 	private static PlayerEntity player = mc.player;

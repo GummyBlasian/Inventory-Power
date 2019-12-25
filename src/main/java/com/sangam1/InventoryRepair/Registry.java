@@ -2,8 +2,8 @@ package com.sangam1.InventoryRepair;
 
 import org.apache.logging.log4j.Logger;
 
-import com.sangam1.InventoryRepair.GUI.Container.PCT_Container;
-import com.sangam1.InventoryRepair.Item.item_portable_crafting;
+import com.sangam1.InventoryRepair.GUI.Container.PCTContainer;
+import com.sangam1.InventoryRepair.Item.ItemPortableCrafting;
 import com.sangam1.InventoryRepair.References.ItemList;
 
 import net.minecraft.block.Block;
@@ -34,7 +34,7 @@ public class Registry {
 		event.getRegistry().registerAll
     	(
 //Items
-    		ItemList.gocraft = new item_portable_crafting(new Item.Properties().group(IRGroup).maxStackSize(1)).setRegistryName(locationItems("gocraft"))
+    		ItemList.gocraft = new ItemPortableCrafting(new Item.Properties().group(IRGroup).maxStackSize(1)).setRegistryName(locationItems("gocraft"))
    	
     	);
 
@@ -61,7 +61,7 @@ public class Registry {
 	public static void registerContainer(final RegistryEvent.Register<ContainerType<?>> event) {
 		event.getRegistry().registerAll(
 
-				IForgeContainerType.create((windowId, playerInventory, data) -> new PCT_Container(windowId, playerInventory, data)).setRegistryName(locationGUI("gocraft"))
+				IForgeContainerType.create((windowId, playerInventory, data) -> new PCTContainer(windowId, playerInventory, data)).setRegistryName(locationGUI("gocraft"))
 		
 		);
 

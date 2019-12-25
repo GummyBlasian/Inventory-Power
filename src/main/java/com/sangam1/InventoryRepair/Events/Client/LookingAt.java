@@ -1,6 +1,6 @@
 package com.sangam1.InventoryRepair.Events.Client;
 
-import com.sangam1.InventoryRepair.API.Harvest_Level_API;
+import com.sangam1.InventoryRepair.API.HarvestLevelAPI;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -17,7 +17,7 @@ import net.minecraft.world.dimension.Dimension;
 /*
  * Big thanks to williewillus for all his help!!!
  */
-public class Looking_At {
+public class LookingAt {
 
 	private static final Minecraft mc = Minecraft.getInstance();
 	private static World world;
@@ -49,8 +49,8 @@ public class Looking_At {
 			lookingAt = block.getNameTextComponent().getFormattedText();
 			madeBy = block.getRegistryName().getNamespace();
 			getHarvestLevelMC(state);
-			if(Armor_Durability.getHand_Icon() != null) {
-				if(Armor_Durability.getHand_Icon().canHarvestBlock(state)) {
+			if(ArmorDurability.getHand_Icon() != null) {
+				if(ArmorDurability.getHand_Icon().canHarvestBlock(state)) {
 					canMine = true;
 				}
 			}
@@ -83,11 +83,11 @@ public class Looking_At {
 
 	@SuppressWarnings("unused")
 	private static void getHarvestLevelMC(Block block) {
-		harvestLevel = Harvest_Level_API.getLevel(block.getDefaultState().getHarvestLevel());
+		harvestLevel = HarvestLevelAPI.getLevel(block.getDefaultState().getHarvestLevel());
 	}
 
 	private static void getHarvestLevelMC(BlockState state) {
-		harvestLevel = Harvest_Level_API.getLevel(state.getHarvestLevel());
+		harvestLevel = HarvestLevelAPI.getLevel(state.getHarvestLevel());
 	}
 
 

@@ -8,11 +8,11 @@ import com.sangam1.InventoryRepair.Config.ConfigHandler;
 import com.sangam1.InventoryRepair.Events.Client.InGameGuiEvent;
 import com.sangam1.InventoryRepair.Events.Server.AutoRepairEvent;
 import com.sangam1.InventoryRepair.Events.Server.NewPlayerEvent;
-import com.sangam1.InventoryRepair.GUI.Armor_GUI_Event;
+import com.sangam1.InventoryRepair.GUI.ArmorGUIEvent;
 import com.sangam1.InventoryRepair.GUI.LookingAtGUI;
-import com.sangam1.InventoryRepair.GUI.Potions_GUI;
+import com.sangam1.InventoryRepair.GUI.PotionsGUI;
 import com.sangam1.InventoryRepair.References.DifferentBlocks;
-import com.sangam1.InventoryRepair.References.ItemGroup_IRGroup;
+import com.sangam1.InventoryRepair.References.ItemGroupIRGroup;
 import com.sangam1.InventoryRepair.proxy.ClientProxy;
 import com.sangam1.InventoryRepair.proxy.IProxy;
 import com.sangam1.InventoryRepair.proxy.ServerProxy;
@@ -35,7 +35,7 @@ public class Main {
 	public static Main instance;
 	public static final Logger LOGGER = LogManager.getLogger();
 	public static final String MODID = "sangamir";
-	public static final ItemGroup IRGroup = new ItemGroup_IRGroup();
+	public static final ItemGroup IRGroup = new ItemGroupIRGroup();
 
 	public static ItemStack Clock;
 	public static LookingAtGUI handler;
@@ -91,8 +91,8 @@ public class Main {
 
 	private void gui_registry() {
 		MinecraftForge.EVENT_BUS.register(new LookingAtGUI());
-		MinecraftForge.EVENT_BUS.register(new Armor_GUI_Event());
-		MinecraftForge.EVENT_BUS.register(new Potions_GUI());
+		MinecraftForge.EVENT_BUS.register(new ArmorGUIEvent());
+		MinecraftForge.EVENT_BUS.register(new PotionsGUI());
 	}
 
 }

@@ -5,7 +5,7 @@ import java.util.Random;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.sangam1.InventoryRepair.Main;
 import com.sangam1.InventoryRepair.Config.ConfigHandler;
-import com.sangam1.InventoryRepair.Events.Client.Looking_At;
+import com.sangam1.InventoryRepair.Events.Client.LookingAt;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -20,7 +20,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
 @OnlyIn(Dist.CLIENT)
-public class GUI_LookingAt{
+public class LookingAtGUI{
 
 	private final Minecraft mc = Minecraft.getInstance();
 
@@ -52,14 +52,14 @@ public class GUI_LookingAt{
 			if (!Minecraft.getInstance().mainWindow.isFullscreen())
 				return;
 
-		Looking_At.get_data();
+		LookingAt.get_data();
 
-		String looking_at = Looking_At.getLookingAt();
-		String made_by = Looking_At.getMadeBy();
-		String harvest_level = "Harvest level: " + Looking_At.getHarvestLevel();
-		String biome = "Biome: " + Looking_At.getBiome();
-		String can_mine = "Can mine: " + Looking_At.isCanMine();
-		String dimension= "Dimension: " + Looking_At.getDimension().getType().getRegistryName().toString();
+		String looking_at = LookingAt.getLookingAt();
+		String made_by = LookingAt.getMadeBy();
+		String harvest_level = "Harvest level: " + LookingAt.getHarvestLevel();
+		String biome = "Biome: " + LookingAt.getBiome();
+		String can_mine = "Can mine: " + LookingAt.isCanMine();
+		String dimension= "Dimension: " + LookingAt.getDimension().getType().getRegistryName().toString();
 		
 		getTime();
 

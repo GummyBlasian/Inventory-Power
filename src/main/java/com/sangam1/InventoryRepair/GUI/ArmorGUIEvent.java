@@ -2,7 +2,7 @@ package com.sangam1.InventoryRepair.GUI;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.sangam1.InventoryRepair.Config.ConfigHandler;
-import com.sangam1.InventoryRepair.GUI.Handlers.Armor_GUI_Handler;
+import com.sangam1.InventoryRepair.GUI.Handlers.ArmorGUIHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -14,7 +14,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @OnlyIn(Dist.CLIENT)
-public class Armor_GUI_Event {
+public class ArmorGUIEvent {
 
 	private final Minecraft mc = Minecraft.getInstance();
 
@@ -62,11 +62,11 @@ public class Armor_GUI_Event {
 
 		GlStateManager.pushMatrix();
 		GlStateManager.scalef(scale, scale, scale);	         
-		Armor_GUI_Handler.headGUI(textRenderer, mc, guiPosX, guiPosY);
-		Armor_GUI_Handler.bodyGUI(textRenderer, mc, guiPosX, guiPosY);
-		Armor_GUI_Handler.legGUI(textRenderer, mc, guiPosX, guiPosY);
-		Armor_GUI_Handler.bootGUI(textRenderer, mc, guiPosX, guiPosY);		         
-		Armor_GUI_Handler.handGUI (textRenderer, mc, guiPosX, guiPosY);
+		ArmorGUIHandler.headGUI(textRenderer, mc, guiPosX, guiPosY);
+		ArmorGUIHandler.bodyGUI(textRenderer, mc, guiPosX, guiPosY);
+		ArmorGUIHandler.legGUI(textRenderer, mc, guiPosX, guiPosY);
+		ArmorGUIHandler.bootGUI(textRenderer, mc, guiPosX, guiPosY);		         
+		ArmorGUIHandler.handGUI (textRenderer, mc, guiPosX, guiPosY);
 		GlStateManager.popMatrix();
 	}
 

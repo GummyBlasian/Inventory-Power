@@ -3,9 +3,9 @@ package com.sangam1.InventoryRepair.References;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
-public class ItemGroup_IRGroup extends ItemGroup
+public class ItemGroupIRGroup extends ItemGroup
 {
-	public ItemGroup_IRGroup() 
+	public ItemGroupIRGroup() 
 	{
 		super("S1IR");
 	}

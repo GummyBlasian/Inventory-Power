@@ -23,7 +23,7 @@ import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.world.World;
 
-public class PCT_Container extends Container {
+public class PCTContainer extends Container {
 
 	private PlayerEntity playerEntity;
 	private CraftingInventory crafting_matrix;
@@ -32,7 +32,7 @@ public class PCT_Container extends Container {
 	private World world;
 	private PlayerEntity player;
 
-	public PCT_Container(int window_id, World world, PlayerEntity player, PlayerInventory playerInv) {
+	public PCTContainer(int window_id, World world, PlayerEntity player, PlayerInventory playerInv) {
 		super(ContainerList.PCT_CONTAINER, window_id);
 		this.playerEntity = player;
 		this.pos = IWorldPosCallable.of(world, player.getPosition());
@@ -50,7 +50,7 @@ public class PCT_Container extends Container {
 		return ContainerList.PCT_CONTAINER;
 	}
 
-	public PCT_Container(int windowId, PlayerInventory playerInv, PacketBuffer data) {
+	public PCTContainer(int windowId, PlayerInventory playerInv, PacketBuffer data) {
 		this(windowId, playerInv.player.world, playerInv.player, playerInv);
 	}
 

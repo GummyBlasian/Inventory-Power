@@ -3,7 +3,7 @@ package com.sangam1.InventoryRepair.API;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Harvest_Level_API {
+public class HarvestLevelAPI {
 	
 	private static Map<Integer,String> level = new HashMap<Integer,String>();
 	

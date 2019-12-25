@@ -1,6 +1,6 @@
 package com.sangam1.InventoryRepair.Item;
 
-import com.sangam1.InventoryRepair.GUI.Container.PCT_Container;
+import com.sangam1.InventoryRepair.GUI.Container.PCTContainer;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -17,9 +17,9 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class item_portable_crafting extends Item {
+public class ItemPortableCrafting extends Item {
 
-	  	public item_portable_crafting(Properties id) {
+	  	public ItemPortableCrafting(Properties id) {
 	  		
 	  		super(id);
 	        
@@ -37,7 +37,7 @@ public class item_portable_crafting extends Item {
 
 		            @Override
 		            public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
-		            	return new PCT_Container(windowId, world, player, playerInventory);
+		            	return new PCTContainer(windowId, world, player, playerInventory);
 		            }
 		        });
 				return new ActionResult<ItemStack>(ActionResultType.PASS, player.getHeldItem(hand));

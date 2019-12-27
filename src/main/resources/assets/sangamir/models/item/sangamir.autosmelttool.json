@@ -1,0 +1,6 @@
+{
+    "parent":"sangamir:item/standard_item",
+    "textures": {
+        "layer0":"sangamir:items/sangamir.autosmelttool"
+    }
+}

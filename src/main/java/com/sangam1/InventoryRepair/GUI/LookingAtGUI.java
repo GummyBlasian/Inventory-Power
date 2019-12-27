@@ -58,10 +58,8 @@ public class LookingAtGUI{
 
 		getTime();
 
-		String day = String.format("%02d", days);
+		String day =  "Day: " + days;
 		String time = String.format("%02d", hours) + ":" + String.format("%02d", mins) + ":" + String.format("%02d", secs) + amOrPm;
-
-		day = "Day: " + day;
 		
 		if (Minecraft.getInstance().world.dimension.getType().getId() == 1) {
 			String alt_text = "";
@@ -99,8 +97,8 @@ public class LookingAtGUI{
 			
 			GlStateManager.pushMatrix();
 			GlStateManager.scalef(0.8f, 0.8f, scale);	
-			textRenderer.drawStringWithShadow(day, 28, (float) ((guiPosY*1.25) - 5), TextFormatting.GOLD.getColor()); //Day
-			textRenderer.drawStringWithShadow(time, 28, (float) ((guiPosY*1.25) + 5), TextFormatting.GOLD.getColor()); //Time
+			textRenderer.drawStringWithShadow(day, 30, (float) ((guiPosY*1.25) - 5), TextFormatting.GOLD.getColor()); //Day
+			textRenderer.drawStringWithShadow(time, 30, (float) ((guiPosY*1.25) + 5), TextFormatting.GOLD.getColor()); //Time
 			GlStateManager.popMatrix();
 		}
 

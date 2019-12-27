@@ -11,6 +11,7 @@ public class ArmorDurability {
 	private static Minecraft mc = Minecraft.getInstance();
 	private static PlayerEntity player = mc.player;
 	private static Iterable<ItemStack> armor;
+	private static ArrayList <ItemStack> a = new ArrayList<ItemStack>();
 
 	private static String head;
 	private static ItemStack head_icon;
@@ -37,15 +38,22 @@ public class ArmorDurability {
 		int current = stack.getMaxDamage() - stack.getDamage();
 		return " " + current + " / " + stack.getMaxDamage();
 	}
+	
+	public static void getAll() {
+		armor = player.getArmorInventoryList();
+		for (ItemStack b:armor) {
+			a.add(b);
+		}
+		getHead();
+		getBody();
+		getLeg();
+		getBoot();
+		getHand();
+	}
 
 
 	//HEAD
 	public static String getHead() {
-		armor = player.getArmorInventoryList();
-		ArrayList <ItemStack> a = new ArrayList<ItemStack>();
-		for (ItemStack b:armor) {
-			a.add(b);
-		}
 		head_icon = a.get(3);
 		head = head_icon.getDisplayName().getFormattedText();
 		head_durability = durability (head_icon);
@@ -67,10 +75,6 @@ public class ArmorDurability {
 
 	//BODY
 	public static String getBody() {
-		ArrayList <ItemStack> a = new ArrayList<ItemStack>();
-		for (ItemStack b:armor) {
-			a.add(b);
-		}
 		body_icon = a.get(2);
 		body = body_icon.getDisplayName().getFormattedText();
 		body_durability = durability (body_icon);
@@ -92,10 +96,6 @@ public class ArmorDurability {
 
 	//LEG
 	public static String getLeg() {
-		ArrayList <ItemStack> a = new ArrayList<ItemStack>();
-		for (ItemStack b:armor) {
-			a.add(b);
-		}
 		leg_icon = a.get(1);
 		leg = leg_icon.getDisplayName().getFormattedText();
 		leg_durability = durability (leg_icon);
@@ -117,10 +117,6 @@ public class ArmorDurability {
 
 	//BOOT
 	public static String getBoot() {
-		ArrayList <ItemStack> a = new ArrayList<ItemStack>();
-		for (ItemStack b:armor) {
-			a.add(b);
-		}
 		boot_icon = a.get(0);
 		boot = boot_icon.getDisplayName().getFormattedText();
 		boot_durability = durability (boot_icon);

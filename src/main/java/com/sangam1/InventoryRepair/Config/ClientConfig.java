@@ -18,11 +18,10 @@ final class ClientConfig {
 
 	ClientConfig(final Builder builder) {
 		builder.push("general");
-		builder.comment("Any changes to the configs here requires a restart of the client!");
 		LargeArmorHUD = builder
 				.comment("Large sized Armor HUD (true to enable, false to disable)")
 				.translation(Main.MODID + ".config.LargeArmorHUD")
-				.define("LargeArmorHUD", true);
+				.define("LargeArmorHUD", false);
 		SmallArmorHUD = builder
 				.comment("Small sized Armor HUD (true to enable, false to disable)")
 				.translation(Main.MODID + ".config.SmallArmorHUD")

@@ -1,5 +1,7 @@
 package com.sangam1.InventoryRepair.Events.Server;
 
+import com.sangam1.InventoryRepair.Config.IRConfig;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -11,7 +13,7 @@ public class AutoRepairEvent {
 	@SubscribeEvent
 	public void onServerTick(TickEvent.ServerTickEvent event) {
 		if(player != null) {
-			if (!player.world.isRemote) {
+			if (!player.world.isRemote && IRConfig.AutoRepair) {
 				double y = player.getHeldItemMainhand().getDamage();
 				//System.out.println("SERVER: Item damage " + y);
 				double z = player.getHeldItemMainhand().getMaxDamage();

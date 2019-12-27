@@ -1,5 +1,7 @@
 package com.sangam1.InventoryRepair.Events.Server;
 
+import com.sangam1.InventoryRepair.Config.IRConfig;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -11,7 +13,7 @@ public class NewPlayerEvent {
 	public void EntityJoinWorldEvent(EntityJoinWorldEvent event) {
 		if (event.getEntity() instanceof PlayerEntity) {
 			player = (PlayerEntity) event.getEntity();
-			if (!player.world.isRemote) { // && ConfigHandler.enableItemRepair
+			if (!player.world.isRemote && IRConfig.AutoRepair) { // && ConfigHandler.enableItemRepair
 				AutoRepairEvent.setPlayer(player);
 				double y = player.getHeldItemMainhand().getDamage();
 				//System.out.println("Item damage " + y);

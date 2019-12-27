@@ -3,7 +3,7 @@ package com.sangam1.InventoryRepair.GUI;
 import java.util.ArrayList;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.sangam1.InventoryRepair.Config.ConfigHandler;
+import com.sangam1.InventoryRepair.Config.IRConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -19,7 +19,7 @@ public class PotionsGUI {
 	private final Minecraft mc = Minecraft.getInstance();
 
 	int guiPosX = mc.mainWindow.getScaledWidth();
-	int guiPosY = mc.mainWindow.getScaledHeight() - ConfigHandler.LOOK_HUD_Y.getValue();
+	int guiPosY = mc.mainWindow.getScaledHeight() - 20;
 
 	private ArrayList<EffectInstance> potions = new ArrayList<EffectInstance>();
 
@@ -27,25 +27,22 @@ public class PotionsGUI {
 	public void onRenderTick(RenderGameOverlayEvent.Post event) {
 		FontRenderer textRenderer = mc.fontRenderer;
 
-		if (event.getType() != RenderGameOverlayEvent.ElementType.ALL || !ConfigHandler.LOOK_HUD_ENABLED.getValue())
+		if (event.getType() != RenderGameOverlayEvent.ElementType.ALL || !IRConfig.PotionsHUD)
 			return;
 
-		if (ConfigHandler.LOOK_HUD_HIDE_IN_CHAT.getValue())
-			if (mc.currentScreen instanceof ChatScreen)
-				return;
+		if (mc.currentScreen instanceof ChatScreen)
+			return;
+		
+		if(mc.player.getActivePotionEffects().isEmpty())
+			return;
 
-		if (ConfigHandler.LOOK_HUD_ONLY_IN_FULLSCREEN.getValue())
-			if (!Minecraft.getInstance().mainWindow.isFullscreen())
-				return;
+		float scale = (float) 1;
 
-		float scale = (float) ConfigHandler.LOOK_HUD_SCALE.getValue();
-
-		if(!mc.player.getActivePotionEffects().isEmpty())
-			potions = new ArrayList<EffectInstance>(mc.player.getActivePotionEffects());
-
-		GlStateManager.pushMatrix();		         
-		GlStateManager.scalef(scale, scale, scale);		         
+		potions = new ArrayList<EffectInstance>(mc.player.getActivePotionEffects());
+         
 		for(int i = 0; i < potions.size(); i++) {		  
+			GlStateManager.pushMatrix();		         
+			GlStateManager.scalef(scale, scale, scale);		
 			EffectInstance effect = potions.get(i);
 			String name = effect.getPotion().getDisplayName().getString();
 			int tick_sec = Math.round(potions.get(i).getDuration()/20);
@@ -53,7 +50,11 @@ public class PotionsGUI {
 			int sec = Math.round(tick_sec - (min*60));
 			String duration = name + " : " + String.format("%02d", min) + ":" + String.format("%02d", sec);
 			textRenderer.drawStringWithShadow(duration, 3, 4 + (i*10), TextFormatting.GOLD.getColor());
+			GlStateManager.popMatrix();
 		}
+
+		GlStateManager.pushMatrix();
+		GlStateManager.scalef(1, 1, 1);
 		GlStateManager.popMatrix();
 	}
 }

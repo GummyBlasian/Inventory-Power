@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.sangam1.InventoryRepair.API.HarvestLevelAPI;
-import com.sangam1.InventoryRepair.Config.ConfigHandler;
+import com.sangam1.InventoryRepair.Config.ConfigHolder;
 import com.sangam1.InventoryRepair.Events.Client.InGameGuiEvent;
 import com.sangam1.InventoryRepair.Events.Server.AutoRepairEvent;
 import com.sangam1.InventoryRepair.Events.Server.NewPlayerEvent;
@@ -51,8 +51,8 @@ public class Main {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onLoadComplete);
 
 		MinecraftForge.EVENT_BUS.register(this);
-
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigHolder.CLIENT_SPEC);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ConfigHolder.SERVER_SPEC);
 
 		Main.LOGGER.info(Main.MODID +" : " + "setup done!");
 	}
@@ -61,6 +61,7 @@ public class Main {
 	{
 		proxy.init();
 		APISetup();
+		
 		Main.LOGGER.info(Main.MODID +" : " + "setup done!");
 	}
 
@@ -71,12 +72,6 @@ public class Main {
 	private void onLoadComplete(final FMLClientSetupEvent event) 
 	{
 		DifferentBlocks.init();
-		if (!ConfigHandler.CONFIG_VERSION.get().equals(ConfigHandler.CURRENT_VERSION)) {
-			ConfigHandler.resetConfig();
-
-			ConfigHandler.CONFIG_VERSION.set(ConfigHandler.CURRENT_VERSION);
-			ConfigHandler.CONFIG_VERSION.save();
-		}
 
 		Clock = new ItemStack(Items.CLOCK);
 

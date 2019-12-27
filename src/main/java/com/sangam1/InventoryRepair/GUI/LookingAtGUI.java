@@ -31,7 +31,6 @@ public class LookingAtGUI{
 
 	private long hours = 0;
 	private long mins = 0;
-	private long secs = 0;
 	private long days = 0;
 	private String amOrPm = " AM";
 
@@ -55,11 +54,12 @@ public class LookingAtGUI{
 		String biome = "Biome: " + LookingAt.getBiome();
 		String can_mine = "Can mine: " + LookingAt.isCanMine();
 		String dimension= "Dimension: " + LookingAt.getDimension().getType().getRegistryName().toString();
-
+		String weather = "Weather: " + LookingAt.isRaining();
+		
 		getTime();
 
 		String day =  "Day: " + days;
-		String time = String.format("%02d", hours) + ":" + String.format("%02d", mins) + ":" + String.format("%02d", secs) + amOrPm;
+		String time = String.format("%02d", hours) + ":" + String.format("%02d", mins) + amOrPm;
 		
 		if (Minecraft.getInstance().world.dimension.getType().getId() == 1) {
 			String alt_text = "";
@@ -75,6 +75,7 @@ public class LookingAtGUI{
 		int txt3width = mc.fontRenderer.getStringWidth(harvest_level);	   
 		int txt4width = mc.fontRenderer.getStringWidth(biome);
 		int txt5width = mc.fontRenderer.getStringWidth(dimension);
+		int txt6width = mc.fontRenderer.getStringWidth(weather);
 
 		float scale = (float) 1;
 
@@ -89,7 +90,7 @@ public class LookingAtGUI{
 		if (IRConfig.TimeHUD) {
 			GlStateManager.pushMatrix();
 			GlStateManager.scalef(scale, scale, scale);	        
-			mc.getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/gui/clock_hud_rect.png"));
+			mc.getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/gui/clock_hud_rect.png"));//Render Background
 			GlStateManager.color3f(1.0F, 1.0F, 1.0F);
 			GuiUtils.drawTexturedModalRect(0, guiPosY-10, 0, 0, 90, 28, 0F); 
 			mc.getItemRenderer().renderItemAndEffectIntoGUI(Main.Clock, 5, guiPosY-4);//Render Clock
@@ -97,8 +98,8 @@ public class LookingAtGUI{
 			
 			GlStateManager.pushMatrix();
 			GlStateManager.scalef(0.8f, 0.8f, scale);	
-			textRenderer.drawStringWithShadow(day, 30, (float) ((guiPosY*1.25) - 5), TextFormatting.GOLD.getColor()); //Day
-			textRenderer.drawStringWithShadow(time, 30, (float) ((guiPosY*1.25) + 5), TextFormatting.GOLD.getColor()); //Time
+			textRenderer.drawStringWithShadow(day, 30, (float) ((guiPosY*1.25) - 3), TextFormatting.GOLD.getColor()); //Day
+			textRenderer.drawStringWithShadow(time, 30, (float) ((guiPosY*1.25) + 7), TextFormatting.GOLD.getColor()); //Time
 			GlStateManager.popMatrix();
 		}
 
@@ -122,6 +123,7 @@ public class LookingAtGUI{
 			textRenderer.drawStringWithShadow(biome, 4, (float)(guiPosY*1.25)/2 + 10, TextFormatting.GOLD.getColor()); //Biome
 			textRenderer.drawStringWithShadow(can_mine, 4, (float) ((guiPosY*1.25)/2 + 22), TextFormatting.GOLD.getColor()); //Can Mine
 			textRenderer.drawStringWithShadow(dimension, 4, (float) ((guiPosY*1.25)/2 + 34), TextFormatting.GOLD.getColor()); //Dimension
+			textRenderer.drawStringWithShadow(weather, 4, (float) ((guiPosY*1.25)/2 + 46), TextFormatting.GOLD.getColor()); //Weather
 			GlStateManager.popMatrix();
 		}
 
@@ -142,18 +144,15 @@ public class LookingAtGUI{
 
 		long hours = hour_tick - (day_tick*24);
 		long mins = min_tick - (hour_tick*60);
-		long secs = sec_tick - (min_tick*60);
 
 		if (hours <= 12) {
 			this.hours = hours;
 			this.mins = mins;
-			this.secs = secs;
 			this.amOrPm = " PM";
 		} else {
 			this.days = day_tick + 1;
 			this.hours = hours - 12;
 			this.mins = mins;
-			this.secs = secs;
 			this.amOrPm = " AM";
 		}
 	}

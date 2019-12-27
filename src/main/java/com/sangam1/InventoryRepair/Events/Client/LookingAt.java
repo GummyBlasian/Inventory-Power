@@ -28,6 +28,7 @@ public class LookingAt {
 	private static String harvestLevel;
 	private static Biome biome;
 	private static Dimension dimension;
+	private static boolean isRaining;
 
 	public static void get_data() {
 		world = mc.world;
@@ -38,7 +39,7 @@ public class LookingAt {
 		harvestLevel = "";
 		dimension = null;
 
-		getBiomeAndDimensionMC();
+		getDataMC();
 		fire();
 	}
 
@@ -76,9 +77,10 @@ public class LookingAt {
 
 	}
 
-	private static void getBiomeAndDimensionMC() {
+	private static void getDataMC() {
 		biome = world.getBiome(mc.player.getPosition());
 		dimension = world.getDimension();
+		isRaining = world.isRaining();
 	}
 
 	@SuppressWarnings("unused")
@@ -114,6 +116,13 @@ public class LookingAt {
 
 	public static Dimension getDimension() {
 		return dimension;
+	}
+
+	public static String isRaining() {
+		if(isRaining)
+			return "Raining";
+		else
+			return "Clear";
 	}
 
 }

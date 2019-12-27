@@ -1,7 +1,7 @@
 package com.sangam1.InventoryRepair.proxy;
 
 import com.sangam1.InventoryRepair.Main;
-import com.sangam1.InventoryRepair.References.ContainerList;
+import com.sangam1.InventoryRepair.GUI.Container.PCTContainer;
 import com.sangam1.InventoryRepair.Screen.PCTScreen;
 
 import net.minecraft.client.Minecraft;
@@ -14,7 +14,7 @@ public class ClientProxy implements IProxy {
     @Override
     public void init() {
     	
-       ScreenManager.registerFactory(ContainerList.PCT_CONTAINER, PCTScreen::new);
+       ScreenManager.registerFactory(PCTContainer.TYPE, PCTScreen::new);
 
        Main.LOGGER.info(Main.MODID +" : " + "Client proxy done!");
     }

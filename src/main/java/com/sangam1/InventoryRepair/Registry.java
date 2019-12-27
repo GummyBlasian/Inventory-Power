@@ -47,7 +47,7 @@ public class Registry {
 		event.getRegistry().registerAll
 		(
 				//Items
-				ItemList.portableCrafting = new ItemPortableCrafting(new Item.Properties().group(IRGroup).maxStackSize(1)).setRegistryName(locationItems("portableCrafting"))
+				ItemList.portableCrafting = new ItemPortableCrafting(new Item.Properties().group(IRGroup).maxStackSize(1)).setRegistryName(locationItems("portable-crafting"))
 
 				);
 
@@ -58,7 +58,7 @@ public class Registry {
 	public static void registerContainer(final RegistryEvent.Register<ContainerType<?>> event) {
 		event.getRegistry().registerAll(
 
-				IForgeContainerType.create((windowId, playerInventory, data) -> new PCTContainer(windowId, playerInventory, data)).setRegistryName("portableCrafting")
+				IForgeContainerType.create(PCTContainer::new).setRegistryName("portable-crafting")
 
 				);
 

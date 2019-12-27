@@ -2,8 +2,7 @@ package com.sangam1.InventoryRepair.GUI.Container;
 
 import java.util.Optional;
 
-import static com.sangam1.InventoryRepair.References.ContainerList.PCT_CONTAINER;
-
+import com.sangam1.InventoryRepair.Main;
 import com.sangam1.InventoryRepair.References.ItemList;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,8 +22,13 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.ObjectHolder;
 
+@ObjectHolder(Main.MODID)
 public class PCTContainer extends Container {
+	
+	@ObjectHolder("portable-crafting")
+	public static ContainerType<PCTContainer> TYPE;
 
 	private PlayerEntity playerEntity;
 	private CraftingInventory crafting_matrix;
@@ -34,7 +38,7 @@ public class PCTContainer extends Container {
 	private PlayerEntity player;
 
 	public PCTContainer(int window_id, World world, PlayerEntity player, PlayerInventory playerInv) {
-		super(PCT_CONTAINER, window_id);
+		super(TYPE, window_id);
 		this.playerEntity = player;
 		this.pos = IWorldPosCallable.of(world, player.getPosition());
 		this.world = world;
@@ -48,7 +52,7 @@ public class PCTContainer extends Container {
 
 	@Override
 	public ContainerType<?> getType() {
-		return PCT_CONTAINER;
+		return TYPE;
 	}
 
 	public PCTContainer(int windowId, PlayerInventory playerInv, PacketBuffer data) {

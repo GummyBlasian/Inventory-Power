@@ -21,5 +21,5 @@
 		"A": { "item": "minecraft:crafting_table" }
 	},
 	
-	"result": { "item": "sangamir:gocraft" }
+	"result": { "item": "sangamir:portableCrafting" }
 }

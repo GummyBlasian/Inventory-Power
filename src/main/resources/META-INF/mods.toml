@@ -1,12 +1,12 @@
 modLoader="javafml" #mandatory
 loaderVersion="[28,)" #mandatory (28 is current forge version)
-issueTrackerURL="https://github.com/GummyBlasian/Sangam1-Core/issues/" #optional
+issueTrackerURL="https://github.com/GummyBlasian/Inventory-Power/issues" #optional
 logoFile="logo.png" #optional
 [[mods]] #mandatory
 modId="sangamir" #mandatory
 version="${file.jarVersion}" #mandatory
 displayName="Inventory Power" #mandatory
-displayURL="https://github.com/GummyBlasian/Sangam1-Core/" #optional
+displayURL="https://github.com/GummyBlasian/Inventory-Power" #optional
 credits="Thanks to the Minecraft Forge Community for the help!" #optional
 authors="Sangam1" #optional
 description='''

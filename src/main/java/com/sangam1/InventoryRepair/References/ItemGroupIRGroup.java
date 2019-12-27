@@ -13,6 +13,6 @@ public class ItemGroupIRGroup extends ItemGroup
 	@Override
 	public ItemStack createIcon() 
 	{
-		return new ItemStack(ItemList.gocraft);
+		return new ItemStack(ItemList.portableCrafting);
 	}
 }

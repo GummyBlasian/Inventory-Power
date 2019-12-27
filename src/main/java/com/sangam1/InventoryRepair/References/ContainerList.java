@@ -9,7 +9,7 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(Main.MODID)
 public class ContainerList {
 	
-	@ObjectHolder("gocraft")
+	@ObjectHolder("portableCrafting")
 	public static final ContainerType<PCTContainer> PCT_CONTAINER = null;
 	
 }

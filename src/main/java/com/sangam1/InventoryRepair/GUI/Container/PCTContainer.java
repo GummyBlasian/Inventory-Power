@@ -2,7 +2,8 @@ package com.sangam1.InventoryRepair.GUI.Container;
 
 import java.util.Optional;
 
-import com.sangam1.InventoryRepair.References.ContainerList;
+import static com.sangam1.InventoryRepair.References.ContainerList.PCT_CONTAINER;
+
 import com.sangam1.InventoryRepair.References.ItemList;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,7 +34,7 @@ public class PCTContainer extends Container {
 	private PlayerEntity player;
 
 	public PCTContainer(int window_id, World world, PlayerEntity player, PlayerInventory playerInv) {
-		super(ContainerList.PCT_CONTAINER, window_id);
+		super(PCT_CONTAINER, window_id);
 		this.playerEntity = player;
 		this.pos = IWorldPosCallable.of(world, player.getPosition());
 		this.world = world;
@@ -47,7 +48,7 @@ public class PCTContainer extends Container {
 
 	@Override
 	public ContainerType<?> getType() {
-		return ContainerList.PCT_CONTAINER;
+		return PCT_CONTAINER;
 	}
 
 	public PCTContainer(int windowId, PlayerInventory playerInv, PacketBuffer data) {
@@ -56,7 +57,7 @@ public class PCTContainer extends Container {
 
 	@Override
 	public boolean canInteractWith(PlayerEntity player) {
-		return player.getHeldItemMainhand().getItem() == ItemList.gocraft;
+		return player.getHeldItemMainhand().getItem() == ItemList.portableCrafting;
 	}
 
 	@Override

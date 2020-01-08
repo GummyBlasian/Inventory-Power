@@ -14,7 +14,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = 'r1.14-003.1B'
-group = 'com.sangam1.InventoryRepair' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'com.github.GummyBlasian.InventoryPower' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Inventory Power'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.

@@ -13,8 +13,13 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
+<<<<<<< Updated upstream
 version = 'r1.14-003.1B'
 group = 'com.sangam1.InventoryRepair' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+=======
+version = 'r1.14-004'
+group = 'com.github.GummyBlasian.InventoryPower' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+>>>>>>> Stashed changes
 archivesBaseName = 'Inventory Power'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.

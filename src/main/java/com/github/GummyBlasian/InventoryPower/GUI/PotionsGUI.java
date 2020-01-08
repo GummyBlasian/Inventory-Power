@@ -3,7 +3,7 @@ package com.github.GummyBlasian.InventoryPower.GUI;
 import java.util.ArrayList;
 
 import com.github.GummyBlasian.InventoryPower.Config.IRConfig;
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -18,8 +18,8 @@ public class PotionsGUI {
 
 	private final Minecraft mc = Minecraft.getInstance();
 
-	int guiPosX = mc.mainWindow.getScaledWidth();
-	int guiPosY = mc.mainWindow.getScaledHeight() - 20;
+	int guiPosX = mc.func_228018_at_().getScaledWidth(); //mainWindow
+	int guiPosY = mc.func_228018_at_().getScaledHeight() - 20; //mainWindow
 
 	private ArrayList<EffectInstance> potions = new ArrayList<EffectInstance>();
 
@@ -41,8 +41,8 @@ public class PotionsGUI {
 		potions = new ArrayList<EffectInstance>(mc.player.getActivePotionEffects());
          
 		for(int i = 0; i < potions.size(); i++) {		  
-			GlStateManager.pushMatrix();		         
-			GlStateManager.scalef(scale, scale, scale);		
+			RenderSystem.pushMatrix();		         
+			RenderSystem.scalef(scale, scale, scale);		
 			EffectInstance effect = potions.get(i);
 			String name = effect.getPotion().getDisplayName().getString();
 			int tick_sec = Math.round(potions.get(i).getDuration()/20);
@@ -50,11 +50,11 @@ public class PotionsGUI {
 			int sec = Math.round(tick_sec - (min*60));
 			String duration = name + " : " + String.format("%02d", min) + ":" + String.format("%02d", sec);
 			textRenderer.drawStringWithShadow(duration, 3, 4 + (i*10), TextFormatting.GOLD.getColor());
-			GlStateManager.popMatrix();
+			RenderSystem.popMatrix();
 		}
 
-		GlStateManager.pushMatrix();
-		GlStateManager.scalef(1, 1, 1);
-		GlStateManager.popMatrix();
+		RenderSystem.pushMatrix();
+		RenderSystem.scalef(1, 1, 1);
+		RenderSystem.popMatrix();
 	}
 }

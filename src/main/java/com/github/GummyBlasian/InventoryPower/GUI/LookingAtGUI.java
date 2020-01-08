@@ -6,6 +6,7 @@ import com.github.GummyBlasian.InventoryPower.Main;
 import com.github.GummyBlasian.InventoryPower.Config.IRConfig;
 import com.github.GummyBlasian.InventoryPower.Events.Client.LookingAt;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -26,8 +27,8 @@ public class LookingAtGUI{
 
 	private static final Random random = new Random();
 
-	private int guiPosX = mc.mainWindow.getScaledWidth();
-	private int guiPosY = mc.mainWindow.getScaledHeight() - 20;
+	private int guiPosX = mc.func_228018_at_().getScaledWidth(); //mainWindow
+	private int guiPosY = mc.func_228018_at_().getScaledHeight() - 20; //mainWindow
 
 	private long hours = 0;
 	private long mins = 0;
@@ -79,57 +80,57 @@ public class LookingAtGUI{
 
 		float scale = (float) 1;
 
-		GlStateManager.pushMatrix();
-		GlStateManager.disableLighting();
-		GlStateManager.enableAlphaTest();	         
-		GlStateManager.alphaFunc(516, 0.1F);
-		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-		GlStateManager.popMatrix();
+		RenderSystem.pushMatrix();
+		RenderSystem.disableLighting();
+		RenderSystem.enableAlphaTest();	         
+		RenderSystem.alphaFunc(516, 0.1F);
+		RenderSystem.enableBlend();
+		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+		RenderSystem.popMatrix();
 
 		if (IRConfig.TimeHUD) {
-			GlStateManager.pushMatrix();
-			GlStateManager.scalef(scale, scale, scale);	        
+			RenderSystem.pushMatrix();
+			RenderSystem.scalef(scale, scale, scale);	        
 			mc.getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/gui/clock_hud_rect.png"));//Render Background
-			GlStateManager.color3f(1.0F, 1.0F, 1.0F);
+			RenderSystem.color3f(1.0F, 1.0F, 1.0F);
 			GuiUtils.drawTexturedModalRect(0, guiPosY-10, 0, 0, 90, 28, 0F); 
 			mc.getItemRenderer().renderItemAndEffectIntoGUI(Main.Clock, 5, guiPosY-4);//Render Clock
-			GlStateManager.popMatrix();
+			RenderSystem.popMatrix();
 			
-			GlStateManager.pushMatrix();
-			GlStateManager.scalef(0.8f, 0.8f, scale);	
+			RenderSystem.pushMatrix();
+			RenderSystem.scalef(0.8f, 0.8f, scale);	
 			textRenderer.drawStringWithShadow(day, 30, (float) ((guiPosY*1.25) - 3), TextFormatting.GOLD.getColor()); //Day
 			textRenderer.drawStringWithShadow(time, 30, (float) ((guiPosY*1.25) + 7), TextFormatting.GOLD.getColor()); //Time
-			GlStateManager.popMatrix();
+			RenderSystem.popMatrix();
 		}
 
-		GlStateManager.pushMatrix();	        
-		GlStateManager.disableAlphaTest();
-		RenderHelper.enableGUIStandardItemLighting();	         
-		GlStateManager.popMatrix();
+		RenderSystem.pushMatrix();	        
+		RenderSystem.disableAlphaTest();
+		RenderHelper.func_227784_d_(); //.enableGUIStandardItemLighting()         
+		RenderSystem.popMatrix();
 
 		if(IRConfig.LookingAtHUD) {
-			GlStateManager.pushMatrix();	         
-			GlStateManager.scalef(scale, scale, scale);
+			RenderSystem.pushMatrix();	         
+			RenderSystem.scalef(scale, scale, scale);
 			textRenderer.drawStringWithShadow(looking_at, guiPosX/2 - txt1width/2, 2, TextFormatting.GOLD.getColor()); //Looking at
 			textRenderer.drawStringWithShadow(made_by, guiPosX/2 - txt2width/2, 12, TextFormatting.GOLD.getColor()); //Made by
-			GlStateManager.popMatrix();
+			RenderSystem.popMatrix();
 		}
 
 		if(IRConfig.DataHUD) {
-			GlStateManager.pushMatrix();
-			GlStateManager.scalef(0.8f, 0.8f, scale);
+			RenderSystem.pushMatrix();
+			RenderSystem.scalef(0.8f, 0.8f, scale);
 			textRenderer.drawStringWithShadow(harvest_level, 4, (float) ((guiPosY*1.25)/2 - 2), TextFormatting.GOLD.getColor()); //Harvest level
 			textRenderer.drawStringWithShadow(biome, 4, (float)(guiPosY*1.25)/2 + 10, TextFormatting.GOLD.getColor()); //Biome
 			textRenderer.drawStringWithShadow(can_mine, 4, (float) ((guiPosY*1.25)/2 + 22), TextFormatting.GOLD.getColor()); //Can Mine
 			textRenderer.drawStringWithShadow(dimension, 4, (float) ((guiPosY*1.25)/2 + 34), TextFormatting.GOLD.getColor()); //Dimension
 			textRenderer.drawStringWithShadow(weather, 4, (float) ((guiPosY*1.25)/2 + 46), TextFormatting.GOLD.getColor()); //Weather
-			GlStateManager.popMatrix();
+			RenderSystem.popMatrix();
 		}
 
-		GlStateManager.pushMatrix();
-		GlStateManager.scalef(1, 1, 1);
-		GlStateManager.popMatrix();
+		RenderSystem.pushMatrix();
+		RenderSystem.scalef(1, 1, 1);
+		RenderSystem.popMatrix();
 	}
 
 	private void getTime() {

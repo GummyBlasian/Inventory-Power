@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = 'r1.14-003.1B'
+version = 'r1.14-004'
 group = 'com.github.GummyBlasian.InventoryPower' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Inventory Power'
 

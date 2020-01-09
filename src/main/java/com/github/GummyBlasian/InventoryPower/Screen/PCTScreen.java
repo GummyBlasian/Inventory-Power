@@ -11,7 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class PCTScreen extends ContainerScreen<PCTContainer>{
 
-    private ResourceLocation GUI = new ResourceLocation(Main.MODID, "textures/gui/portable-crafting.png");
+    private ResourceLocation GUI = new ResourceLocation(Main.MODID, "textures/gui/portable_crafting.png");
 
 	public PCTScreen(PCTContainer container, PlayerInventory inv, ITextComponent name) {
 		super(container, inv, name);

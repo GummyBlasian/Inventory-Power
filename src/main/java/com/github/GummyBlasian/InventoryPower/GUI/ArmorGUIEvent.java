@@ -1,6 +1,7 @@
 package com.github.GummyBlasian.InventoryPower.GUI;
 
 import com.github.GummyBlasian.InventoryPower.Config.IRConfig;
+import com.github.GummyBlasian.InventoryPower.Events.Client.ArmorDurability;
 import com.github.GummyBlasian.InventoryPower.GUI.Handlers.LargeArmorGUIHandler;
 import com.github.GummyBlasian.InventoryPower.GUI.Handlers.SmallArmorGUIHandler;
 import com.github.GummyBlasian.InventoryPower.GUI.Handlers.SmallIconArmorGUIHandler;
@@ -37,6 +38,8 @@ public class ArmorGUIEvent {
 
 		float scale = (float) 1;
 		
+		ArmorDurability.getData();
+		
 		RenderSystem.pushMatrix();
 		RenderSystem.disableLighting();
 		RenderSystem.enableAlphaTest();		         
@@ -60,6 +63,9 @@ public class ArmorGUIEvent {
 		RenderSystem.popMatrix();
 
 		if(IRConfig.LargeArmorHUD) {
+			
+			ArmorDurability.getData();
+			
 			RenderSystem.pushMatrix();
 			RenderSystem.scalef(scale, scale, scale);	         
 			LargeArmorGUIHandler.headGUI(textRenderer, mc, guiPosX, guiPosY);
@@ -70,6 +76,9 @@ public class ArmorGUIEvent {
 		}
 
 		if(IRConfig.SmallArmorHud) {
+
+			ArmorDurability.getData();
+			
 			//Text
 			int guiPosYScaled = (int) (guiPosY*1.43);
 			int guiPosXScaled = (int) (guiPosX*1.43);

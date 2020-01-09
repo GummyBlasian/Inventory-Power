@@ -27,7 +27,7 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(Main.MODID)
 public class PCTContainer extends Container {
 	
-	@ObjectHolder("portable-crafting")
+	@ObjectHolder("portable_crafting")
 	public static ContainerType<PCTContainer> TYPE;
 
 	private PlayerEntity playerEntity;

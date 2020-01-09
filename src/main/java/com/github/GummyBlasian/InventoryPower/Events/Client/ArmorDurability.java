@@ -2,6 +2,8 @@ package com.github.GummyBlasian.InventoryPower.Events.Client;
 
 import java.util.ArrayList;
 
+import com.github.GummyBlasian.InventoryPower.Main;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -11,7 +13,7 @@ public class ArmorDurability {
 	private static Minecraft mc = Minecraft.getInstance();
 	private static PlayerEntity player = mc.player;
 	private static Iterable<ItemStack> armor;
-	private static ArrayList <ItemStack> a = new ArrayList<ItemStack>();
+	private static ArrayList <ItemStack> armors = new ArrayList<ItemStack>();
 
 	private static String head;
 	private static ItemStack head_icon;
@@ -39,11 +41,17 @@ public class ArmorDurability {
 		return " " + current + " / " + stack.getMaxDamage();
 	}
 	
-	public static void getAll() {
+	public static void getData() {
 		armor = player.getArmorInventoryList();
-		for (ItemStack b:armor) {
-			a.add(b);
+		armors.clear();
+		for (ItemStack a:armor) {
+			armors.add(a);
 		}
+		Main.LOGGER.debug(armor.toString() + " here " + armors.size());
+	}
+	
+	public static void getAll() {
+		getData();
 		getHead();
 		getBody();
 		getLeg();
@@ -54,9 +62,13 @@ public class ArmorDurability {
 
 	//HEAD
 	public static String getHead() {
-		head_icon = a.get(3);
+		
+		getData();
+		
+		head_icon = armors.get(3);
 		head = head_icon.getDisplayName().getFormattedText();
 		head_durability = durability (head_icon);
+		Main.LOGGER.debug("head " + head);
 		if (head.matches("Air")) {
 			head_icon = null;
 			head = "";
@@ -75,9 +87,13 @@ public class ArmorDurability {
 
 	//BODY
 	public static String getBody() {
-		body_icon = a.get(2);
+		
+		getData();
+		
+		body_icon = armors.get(2);
 		body = body_icon.getDisplayName().getFormattedText();
 		body_durability = durability (body_icon);
+		Main.LOGGER.debug("body " + body);
 		if (body.matches("Air")) {
 			body_icon = null;
 			body = "";
@@ -96,9 +112,13 @@ public class ArmorDurability {
 
 	//LEG
 	public static String getLeg() {
-		leg_icon = a.get(1);
+		
+		getData();
+		
+		leg_icon = armors.get(1);
 		leg = leg_icon.getDisplayName().getFormattedText();
 		leg_durability = durability (leg_icon);
+		Main.LOGGER.debug("leg " + leg);
 		if (leg.matches("Air")) {
 			leg_icon = null;
 			leg = "";
@@ -117,9 +137,13 @@ public class ArmorDurability {
 
 	//BOOT
 	public static String getBoot() {
-		boot_icon = a.get(0);
+		
+		getData();
+		
+		boot_icon = armors.get(0);
 		boot = boot_icon.getDisplayName().getFormattedText();
 		boot_durability = durability (boot_icon);
+		Main.LOGGER.debug("boot " + boot);
 		if (boot.matches("Air")) {
 			boot_icon = null;
 			boot = "";

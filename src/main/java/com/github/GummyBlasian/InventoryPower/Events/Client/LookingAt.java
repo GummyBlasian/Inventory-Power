@@ -78,7 +78,7 @@ public class LookingAt {
 	}
 
 	private static void getDataMC() {
-		biome = world.getBiome(mc.player.getPosition());
+		biome = world.func_226691_t_(mc.player.getPosition()); //world.getBiome()
 		dimension = world.getDimension();
 		isRaining = world.isRaining();
 	}

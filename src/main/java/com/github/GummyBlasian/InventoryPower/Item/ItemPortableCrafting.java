@@ -28,7 +28,6 @@ public class ItemPortableCrafting extends Item {
 	  	@Override
 		public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 			if (!world.isRemote && hand == Hand.MAIN_HAND) {
-			
 				NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
 					@Override
 		            public ITextComponent getDisplayName() {

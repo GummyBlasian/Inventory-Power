@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraftforge.common.extensions.IForgeBlockState;
+import net.minecraft.block.state.IBlockState;
 
 public class ListOfSpecialBlocks {
 
@@ -28,19 +27,25 @@ public class ListOfSpecialBlocks {
 	/**
      * Adds the info for the block that a player is looking at to be properly named. (IBlockState version)
      */
-	public static void addToList(BlockState input, String output) {
+	public static void addToList(IBlockState input, String output) {
 		all.put(input, output);
 	}
 
 	public static String getFromList(String key) {
-		return all.get(key);
+		if(all.containsKey(key))
+			return all.get(key);
+		return "";
 	}
 
 	public static String getFromList(Block block) {
-		return all.get(block);
+		if(all.containsKey(block))
+			return all.get(block);
+		return "";
 	}
 
-	public static String getFromList(IForgeBlockState blockState) {
-		return all.get(blockState);
+	public static String getFromList(IBlockState blockState) {
+		if(all.containsKey(blockState))
+			return all.get(blockState);
+		return "";
 	}
 }

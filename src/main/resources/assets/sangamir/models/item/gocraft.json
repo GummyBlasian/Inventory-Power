@@ -1,6 +1,6 @@
 {
     "parent":"item/generated",
     "textures": {
-        "layer0":"sangamir:items/portable_crafting"
+        "layer0":"sangamir:items/gocraft"
     }
 }

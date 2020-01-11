@@ -28,6 +28,9 @@ public class ConfigHandler {
     @RequiresMcRestart
     public static boolean enableGoCraft = true;
     
+    @Comment("Allow portable crafting table. Disable if you don't want portable crafting table. Requires restart of client.")
+    @RequiresMcRestart
+    public static boolean blockNames = true;
     
     @Mod.EventBusSubscriber(modid = StartupRef.MODID)
 	private static class EventHandler {

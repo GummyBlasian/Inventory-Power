@@ -1,6 +1,5 @@
 package com.github.GummyBlasian.InventoryPower.Events.Client;
 
-import com.github.GummyBlasian.InventoryPower.API.ListOfSpecialBlocks;
 import com.github.GummyBlasian.InventoryPower.GUI.GUILookAt;
 
 import net.minecraft.block.Block;
@@ -10,8 +9,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -34,10 +31,11 @@ public class LookTickEvent {
 			fire();
 			if (target != null && target.typeOfHit == RayTraceResult.Type.BLOCK) {
 				BlockPos abc = target.getBlockPos();
-				BlockPos abc1 = new BlockPos(abc.getX(), abc.getY() - 1, abc.getZ());
-				IBlockState mcBlockState = Minecraft.getMinecraft().world.getBlockState(abc);
-				Block mcBlock = Minecraft.getMinecraft().world.getBlockState(abc).getBlock();
-				System.out.println();
+				//BlockPos abc1 = new BlockPos(abc.getX(), abc.getY() - 1, abc.getZ());
+				IBlockState blockState = Minecraft.getMinecraft().world.getBlockState(abc);
+				Block block = blockState.getBlock();
+				GUILookAt.setItemInHandText(block.getLocalizedName());
+				/*
 				if (mcBlock.toString().contains("double_plant")) {
 					if (mcBlockState.toString().contains("half=upper")) {
 						IBlockState ad = Minecraft.getMinecraft().world.getBlockState(abc1);
@@ -62,6 +60,7 @@ public class LookTickEvent {
 						GUILookAt.setItemInHandText(" " + ListOfSpecialBlocks.getFromList(mcBlock));
 					}
 				}
+				*/
 			} else if (target != null && target.typeOfHit == RayTraceResult.Type.ENTITY) {
 				GUILookAt.setItemInHandText(" " + EntityList.getEntityString(target.entityHit));
 			} else {

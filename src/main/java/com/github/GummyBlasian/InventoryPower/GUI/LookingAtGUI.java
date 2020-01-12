@@ -46,6 +46,9 @@ public class LookingAtGUI{
 
 		if (mc.currentScreen instanceof ChatScreen)
 			return;
+		
+		guiPosX = mc.func_228018_at_().getScaledWidth(); //mainWindow
+		guiPosY = mc.func_228018_at_().getScaledHeight() - 20; //mainWindow
 
 		LookingAt.get_data();
 

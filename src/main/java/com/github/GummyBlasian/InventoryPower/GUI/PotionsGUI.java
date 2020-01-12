@@ -35,7 +35,10 @@ public class PotionsGUI {
 		
 		if(mc.player.getActivePotionEffects().isEmpty())
 			return;
-
+		
+		guiPosX = mc.func_228018_at_().getScaledWidth(); //mainWindow
+		guiPosY = mc.func_228018_at_().getScaledHeight() - 20; //mainWindow
+		
 		float scale = (float) 1;
 
 		potions = new ArrayList<EffectInstance>(mc.player.getActivePotionEffects());

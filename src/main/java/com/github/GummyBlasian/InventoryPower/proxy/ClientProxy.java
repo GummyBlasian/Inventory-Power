@@ -2,7 +2,9 @@ package com.github.GummyBlasian.InventoryPower.proxy;
 
 import com.github.GummyBlasian.InventoryPower.Main;
 import com.github.GummyBlasian.InventoryPower.GUI.Container.PCTContainer;
+import com.github.GummyBlasian.InventoryPower.GUI.Container.PFContainer;
 import com.github.GummyBlasian.InventoryPower.Screen.PCTScreen;
+import com.github.GummyBlasian.InventoryPower.Screen.PFScreen;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
@@ -15,6 +17,7 @@ public class ClientProxy implements IProxy {
     public void init() {
     	
        ScreenManager.registerFactory(PCTContainer.TYPE, PCTScreen::new);
+       ScreenManager.registerFactory(PFContainer.TYPE, PFScreen::new);
 
        Main.LOGGER.info(Main.MODID +" : " + "Client proxy done!");
     }

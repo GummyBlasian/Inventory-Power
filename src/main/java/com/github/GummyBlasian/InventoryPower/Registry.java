@@ -6,6 +6,7 @@ import com.github.GummyBlasian.InventoryPower.Config.ConfigHelper;
 import com.github.GummyBlasian.InventoryPower.Config.ConfigHolder;
 import com.github.GummyBlasian.InventoryPower.GUI.Container.PCTContainer;
 import com.github.GummyBlasian.InventoryPower.Item.ItemPortableCrafting;
+import com.github.GummyBlasian.InventoryPower.Item.ItemPortableFurnace;
 import com.github.GummyBlasian.InventoryPower.References.ItemList;
 
 import net.minecraft.inventory.container.ContainerType;
@@ -47,7 +48,8 @@ public class Registry {
 		event.getRegistry().registerAll
 		(
 				//Items
-				ItemList.portableCrafting = new ItemPortableCrafting(new Item.Properties().group(IRGroup).maxStackSize(1)).setRegistryName(locationItems("portable_crafting"))
+				ItemList.portableCrafting = new ItemPortableCrafting(new Item.Properties().group(IRGroup).maxStackSize(1)).setRegistryName(locationItems("portable_crafting")),
+				ItemList.portableFurnace = new ItemPortableFurnace(new Item.Properties().group(IRGroup).maxStackSize(1)).setRegistryName(locationItems("portable_furnace"))
 				
 				);
 
@@ -58,7 +60,8 @@ public class Registry {
 	public static void registerContainer(final RegistryEvent.Register<ContainerType<?>> event) {
 		event.getRegistry().registerAll(
 
-				IForgeContainerType.create(PCTContainer::new).setRegistryName("portable_crafting")
+				IForgeContainerType.create(PCTContainer::new).setRegistryName("portable_crafting"),
+				IForgeContainerType.create(PCTContainer::new).setRegistryName("portable_furnace")
 
 				);
 

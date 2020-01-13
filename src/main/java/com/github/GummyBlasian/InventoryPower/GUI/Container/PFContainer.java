@@ -2,43 +2,41 @@ package com.github.GummyBlasian.InventoryPower.GUI.Container;
 
 import java.util.Optional;
 
+import com.github.GummyBlasian.InventoryPower.Inventory.FurnaceBurnInventory;
+import com.github.GummyBlasian.InventoryPower.Inventory.FurnaceInventory;
+import com.github.GummyBlasian.InventoryPower.Inventory.FurnaceResultInventory;
 import com.github.GummyBlasian.InventoryPower.Main;
 import com.github.GummyBlasian.InventoryPower.References.ItemList;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.CraftResultInventory;
-import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.CraftingResultSlot;
-import net.minecraft.inventory.container.Slot;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.AbstractCookingRecipe;
-import net.minecraft.item.crafting.ICraftingRecipe;
+import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SSetSlotPacket;
-import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(Main.MODID)
-public class PFContainer extends Container {
-	
+public class PFContainer extends AbstractFurnaceContainer {
+
 	@ObjectHolder("portable_furnace")
 	public static ContainerType<PFContainer> TYPE;
 
 	private PlayerEntity playerEntity;
-	private FurnaceInventory furnace_matrix;
+	private IInventory furnaceInventory;
 	private FurnaceBurnInventory furnace_power;
 	private FurnaceResultInventory furnace_result;
 	private final IWorldPosCallable pos;
 	private World world;
-	private PlayerEntity player;	
+	private PlayerEntity player;
 
 	/**
 	INPUT = 0;
@@ -49,15 +47,15 @@ public class PFContainer extends Container {
 	protected ItemStack failedMatch = ItemStack.EMPTY;
 
 	public PFContainer(int window_id, World world, PlayerEntity player, PlayerInventory playerInv) {
-		super(TYPE, window_id);
+		super(TYPE, IRecipeType.SMELTING, window_id, playerInv);
 		this.playerEntity = player;
 		this.pos = IWorldPosCallable.of(world, player.getPosition());
 		this.world = world;
 		this.player = player;
-		crafting_matrix = new FurnaceInventory(this);
-		furnace_result = new CraftResultInventory();
+		furnaceInventory = new Inventory(3);
+		furnace_result = new FurnaceResultInventory();
 		layoutPlayerInventorySlots(playerInv);
-		onCraftMatrixChanged(furnace_matrix);
+		onCraftMatrixChanged(furnaceInventory);
 	}
 
 	@Override
@@ -102,14 +100,11 @@ public class PFContainer extends Container {
 	}
 
 	private void layoutPlayerInventorySlots(PlayerInventory playerInv) {
-		crafting_matrix.openInventory(player);
-		
-		addSlot(new CraftingResultSlot(player, crafting_matrix, craft_result, 0, 124, 35));
-		for (int i = 0; i < 3; ++i) {
-			for (int j = 0; j < 3; ++j) {
-				addSlot(new Slot(crafting_matrix, j + i * 3, 30 + j * 18, 17 + i * 18));
-			}
-		}
+		furnaceInventory.openInventory(player);
+
+		addSlot(new FurnaceResultSlot(player, furnaceInventory, 2, 116, 35)); //output slot
+		addSlot(new FurnaceFuelSlot(this, furnaceInventory,1,56,53)); //fuel slot
+		addSlot(new Slot(furnaceInventory, 0, 56, 17)); //input slot
 		for (int k = 0; k < 3; ++k) {
 			for (int i1 = 0; i1 < 9; ++i1) {
 				addSlot(new Slot(player.inventory, i1 + k * 9 + 9, 8 + i1 * 18, 84 + k * 18));
@@ -120,26 +115,26 @@ public class PFContainer extends Container {
 			addSlot(new Slot(player.inventory, l, 8 + l * 18, 142));
 		}
 	}
-	
+
 	@Override
 	public void onCraftMatrixChanged(final IInventory inventory) {
 		pos.consume((world, pos) -> {
 			if (!world.isRemote) {
 				final ServerPlayerEntity playerMp = (ServerPlayerEntity) playerEntity;
 				ItemStack stack = ItemStack.EMPTY;
-				AbstractCookingRecipe  optional = world.getServer().getRecipeManager().getRecipe(IRecipeType.SMELTING, crafting_matrix, world);
+				Optional<FurnaceRecipe> optional = world.getServer().getRecipeManager().getRecipe(IRecipeType.SMELTING, furnaceInventory, world);
 				if (optional.isPresent()) {
-					final ICraftingRecipe icraftingrecipe = optional.get();
-					if (craft_result.canUseRecipe(world, playerMp, icraftingrecipe)) {
-						stack = icraftingrecipe.getCraftingResult(crafting_matrix);
+					final FurnaceRecipe icraftingrecipe = optional.get();
+					if (furnace_result.canUseRecipe(world, playerMp, icraftingrecipe)) {
+						stack = icraftingrecipe.getCraftingResult(furnaceInventory);
 					}
 				}
-				craft_result.setInventorySlotContents(0, stack);
+				furnace_result.setInventorySlotContents(0, stack);
 				playerMp.connection.sendPacket(new SSetSlotPacket(windowId, 0, stack));
 			}
 		});
 	}
-	
+
 	@Override
 	public void onContainerClosed(PlayerEntity playerIn)
     {
@@ -149,7 +144,7 @@ public class PFContainer extends Container {
         {
             for (int i = 0; i < 9; ++i)
             {
-            	ItemStack itemstack = this.crafting_matrix.removeStackFromSlot(i);
+            	ItemStack itemstack = this.furnaceInventory.removeStackFromSlot(i);
                 if (!itemstack.isEmpty())
                 {
                 	if (inv.hasItemStack(itemstack)) {
@@ -162,7 +157,7 @@ public class PFContainer extends Container {
         } else {
             for (int i = 0; i < 9; ++i)
             {
-            	ItemStack itemstack = this.crafting_matrix.removeStackFromSlot(i);
+            	ItemStack itemstack = this.furnaceInventory.removeStackFromSlot(i);
                 if (!itemstack.isEmpty())
                 {
                 	if (inv.hasItemStack(itemstack)) {
@@ -174,13 +169,14 @@ public class PFContainer extends Container {
             }
         }
     }
-	
+
 	@Override
 	public boolean canMergeSlot(ItemStack stack, Slot slotIn)
     {
-        return slotIn.inventory != this.craft_result && super.canMergeSlot(stack, slotIn);
+        return slotIn.inventory != this.furnace_result && super.canMergeSlot(stack, slotIn);
     }
-	
+
+    /*
 	protected AbstractCookingRecipe getRecipe() {
 		ItemStack input = this.getStackInSlot(INPUT);
 		if (input.isEmpty() || input == failedMatch) return null;
@@ -192,6 +188,6 @@ public class PFContainer extends Container {
 			return curRecipe = rec;
 		}
 	}
-
+*/
 
 }

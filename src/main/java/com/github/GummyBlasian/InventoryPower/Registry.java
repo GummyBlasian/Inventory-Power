@@ -1,5 +1,6 @@
 package com.github.GummyBlasian.InventoryPower;
 
+import com.github.GummyBlasian.InventoryPower.GUI.Container.PFContainer;
 import org.apache.logging.log4j.Logger;
 
 import com.github.GummyBlasian.InventoryPower.Config.ConfigHelper;
@@ -61,7 +62,7 @@ public class Registry {
 		event.getRegistry().registerAll(
 
 				IForgeContainerType.create(PCTContainer::new).setRegistryName("portable_crafting"),
-				IForgeContainerType.create(PCTContainer::new).setRegistryName("portable_furnace")
+				IForgeContainerType.create(PFContainer::new).setRegistryName("portable_furnace")
 
 				);
 

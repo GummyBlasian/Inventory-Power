@@ -27,7 +27,7 @@ public class PotionsGUI {
 	public void onRenderTick(RenderGameOverlayEvent.Post event) {
 		FontRenderer textRenderer = mc.fontRenderer;
 
-		if (event.getType() != RenderGameOverlayEvent.ElementType.ALL || !IRConfig.PotionsHUD)
+		if (event.getType() != RenderGameOverlayEvent.ElementType.ALL && !IRConfig.PotionsHUD)
 			return;
 
 		if (mc.currentScreen instanceof ChatScreen)

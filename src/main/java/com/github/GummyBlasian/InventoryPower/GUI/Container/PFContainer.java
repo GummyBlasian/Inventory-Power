@@ -18,8 +18,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.AbstractCookingRecipe;
 import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SSetSlotPacket;
+import net.minecraft.tileentity.AbstractFurnaceTileEntity;
+import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
@@ -43,8 +47,6 @@ public class PFContainer extends AbstractFurnaceContainer {
 	FUEL = 1;
 	OUTPUT = 2;
 	 **/
-	protected AbstractCookingRecipe curRecipe;
-	protected ItemStack failedMatch = ItemStack.EMPTY;
 
 	public PFContainer(int window_id, World world, PlayerEntity player, PlayerInventory playerInv) {
 		super(TYPE, IRecipeType.SMELTING, window_id, playerInv);
@@ -69,34 +71,63 @@ public class PFContainer extends AbstractFurnaceContainer {
 
 	@Override
 	public boolean canInteractWith(PlayerEntity player) {
-		return player.getHeldItemMainhand().getItem() == ItemList.portableCrafting;
+		return player.getHeldItemMainhand().getItem() == ItemList.portableFurnace;
 	}
 
+	/**
+	 * only called when player shift-clicks
+	 * @param playerIn
+	 * @param index
+	 * @return itemstack
+	 */
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+		System.out.println("transferred");
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(index);
 		if (slot != null && slot.getHasStack()) {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
-			int countSlots = 27;
-			if (index < countSlots) {
-				if (!mergeItemStack(itemstack1, countSlots + 1, this.inventorySlots.size() - 9, false)
-						&& !mergeItemStack(itemstack1, this.inventorySlots.size() - 9, this.inventorySlots.size(),
-								true)) {
-					return ItemStack.EMPTY;
-				}
-			} else if (!mergeItemStack(itemstack1, 0, countSlots, false)) {
+		if (index == 2) {
+			if (!this.mergeItemStack(itemstack1, 3, 39, true)) {
 				return ItemStack.EMPTY;
 			}
 
-			if (itemstack1.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
-			} else {
-				slot.onSlotChanged();
+			slot.onSlotChange(itemstack1, itemstack);
+		} else if (index != 1 && index != 0) {
+			if (this.func_217057_a(itemstack1)) {
+				if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (this.isFuel(itemstack1)) {
+				if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (index >= 3 && index < 30) {
+				if (!this.mergeItemStack(itemstack1, 30, 39, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (index >= 30 && index < 39 && !this.mergeItemStack(itemstack1, 3, 30, false)) {
+				return ItemStack.EMPTY;
 			}
+		} else if (!this.mergeItemStack(itemstack1, 3, 39, false)) {
+			return ItemStack.EMPTY;
 		}
-		return itemstack;
+
+		if (itemstack1.isEmpty()) {
+			slot.putStack(ItemStack.EMPTY);
+		} else {
+			slot.onSlotChanged();
+		}
+
+		if (itemstack1.getCount() == itemstack.getCount()) {
+			return ItemStack.EMPTY;
+		}
+
+		slot.onTake(playerIn, itemstack1);
+		}
+
+      return itemstack;
 	}
 
 	private void layoutPlayerInventorySlots(PlayerInventory playerInv) {
@@ -116,58 +147,70 @@ public class PFContainer extends AbstractFurnaceContainer {
 		}
 	}
 
+	/**
+	 *
+	 * @param inventory
+	 */
 	@Override
 	public void onCraftMatrixChanged(final IInventory inventory) {
+		System.out.println("called");
 		pos.consume((world, pos) -> {
 			if (!world.isRemote) {
+				Main.LOGGER.debug("entered");
 				final ServerPlayerEntity playerMp = (ServerPlayerEntity) playerEntity;
 				ItemStack stack = ItemStack.EMPTY;
 				Optional<FurnaceRecipe> optional = world.getServer().getRecipeManager().getRecipe(IRecipeType.SMELTING, furnaceInventory, world);
+				Main.LOGGER.debug("hehe " + optional.isPresent());
 				if (optional.isPresent()) {
 					final FurnaceRecipe icraftingrecipe = optional.get();
+					Main.LOGGER.debug("looking " + icraftingrecipe.toString());
 					if (furnace_result.canUseRecipe(world, playerMp, icraftingrecipe)) {
 						stack = icraftingrecipe.getCraftingResult(furnaceInventory);
+						Main.LOGGER.debug("option " + stack.toString());
 					}
 				}
-				furnace_result.setInventorySlotContents(0, stack);
+				furnace_result.setInventorySlotContents(2, stack);
 				playerMp.connection.sendPacket(new SSetSlotPacket(windowId, 0, stack));
 			}
 		});
 	}
 
 	@Override
-	public void onContainerClosed(PlayerEntity playerIn)
+	public void onContainerClosed(PlayerEntity player)
     {
-        super.onContainerClosed(playerIn);
-        PlayerInventory inv = playerIn.inventory;
+        super.onContainerClosed(player);
+        PlayerInventory inv = player.inventory;
+
         if (!this.world.isRemote)
         {
-            for (int i = 0; i < 9; ++i)
+            for (int i = 0; i < 3; ++i)
             {
-            	ItemStack itemstack = this.furnaceInventory.removeStackFromSlot(i);
+            	ItemStack itemstack = this.furnaceInventory.getStackInSlot(i);//.removeStackFromSlot(i);
+            	System.out.println(i + " " + itemstack.toString());
                 if (!itemstack.isEmpty())
                 {
                 	if (inv.hasItemStack(itemstack)) {
-                		playerIn.inventory.addItemStackToInventory(itemstack);
+						player.inventory.addItemStackToInventory(itemstack);
                 	} else {
-                		playerIn.dropItem(itemstack, false);
+						player.dropItem(itemstack, true);
                 	}
                 }
             }
         } else {
-            for (int i = 0; i < 9; ++i)
+            for (int i = 0; i < 3; ++i)
             {
-            	ItemStack itemstack = this.furnaceInventory.removeStackFromSlot(i);
+            	ItemStack itemstack = this.furnaceInventory.getStackInSlot(i); //.removeStackFromSlot(i);
                 if (!itemstack.isEmpty())
                 {
                 	if (inv.hasItemStack(itemstack)) {
-                		playerIn.inventory.addItemStackToInventory(itemstack);
+						player.inventory.addItemStackToInventory(itemstack);
                 	} else {
-                		playerIn.dropItem(itemstack, false);
+						player.dropItem(itemstack, true);
                 	}
                 }
             }
         }
+
     }
 
 	@Override
@@ -176,18 +219,7 @@ public class PFContainer extends AbstractFurnaceContainer {
         return slotIn.inventory != this.furnace_result && super.canMergeSlot(stack, slotIn);
     }
 
-    /*
-	protected AbstractCookingRecipe getRecipe() {
-		ItemStack input = this.getStackInSlot(INPUT);
-		if (input.isEmpty() || input == failedMatch) return null;
-		if (curRecipe != null && curRecipe.matches(this, world)) return curRecipe;
-		else {
-			AbstractCookingRecipe rec = world.getRecipeManager().getRecipe((IRecipeType<AbstractCookingRecipe>) this.recipeType, this, this.world).orElse(null);
-			if (rec == null) failedMatch = input;
-			else failedMatch = ItemStack.EMPTY;
-			return curRecipe = rec;
-		}
+	public void clear() {
+		this.furnaceInventory.clear();
 	}
-*/
-
 }

@@ -132,10 +132,9 @@ public class PFContainer extends AbstractFurnaceContainer {
 
 	private void layoutPlayerInventorySlots(PlayerInventory playerInv) {
 		furnaceInventory.openInventory(player);
-
-		addSlots(new FurnaceResultSlot(player, furnaceInventory, 2, 116, 35)); //output slot
-		addSlots(new FurnaceFuelSlot(this, furnaceInventory, 1, 56, 53)); //fuel slot
 		addSlots(new FurnaceInputSlot(furnaceInventory, 0, 56, 17, this)); //input slot
+		addSlots(new FurnaceFuelSlot(this, furnaceInventory, 1, 56, 53)); //fuel slot
+		addSlots(new FurnaceResultSlot(player, furnaceInventory, 2, 116, 35)); //output slot
 		for (int k = 0; k < 3; ++k) {
 			for (int i1 = 0; i1 < 9; ++i1) {
 				addSlots(new Slot(player.inventory, i1 + k * 9 + 9, 8 + i1 * 18, 84 + k * 18));
@@ -230,7 +229,7 @@ public class PFContainer extends AbstractFurnaceContainer {
 		for (int i = 0; i < inventoryItemStack.size(); i++) {
 			ItemStack itemstack = inventorySlots.get(i).getStack();
 			ItemStack itemstack1 = inventoryItemStack.get(i);
-			System.out.println(i + " " + itemstack.toString());
+			System.out.println(i + " " + itemstack.toString()  + " " + itemstack1.toString() + " : " + inventorySlots.get(i).toString());
 			if (!ItemStack.areItemStacksEqual(itemstack1, itemstack)) {
 				System.out.println("dif " + itemstack1 + " to " + itemstack + " @ " + i);
 				boolean clientStackChanged = !itemstack1.equals(itemstack, true);

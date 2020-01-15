@@ -43,6 +43,5 @@ public class FurnaceInputSlot extends Slot {
         if (i > 0) {
             this.onCrafting(p_75220_2_, i);
         }
-
     }
 }

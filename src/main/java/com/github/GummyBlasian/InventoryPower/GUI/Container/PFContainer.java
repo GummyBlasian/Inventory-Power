@@ -1,15 +1,10 @@
 package com.github.GummyBlasian.InventoryPower.GUI.Container;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.github.GummyBlasian.InventoryPower.GUI.Slot.FurnaceInputSlot;
 import com.github.GummyBlasian.InventoryPower.Inventory.FurnaceBurnInventory;
-import com.github.GummyBlasian.InventoryPower.Inventory.FurnaceInventory;
 import com.github.GummyBlasian.InventoryPower.Inventory.FurnaceResultInventory;
 import com.github.GummyBlasian.InventoryPower.Main;
 import com.github.GummyBlasian.InventoryPower.References.ItemList;
-
 import com.google.common.collect.Lists;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -18,20 +13,19 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.AbstractCookingRecipe;
 import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SSetSlotPacket;
-import net.minecraft.tileentity.AbstractFurnaceTileEntity;
-import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ObjectHolder;
+
+import java.util.List;
+import java.util.Optional;
 
 @ObjectHolder(Main.MODID)
 public class PFContainer extends AbstractFurnaceContainer {
@@ -48,9 +42,9 @@ public class PFContainer extends AbstractFurnaceContainer {
 	private PlayerEntity player;
 
 	/**
-	INPUT = 0;
-	FUEL = 1;
-	OUTPUT = 2;
+	 * INPUT = 0;
+	 * FUEL = 1;
+	 * OUTPUT = 2;
 	 **/
 
 	public PFContainer(int window_id, World world, PlayerEntity player, PlayerInventory playerInv) {
@@ -81,6 +75,7 @@ public class PFContainer extends AbstractFurnaceContainer {
 
 	/**
 	 * only called when player shift-clicks
+	 *
 	 * @param playerIn
 	 * @param index
 	 * @return itemstack
@@ -139,7 +134,7 @@ public class PFContainer extends AbstractFurnaceContainer {
 		furnaceInventory.openInventory(player);
 
 		addSlots(new FurnaceResultSlot(player, furnaceInventory, 2, 116, 35)); //output slot
-		addSlots(new FurnaceFuelSlot(this, furnaceInventory,1,56,53)); //fuel slot
+		addSlots(new FurnaceFuelSlot(this, furnaceInventory, 1, 56, 53)); //fuel slot
 		addSlots(new FurnaceInputSlot(furnaceInventory, 0, 56, 17, this)); //input slot
 		for (int k = 0; k < 3; ++k) {
 			for (int i1 = 0; i1 < 9; ++i1) {
@@ -154,6 +149,7 @@ public class PFContainer extends AbstractFurnaceContainer {
 
 	/**
 	 * Only called by MC in the opening of the container
+	 *
 	 * @param inventory
 	 */
 	@Override
@@ -181,48 +177,41 @@ public class PFContainer extends AbstractFurnaceContainer {
 	}
 
 	@Override
-	public void onContainerClosed(PlayerEntity player)
-    {
-        super.onContainerClosed(player);
-        PlayerInventory inv = player.inventory;
+	public void onContainerClosed(PlayerEntity player) {
+		super.onContainerClosed(player);
+		PlayerInventory inv = player.inventory;
 
-        if (!this.world.isRemote)
-        {
-            for (int i = 0; i < 3; ++i)
-            {
-            	ItemStack itemstack = this.furnaceInventory.getStackInSlot(i);//.removeStackFromSlot(i);
-            	System.out.println(i + " " + itemstack.toString());
-                if (!itemstack.isEmpty())
-                {
-                	if (inv.hasItemStack(itemstack)) {
+		if (!this.world.isRemote) {
+			for (int i = 0; i < 3; ++i) {
+				ItemStack itemstack = this.furnaceInventory.getStackInSlot(i);//.removeStackFromSlot(i);
+				System.out.println(i + " " + itemstack.toString());
+				if (!itemstack.isEmpty()) {
+					if (inv.hasItemStack(itemstack)) {
 						player.inventory.addItemStackToInventory(itemstack);
-                	} else {
+					} else {
 						player.dropItem(itemstack, true);
-                	}
-                }
-            }
-        } else {
-            for (int i = 0; i < 3; ++i)
-            {
-            	ItemStack itemstack = this.furnaceInventory.getStackInSlot(i); //.removeStackFromSlot(i);
-                if (!itemstack.isEmpty())
-                {
-                	if (inv.hasItemStack(itemstack)) {
+					}
+				}
+			}
+		} else {
+			for (int i = 0; i < 3; ++i) {
+				ItemStack itemstack = this.furnaceInventory.getStackInSlot(i); //.removeStackFromSlot(i);
+				if (!itemstack.isEmpty()) {
+					if (inv.hasItemStack(itemstack)) {
 						player.inventory.addItemStackToInventory(itemstack);
-                	} else {
+					} else {
 						player.dropItem(itemstack, true);
-                	}
-                }
-            }
-        }
+					}
+				}
+			}
+		}
 
-    }
+	}
 
 	@Override
-	public boolean canMergeSlot(ItemStack stack, Slot slotIn)
-    {
-        return slotIn.inventory != this.furnace_result && super.canMergeSlot(stack, slotIn);
-    }
+	public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
+		return slotIn.inventory != this.furnace_result && super.canMergeSlot(stack, slotIn);
+	}
 
 	public void clear() {
 		this.furnaceInventory.clear();
@@ -238,10 +227,10 @@ public class PFContainer extends AbstractFurnaceContainer {
 
 	@Override
 	public void detectAndSendChanges() {
-		for(int i = 0; i < inventoryItemStack.size(); i++) {
+		for (int i = 0; i < inventoryItemStack.size(); i++) {
 			ItemStack itemstack = inventorySlots.get(i).getStack();
 			ItemStack itemstack1 = inventoryItemStack.get(i);
-			System.out.println(i + " " itemstack.toString());
+			System.out.println(i + " " + itemstack.toString());
 			if (!ItemStack.areItemStacksEqual(itemstack1, itemstack)) {
 				System.out.println("dif " + itemstack1 + " to " + itemstack + " @ " + i);
 				boolean clientStackChanged = !itemstack1.equals(itemstack, true);
@@ -249,11 +238,11 @@ public class PFContainer extends AbstractFurnaceContainer {
 				inventoryItemStack.set(i, itemstack1);
 
 				if (clientStackChanged)
-					for(IContainerListener icontainerlistener : listeners) {
+					for (IContainerListener icontainerlistener : listeners) {
 						icontainerlistener.sendSlotContents(this, i, itemstack1);
 					}
 
-				if(i == 0 && !world.isRemote){
+				if (i == 0 && !world.isRemote) {
 					System.out.println("entered");
 					final ServerPlayerEntity playerMp = (ServerPlayerEntity) playerEntity;
 					ItemStack stack = ItemStack.EMPTY;
@@ -273,10 +262,10 @@ public class PFContainer extends AbstractFurnaceContainer {
 			}
 		}
 
-		for(int j = 0; j < trackedIntReferences.size(); ++j) {
+		for (int j = 0; j < trackedIntReferences.size(); ++j) {
 			IntReferenceHolder intreferenceholder = trackedIntReferences.get(j);
 			if (intreferenceholder.isDirty()) {
-				for(IContainerListener icontainerlistener1 : listeners) {
+				for (IContainerListener icontainerlistener1 : listeners) {
 					icontainerlistener1.sendWindowProperty(this, j, intreferenceholder.get());
 				}
 			}
@@ -300,4 +289,5 @@ public class PFContainer extends AbstractFurnaceContainer {
 		inventoryItemStack.add(ItemStack.EMPTY);
 		return slotIn;
 	}
+
 }

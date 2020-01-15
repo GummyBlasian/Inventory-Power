@@ -241,8 +241,9 @@ public class PFContainer extends AbstractFurnaceContainer {
 		for(int i = 0; i < inventoryItemStack.size(); i++) {
 			ItemStack itemstack = inventorySlots.get(i).getStack();
 			ItemStack itemstack1 = inventoryItemStack.get(i);
+			System.out.println(i + " " itemstack.toString());
 			if (!ItemStack.areItemStacksEqual(itemstack1, itemstack)) {
-				System.out.println("dif " + itemstack + " to " + itemstack1 + " @ " + i);
+				System.out.println("dif " + itemstack1 + " to " + itemstack + " @ " + i);
 				boolean clientStackChanged = !itemstack1.equals(itemstack, true);
 				itemstack1 = itemstack.copy();
 				inventoryItemStack.set(i, itemstack1);

@@ -1,13 +1,16 @@
 package com.github.GummyBlasian.InventoryPower.GUI.Container;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.github.GummyBlasian.InventoryPower.GUI.Slot.FurnaceInputSlot;
 import com.github.GummyBlasian.InventoryPower.Inventory.FurnaceBurnInventory;
 import com.github.GummyBlasian.InventoryPower.Inventory.FurnaceInventory;
 import com.github.GummyBlasian.InventoryPower.Inventory.FurnaceResultInventory;
 import com.github.GummyBlasian.InventoryPower.Main;
 import com.github.GummyBlasian.InventoryPower.References.ItemList;
 
+import com.google.common.collect.Lists;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -25,6 +28,8 @@ import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.util.IntReferenceHolder;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -88,67 +93,67 @@ public class PFContainer extends AbstractFurnaceContainer {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
-		if (index == 2) {
-			if (!this.mergeItemStack(itemstack1, 3, 39, true)) {
+			if (index == 2) {
+				if (!this.mergeItemStack(itemstack1, 3, 39, true)) {
+					return ItemStack.EMPTY;
+				}
+
+				slot.onSlotChange(itemstack1, itemstack);
+			} else if (index != 1 && index != 0) {
+				if (this.func_217057_a(itemstack1)) {
+					if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (this.isFuel(itemstack1)) {
+					if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index >= 3 && index < 30) {
+					if (!this.mergeItemStack(itemstack1, 30, 39, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index >= 30 && index < 39 && !this.mergeItemStack(itemstack1, 3, 30, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (!this.mergeItemStack(itemstack1, 3, 39, false)) {
 				return ItemStack.EMPTY;
 			}
 
-			slot.onSlotChange(itemstack1, itemstack);
-		} else if (index != 1 && index != 0) {
-			if (this.func_217057_a(itemstack1)) {
-				if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
-					return ItemStack.EMPTY;
-				}
-			} else if (this.isFuel(itemstack1)) {
-				if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
-					return ItemStack.EMPTY;
-				}
-			} else if (index >= 3 && index < 30) {
-				if (!this.mergeItemStack(itemstack1, 30, 39, false)) {
-					return ItemStack.EMPTY;
-				}
-			} else if (index >= 30 && index < 39 && !this.mergeItemStack(itemstack1, 3, 30, false)) {
+			if (itemstack1.isEmpty()) {
+				slot.putStack(ItemStack.EMPTY);
+			} else {
+				slot.onSlotChanged();
+			}
+
+			if (itemstack1.getCount() == itemstack.getCount()) {
 				return ItemStack.EMPTY;
 			}
-		} else if (!this.mergeItemStack(itemstack1, 3, 39, false)) {
-			return ItemStack.EMPTY;
+
+			slot.onTake(playerIn, itemstack1);
 		}
 
-		if (itemstack1.isEmpty()) {
-			slot.putStack(ItemStack.EMPTY);
-		} else {
-			slot.onSlotChanged();
-		}
-
-		if (itemstack1.getCount() == itemstack.getCount()) {
-			return ItemStack.EMPTY;
-		}
-
-		slot.onTake(playerIn, itemstack1);
-		}
-
-      return itemstack;
+		return itemstack;
 	}
 
 	private void layoutPlayerInventorySlots(PlayerInventory playerInv) {
 		furnaceInventory.openInventory(player);
 
-		addSlot(new FurnaceResultSlot(player, furnaceInventory, 2, 116, 35)); //output slot
-		addSlot(new FurnaceFuelSlot(this, furnaceInventory,1,56,53)); //fuel slot
-		addSlot(new Slot(furnaceInventory, 0, 56, 17)); //input slot
+		addSlots(new FurnaceResultSlot(player, furnaceInventory, 2, 116, 35)); //output slot
+		addSlots(new FurnaceFuelSlot(this, furnaceInventory,1,56,53)); //fuel slot
+		addSlots(new FurnaceInputSlot(furnaceInventory, 0, 56, 17, this)); //input slot
 		for (int k = 0; k < 3; ++k) {
 			for (int i1 = 0; i1 < 9; ++i1) {
-				addSlot(new Slot(player.inventory, i1 + k * 9 + 9, 8 + i1 * 18, 84 + k * 18));
+				addSlots(new Slot(player.inventory, i1 + k * 9 + 9, 8 + i1 * 18, 84 + k * 18));
 			}
 		}
 
 		for (int l = 0; l < 9; ++l) {
-			addSlot(new Slot(player.inventory, l, 8 + l * 18, 142));
+			addSlots(new Slot(player.inventory, l, 8 + l * 18, 142));
 		}
 	}
 
 	/**
-	 *
+	 * Only called by MC in the opening of the container
 	 * @param inventory
 	 */
 	@Override
@@ -221,5 +226,77 @@ public class PFContainer extends AbstractFurnaceContainer {
 
 	public void clear() {
 		this.furnaceInventory.clear();
+	}
+
+
+	//test
+
+	private final NonNullList<ItemStack> inventoryItemStack = NonNullList.create();
+	public final List<Slot> inventorySlots = Lists.newArrayList();
+	private final List<IContainerListener> listeners = Lists.newArrayList();
+	private final List<IntReferenceHolder> trackedIntReferences = Lists.newArrayList();
+
+	@Override
+	public void detectAndSendChanges() {
+		for(int i = 0; i < inventoryItemStack.size(); i++) {
+			ItemStack itemstack = inventorySlots.get(i).getStack();
+			ItemStack itemstack1 = inventoryItemStack.get(i);
+			if (!ItemStack.areItemStacksEqual(itemstack1, itemstack)) {
+				System.out.println("dif " + itemstack + " to " + itemstack1 + " @ " + i);
+				boolean clientStackChanged = !itemstack1.equals(itemstack, true);
+				itemstack1 = itemstack.copy();
+				inventoryItemStack.set(i, itemstack1);
+
+				if (clientStackChanged)
+					for(IContainerListener icontainerlistener : listeners) {
+						icontainerlistener.sendSlotContents(this, i, itemstack1);
+					}
+
+				if(i == 0 && !world.isRemote){
+					System.out.println("entered");
+					final ServerPlayerEntity playerMp = (ServerPlayerEntity) playerEntity;
+					ItemStack stack = ItemStack.EMPTY;
+					Optional<FurnaceRecipe> optional = world.getServer().getRecipeManager().getRecipe(IRecipeType.SMELTING, furnaceInventory, world);
+					System.out.println("hehe " + optional.isPresent());
+					if (optional.isPresent()) {
+						final FurnaceRecipe icraftingrecipe = optional.get();
+						System.out.println("looking " + icraftingrecipe.toString());
+						if (furnace_result.canUseRecipe(world, playerMp, icraftingrecipe)) {
+							stack = icraftingrecipe.getCraftingResult(furnaceInventory);
+							System.out.println("option " + stack.toString());
+						}
+					}
+					furnace_result.setInventorySlotContents(2, stack);
+					playerMp.connection.sendPacket(new SSetSlotPacket(windowId, 2, stack));
+				}
+			}
+		}
+
+		for(int j = 0; j < trackedIntReferences.size(); ++j) {
+			IntReferenceHolder intreferenceholder = trackedIntReferences.get(j);
+			if (intreferenceholder.isDirty()) {
+				for(IContainerListener icontainerlistener1 : listeners) {
+					icontainerlistener1.sendWindowProperty(this, j, intreferenceholder.get());
+				}
+			}
+		}
+
+	}
+
+	@Override
+	public void addListener(IContainerListener listener) {
+		if (!listeners.contains(listener)) {
+			listeners.add(listener);
+			listener.sendAllContents(this, this.getInventory());
+			detectAndSendChanges();
+		}
+	}
+
+	public Slot addSlots(Slot slotIn) {
+		slotIn.slotNumber = inventorySlots.size();
+		inventorySlots.add(slotIn);
+		//System.out.println(inventoryItemStacks.toString());
+		inventoryItemStack.add(ItemStack.EMPTY);
+		return slotIn;
 	}
 }

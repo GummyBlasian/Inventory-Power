@@ -25,6 +25,7 @@ public class FurnaceInputSlot extends Slot {
 
     @Override
     public void putStack(ItemStack stack) {
+        System.out.println("setting");
         this.inventory.setInventorySlotContents(this.slotIndex, stack);
         this.onSlotChanged();
     }
@@ -43,5 +44,10 @@ public class FurnaceInputSlot extends Slot {
         if (i > 0) {
             this.onCrafting(p_75220_2_, i);
         }
+    }
+
+    @Override
+    public ItemStack getStack() {
+        return this.inventory.getStackInSlot(this.slotIndex);
     }
 }

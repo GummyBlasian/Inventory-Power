@@ -15,8 +15,6 @@ public class PFScreen extends ContainerScreen<PFContainer>{
 
     private ResourceLocation GUI = new ResourceLocation(Main.MODID, "textures/gui/portable_furnace.png");
 
-    private float burn;
-
 	public PFScreen(PFContainer container, PlayerInventory inv, ITextComponent name) {
 		super(container, inv, name);
 	}
@@ -39,15 +37,14 @@ public class PFScreen extends ContainerScreen<PFContainer>{
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		this.font.drawString("Burn energy: " + burn, 28.0F, 6.0F, 4210752);
+		this.font.drawString("Burn energy: " + container.getBurn(), 28.0F, 6.0F, 4210752);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		if (!this.minecraft.player.isAlive() || this.minecraft.player.removed) {
+		if (!this.minecraft.player.isAlive()) {
 			this.minecraft.player.closeScreen();
 		}
-		burn = container.getBurn();
 	}
 }

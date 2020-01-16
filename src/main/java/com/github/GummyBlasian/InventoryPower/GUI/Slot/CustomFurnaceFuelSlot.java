@@ -33,7 +33,11 @@ public class CustomFurnaceFuelSlot extends Slot {
     @Override
     public void onSlotChanged() {
         container.addBurn(ForgeHooks.getBurnTime(getStack()));
-        decrStackSize(1);
+        if(isBucket(getStack())){
+            putStack(new ItemStack(Items.BUCKET));
+        } else {
+            decrStackSize(1);
+        }
         this.inventory.markDirty();
     }
 }

@@ -45,7 +45,7 @@ public class PFContainer extends Container {
 	private World world;
 	private PlayerEntity player;
 
-	private float burn = 0;
+	private static float burn = 0;
 
 	/**
 	 * INPUT = 0;
@@ -90,6 +90,7 @@ public class PFContainer extends Container {
 		if(canInteractWith(player)){
 			nbt = player.getHeldItemMainhand().getChildTag("burn");
 			nbt.putFloat("burn", burn);
+			player.getHeldItemMainhand().setTag(nbt);
 		}
 	}
 
@@ -103,6 +104,7 @@ public class PFContainer extends Container {
 
 	public void removeBurn(float value){
 		burn -= value;
+		System.out.println(burn);
 	}
 
 	@Override
@@ -170,7 +172,6 @@ public class PFContainer extends Container {
 	 */
 	@Override
 	public void onCraftMatrixChanged(final IInventory inventory) {
-		System.out.println("called");
 		pos.consume((world, pos) -> {
 			if (!world.isRemote) {
 				ServerPlayerEntity playerMp = (ServerPlayerEntity) playerEntity;
@@ -179,15 +180,29 @@ public class PFContainer extends Container {
 				if (optional.isPresent()) {
 					FurnaceRecipe icraftingrecipe = optional.get();
 					if (furnace_result.canUseRecipe(world, playerMp, icraftingrecipe)) {
-						System.out.println(icraftingrecipe.getCookTime());
 						if(burn >= icraftingrecipe.getCookTime()) {
 							stack = icraftingrecipe.getCraftingResult(furnaceInventory);
-							removeBurn(icraftingrecipe.getCookTime());
+							if (furnace_result.isEmpty()) {
+								removeBurn(icraftingrecipe.getCookTime());
+								this.getSlot(0).decrStackSize(1);
+								furnace_result.setInventorySlotContents(2, stack);
+								playerMp.connection.sendPacket(new SSetSlotPacket(windowId, 2, stack));
+							} else if (furnace_result.getStackInSlot(2).isItemEqual(stack)){
+								int size = furnace_result.getStackInSlot(2).getCount();
+								if(size >= furnace_result.getStackInSlot(2).getMaxStackSize())
+									return;
+								stack.setCount(stack.getCount() + 1);
+								removeBurn(icraftingrecipe.getCookTime());
+								this.getSlot(0).decrStackSize(1);
+								furnace_result.setInventorySlotContents(2, stack);
+								playerMp.connection.sendPacket(new SSetSlotPacket(windowId, 2, stack));
+							}
 						}
 					}
+				} else {
+					furnace_result.setInventorySlotContents(2, stack);
+					playerMp.connection.sendPacket(new SSetSlotPacket(windowId, 2, stack));
 				}
-				furnace_result.setInventorySlotContents(2, stack);
-				playerMp.connection.sendPacket(new SSetSlotPacket(windowId, 2, stack));
 			}
 		});
 	}

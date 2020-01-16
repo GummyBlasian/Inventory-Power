@@ -6,12 +6,16 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.common.ForgeHooks;
 
 public class PFScreen extends ContainerScreen<PFContainer>{
 
     private ResourceLocation GUI = new ResourceLocation(Main.MODID, "textures/gui/portable_furnace.png");
+
+    private float burn;
 
 	public PFScreen(PFContainer container, PlayerInventory inv, ITextComponent name) {
 		super(container, inv, name);
@@ -33,4 +37,17 @@ public class PFScreen extends ContainerScreen<PFContainer>{
         this.blit(relX, relY, 0, 0, this.xSize, this.ySize);
 	}
 
+	@Override
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+		this.font.drawString("Burn energy: " + burn, 28.0F, 6.0F, 4210752);
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+		if (!this.minecraft.player.isAlive() || this.minecraft.player.removed) {
+			this.minecraft.player.closeScreen();
+		}
+		burn = container.getBurn();
+	}
 }

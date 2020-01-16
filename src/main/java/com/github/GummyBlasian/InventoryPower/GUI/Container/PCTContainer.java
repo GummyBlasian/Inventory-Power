@@ -113,6 +113,7 @@ public class PCTContainer extends Container {
 	
 	@Override
 	public void onCraftMatrixChanged(final IInventory inventory) {
+		System.out.println("called");
 		pos.consume((world, pos) -> {
 			if (!world.isRemote) {
 				final ServerPlayerEntity playerMp = (ServerPlayerEntity) playerEntity;

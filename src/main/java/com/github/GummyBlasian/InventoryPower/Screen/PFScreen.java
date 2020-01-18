@@ -39,12 +39,4 @@ public class PFScreen extends ContainerScreen<PFContainer>{
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		this.font.drawString("Burn energy: " + container.getBurn(), 28.0F, 6.0F, 4210752);
 	}
-
-	@Override
-	public void tick() {
-		super.tick();
-		if (!this.minecraft.player.isAlive()) {
-			this.minecraft.player.closeScreen();
-		}
-	}
 }

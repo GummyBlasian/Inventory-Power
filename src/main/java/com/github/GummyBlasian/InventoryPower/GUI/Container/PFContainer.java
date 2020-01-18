@@ -45,7 +45,7 @@ public class PFContainer extends Container {
 	private World world;
 	private PlayerEntity player;
 
-	private static float burn = 0;
+	private static float burn;
 
 	/**
 	 * INPUT = 0;
@@ -78,17 +78,19 @@ public class PFContainer extends Container {
 	private void getBurnFromItem(){
 		CompoundNBT nbt;
 		if(canInteractWith(player)){
-				nbt = player.getHeldItemMainhand().getOrCreateChildTag("burn");
-				if (!nbt.contains("burn"))
-					nbt.putFloat("burn", 0);
-				burn = nbt.getFloat("burn");
+			nbt = player.getHeldItemMainhand().getTag();
+			if(nbt == null)
+				nbt = new CompoundNBT();
+			if (!nbt.contains("burn"))
+				nbt.putFloat("burn", 0);
+			burn = nbt.getFloat("burn");
 		}
 	}
 
 	private void setBurnFromItem(){
 		CompoundNBT nbt;
 		if(canInteractWith(player)){
-			nbt = player.getHeldItemMainhand().getChildTag("burn");
+			nbt = player.getHeldItemMainhand().getTag();
 			nbt.putFloat("burn", burn);
 			player.getHeldItemMainhand().setTag(nbt);
 		}
@@ -100,11 +102,12 @@ public class PFContainer extends Container {
 
 	public void addBurn(float value){
 		burn += value;
+		setBurnFromItem();
 	}
 
 	public void removeBurn(float value){
 		burn -= value;
-		System.out.println(burn);
+		setBurnFromItem();
 	}
 
 	@Override
@@ -114,7 +117,6 @@ public class PFContainer extends Container {
 
 	/**
 	 * only called when player shift-clicks
-	 *
 	 * @param playerIn
 	 * @param index
 	 * @return itemstack
@@ -126,7 +128,7 @@ public class PFContainer extends Container {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
-			int countSlots = 27;
+			int countSlots = 36; //27
 			if (index < countSlots) {
 				if (!mergeItemStack(itemstack1, countSlots + 1, this.inventorySlots.size() - 9, false)
 						&& !mergeItemStack(itemstack1, this.inventorySlots.size() - 9, this.inventorySlots.size(),
@@ -146,6 +148,10 @@ public class PFContainer extends Container {
 		return itemstack;
 	}
 
+	/**
+	 * Only called by MC in the opening of the container
+	 * @param playerInv
+	 */
 	private void layoutPlayerInventorySlots(PlayerInventory playerInv) {
 		furnaceInventory.openInventory(player);
 
@@ -166,43 +172,27 @@ public class PFContainer extends Container {
 	}
 
 	/**
-	 * Only called by MC in the opening of the container
-	 *
+	 * Called whenever Matrix changes
 	 * @param inventory
 	 */
 	@Override
 	public void onCraftMatrixChanged(final IInventory inventory) {
 		pos.consume((world, pos) -> {
 			if (!world.isRemote) {
-				ServerPlayerEntity playerMp = (ServerPlayerEntity) playerEntity;
+				final ServerPlayerEntity playerMp = (ServerPlayerEntity) playerEntity;
 				ItemStack stack = ItemStack.EMPTY;
-				Optional<FurnaceRecipe> optional = world.getServer().getRecipeManager().getRecipe(IRecipeType.SMELTING, furnaceInventory, world);
+				final Optional<FurnaceRecipe> optional = world.getServer().getRecipeManager().getRecipe(IRecipeType.SMELTING, furnaceInventory, world);
 				if (optional.isPresent()) {
-					FurnaceRecipe icraftingrecipe = optional.get();
+					final FurnaceRecipe icraftingrecipe = optional.get();
 					if (furnace_result.canUseRecipe(world, playerMp, icraftingrecipe)) {
-						if(burn >= icraftingrecipe.getCookTime()) {
+						if (burn >= icraftingrecipe.getCookTime()) {
 							stack = icraftingrecipe.getCraftingResult(furnaceInventory);
-							if (furnace_result.isEmpty()) {
-								removeBurn(icraftingrecipe.getCookTime());
-								this.getSlot(0).decrStackSize(1);
-								furnace_result.setInventorySlotContents(2, stack);
-								playerMp.connection.sendPacket(new SSetSlotPacket(windowId, 2, stack));
-							} else if (furnace_result.getStackInSlot(2).isItemEqual(stack)){
-								int size = furnace_result.getStackInSlot(2).getCount();
-								if(size >= furnace_result.getStackInSlot(2).getMaxStackSize())
-									return;
-								stack.setCount(stack.getCount() + 1);
-								removeBurn(icraftingrecipe.getCookTime());
-								this.getSlot(0).decrStackSize(1);
-								furnace_result.setInventorySlotContents(2, stack);
-								playerMp.connection.sendPacket(new SSetSlotPacket(windowId, 2, stack));
-							}
+							removeBurn(icraftingrecipe.getCookTime());
 						}
 					}
-				} else {
-					furnace_result.setInventorySlotContents(2, stack);
-					playerMp.connection.sendPacket(new SSetSlotPacket(windowId, 2, stack));
 				}
+				furnace_result.setInventorySlotContents(2, stack);
+				playerMp.connection.sendPacket(new SSetSlotPacket(windowId, 2, stack));
 			}
 		});
 	}

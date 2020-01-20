@@ -127,16 +127,16 @@ public class PFContainer extends Container {
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
 		ItemStack stack = ItemStack.EMPTY;
-		Slot lvt_4_1_ = (Slot)this.inventorySlots.get(index);
-		if (lvt_4_1_ != null && lvt_4_1_.getHasStack()) {
-			ItemStack stack1 = lvt_4_1_.getStack();
+		Slot slot = (Slot)this.inventorySlots.get(index);
+		if (slot != null && slot.getHasStack()) {
+			ItemStack stack1 = slot.getStack();
 			stack = stack1.copy();
 			if (index == 2) {
 				if (!this.mergeItemStack(stack1, 3, 39, true)) {
 					return ItemStack.EMPTY;
 				}
 
-				lvt_4_1_.onSlotChange(stack1, stack);
+				slot.onSlotChange(stack1, stack);
 			} else if (index != 1 && index != 0) {
 				if (this.isValid(stack1)) {
 					if (!this.mergeItemStack(stack1, 0, 1, false)) {
@@ -158,16 +158,16 @@ public class PFContainer extends Container {
 			}
 
 			if (stack1.isEmpty()) {
-				lvt_4_1_.putStack(ItemStack.EMPTY);
+				slot.putStack(ItemStack.EMPTY);
 			} else {
-				lvt_4_1_.onSlotChanged();
+				slot.onSlotChanged();
 			}
 
 			if (stack1.getCount() == stack.getCount()) {
 				return ItemStack.EMPTY;
 			}
 
-			lvt_4_1_.onTake(playerIn, stack1);
+			slot.onTake(playerIn, stack1);
 		}
 
 		return stack;

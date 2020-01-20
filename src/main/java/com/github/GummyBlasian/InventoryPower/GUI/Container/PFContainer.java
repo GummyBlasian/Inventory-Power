@@ -22,6 +22,7 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SSetSlotPacket;
+import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.NonNullList;
@@ -29,6 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ObjectHolder;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +42,7 @@ public class PFContainer extends Container {
 
 	private PlayerEntity playerEntity;
 	private CraftingInventory furnaceInventory;
-	private CraftResultInventory furnace_result;
+	private CraftResultInventory furnaceResult;
 	private final IWorldPosCallable pos;
 	private World world;
 	private PlayerEntity player;
@@ -53,16 +55,17 @@ public class PFContainer extends Container {
 	 * OUTPUT = 2;
 	 **/
 
-	public PFContainer(int window_id, World world, PlayerEntity player, PlayerInventory playerInv) {
+	public PFContainer(int window_id, World world,@Nonnull PlayerEntity player, PlayerInventory playerInv) {
 		super(TYPE, window_id);
 		this.playerEntity = player;
 		this.pos = IWorldPosCallable.of(world, player.getPosition());
 		this.world = world;
 		this.player = player;
 		furnaceInventory = new CraftingInventory(this, 3, 1);
-		furnace_result = new CraftResultInventory();
+		furnaceResult = new CraftResultInventory();
 		layoutPlayerInventorySlots(playerInv);
 		getBurnFromItem();
+
 		onCraftMatrixChanged(furnaceInventory);
 	}
 
@@ -111,7 +114,7 @@ public class PFContainer extends Container {
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity player) {
+	public boolean canInteractWith(@Nonnull PlayerEntity player) {
 		return player.getHeldItemMainhand().getItem() == ItemList.portableFurnace;
 	}
 
@@ -128,7 +131,7 @@ public class PFContainer extends Container {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
-			int countSlots = 36; //27
+			int countSlots = 27; //27
 			if (index < countSlots) {
 				if (!mergeItemStack(itemstack1, countSlots + 1, this.inventorySlots.size() - 9, false)
 						&& !mergeItemStack(itemstack1, this.inventorySlots.size() - 9, this.inventorySlots.size(),
@@ -157,7 +160,8 @@ public class PFContainer extends Container {
 
 		addSlot(new Slot(furnaceInventory, 0, 56, 17)); //input slot
 		addSlot(new CustomFurnaceFuelSlot(this, furnaceInventory, 1, 56, 53)); //fuel slot
-		addSlot(new CraftingResultSlot(player, furnaceInventory, furnace_result, 2, 116, 35)); //output slot
+		addSlot(new CraftingResultSlot(player, furnaceInventory, furnaceResult, 2, 116, 35)); //output slot
+
 
 		for (int k = 0; k < 3; ++k) {
 			for (int i = 0; i < 9; ++i) {
@@ -184,14 +188,14 @@ public class PFContainer extends Container {
 				final Optional<FurnaceRecipe> optional = world.getServer().getRecipeManager().getRecipe(IRecipeType.SMELTING, furnaceInventory, world);
 				if (optional.isPresent()) {
 					final FurnaceRecipe icraftingrecipe = optional.get();
-					if (furnace_result.canUseRecipe(world, playerMp, icraftingrecipe)) {
+					if (furnaceResult.canUseRecipe(world, playerMp, icraftingrecipe)) {
 						if (burn >= icraftingrecipe.getCookTime()) {
 							stack = icraftingrecipe.getCraftingResult(furnaceInventory);
 							removeBurn(icraftingrecipe.getCookTime());
 						}
 					}
 				}
-				furnace_result.setInventorySlotContents(2, stack);
+				furnaceResult.setInventorySlotContents(2, stack);
 				playerMp.connection.sendPacket(new SSetSlotPacket(windowId, 2, stack));
 			}
 		});
@@ -230,6 +234,6 @@ public class PFContainer extends Container {
 
 	@Override
 	public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
-		return slotIn.inventory != this.furnace_result && super.canMergeSlot(stack, slotIn);
+		return slotIn.inventory != this.furnaceResult && super.canMergeSlot(stack, slotIn);
 	}
 }

@@ -126,29 +126,59 @@ public class PFContainer extends Container {
 	 */
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
-		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
-			itemstack = itemstack1.copy();
-			int countSlots = 27; //27
-			if (index < countSlots) {
-				if (!mergeItemStack(itemstack1, countSlots + 1, this.inventorySlots.size() - 9, false)
-						&& !mergeItemStack(itemstack1, this.inventorySlots.size() - 9, this.inventorySlots.size(),
-						true)) {
+		ItemStack stack = ItemStack.EMPTY;
+		Slot lvt_4_1_ = (Slot)this.inventorySlots.get(index);
+		if (lvt_4_1_ != null && lvt_4_1_.getHasStack()) {
+			ItemStack stack1 = lvt_4_1_.getStack();
+			stack = stack1.copy();
+			if (index == 2) {
+				if (!this.mergeItemStack(stack1, 3, 39, true)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!mergeItemStack(itemstack1, 0, countSlots, false)) {
+
+				lvt_4_1_.onSlotChange(stack1, stack);
+			} else if (index != 1 && index != 0) {
+				if (this.isValid(stack1)) {
+					if (!this.mergeItemStack(stack1, 0, 1, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (this.isFuel(stack1)) {
+					if (!this.mergeItemStack(stack1, 1, 2, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index >= 3 && index < 30) {
+					if (!this.mergeItemStack(stack1, 30, 39, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else if (index >= 30 && index < 39 && !this.mergeItemStack(stack1, 3, 30, false)) {
+					return ItemStack.EMPTY;
+				}
+			} else if (!this.mergeItemStack(stack1, 3, 39, false)) {
 				return ItemStack.EMPTY;
 			}
 
-			if (itemstack1.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+			if (stack1.isEmpty()) {
+				lvt_4_1_.putStack(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				lvt_4_1_.onSlotChanged();
 			}
+
+			if (stack1.getCount() == stack.getCount()) {
+				return ItemStack.EMPTY;
+			}
+
+			lvt_4_1_.onTake(playerIn, stack1);
 		}
-		return itemstack;
+
+		return stack;
+	}
+
+	protected boolean isValid(ItemStack stack) {
+		return this.world.getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(new ItemStack[]{stack}), this.world).isPresent();
+	}
+
+	protected boolean isFuel(ItemStack stack) {
+		return AbstractFurnaceTileEntity.isFuel(stack);
 	}
 
 	/**

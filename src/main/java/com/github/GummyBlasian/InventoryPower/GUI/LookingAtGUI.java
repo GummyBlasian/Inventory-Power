@@ -1,13 +1,10 @@
 package com.github.GummyBlasian.InventoryPower.GUI;
 
-import java.util.Random;
-
-import com.github.GummyBlasian.InventoryPower.Main;
 import com.github.GummyBlasian.InventoryPower.Config.IRConfig;
 import com.github.GummyBlasian.InventoryPower.Events.Client.LookingAt;
+import com.github.GummyBlasian.InventoryPower.Main;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.ChatScreen;
@@ -18,7 +15,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.config.GuiUtils;
+import net.minecraftforge.fml.client.gui.GuiUtils;
+
+import java.util.Random;
 
 @OnlyIn(Dist.CLIENT)
 public class LookingAtGUI{
@@ -96,7 +95,7 @@ public class LookingAtGUI{
 			RenderSystem.scalef(scale, scale, scale);	        
 			mc.getTextureManager().bindTexture(new ResourceLocation(Main.MODID, "textures/gui/clock_hud_rect.png"));//Render Background
 			RenderSystem.color3f(1.0F, 1.0F, 1.0F);
-			GuiUtils.drawTexturedModalRect(0, guiPosY-10, 0, 0, 90, 28, 0F); 
+			GuiUtils.drawTexturedModalRect(0, guiPosY-10, 0, 0, 90, 28, 0F);
 			mc.getItemRenderer().renderItemAndEffectIntoGUI(Main.Clock, 5, guiPosY-4);//Render Clock
 			RenderSystem.popMatrix();
 			

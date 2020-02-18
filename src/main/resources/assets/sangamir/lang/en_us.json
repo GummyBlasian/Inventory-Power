@@ -1,5 +1,6 @@
 {
 	"item.sangamir.portable_crafting" : "Portable Crafting Table",
+	"item.sangamir.portable_furnace" : "Portable Furnace",
 	
 	"itemGroup.S1IR": "Inventory Power"
 }

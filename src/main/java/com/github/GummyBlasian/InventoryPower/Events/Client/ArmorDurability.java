@@ -47,7 +47,6 @@ public class ArmorDurability {
 		for (ItemStack a:armor) {
 			armors.add(a);
 		}
-		Main.LOGGER.debug(armor.toString() + " here " + armors.size());
 	}
 	
 	public static void getAll() {
@@ -68,7 +67,6 @@ public class ArmorDurability {
 		head_icon = armors.get(3);
 		head = head_icon.getDisplayName().getFormattedText();
 		head_durability = durability (head_icon);
-		Main.LOGGER.debug("head " + head);
 		if (head.matches("Air")) {
 			head_icon = null;
 			head = "";
@@ -93,7 +91,6 @@ public class ArmorDurability {
 		body_icon = armors.get(2);
 		body = body_icon.getDisplayName().getFormattedText();
 		body_durability = durability (body_icon);
-		Main.LOGGER.debug("body " + body);
 		if (body.matches("Air")) {
 			body_icon = null;
 			body = "";
@@ -118,7 +115,6 @@ public class ArmorDurability {
 		leg_icon = armors.get(1);
 		leg = leg_icon.getDisplayName().getFormattedText();
 		leg_durability = durability (leg_icon);
-		Main.LOGGER.debug("leg " + leg);
 		if (leg.matches("Air")) {
 			leg_icon = null;
 			leg = "";
@@ -143,7 +139,6 @@ public class ArmorDurability {
 		boot_icon = armors.get(0);
 		boot = boot_icon.getDisplayName().getFormattedText();
 		boot_durability = durability (boot_icon);
-		Main.LOGGER.debug("boot " + boot);
 		if (boot.matches("Air")) {
 			boot_icon = null;
 			boot = "";

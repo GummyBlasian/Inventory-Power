@@ -48,8 +48,8 @@ public class Registry {
 		(
 				//Items
 				ItemList.portableCrafting = new ItemPortableCrafting(new Item.Properties().group(IRGroup).maxStackSize(1)).setRegistryName(locationItems("portable_crafting"))
-				
-				);
+
+		);
 
 		Main.LOGGER.info(Main.MODID +" : " + "Items Registered!");
 	}

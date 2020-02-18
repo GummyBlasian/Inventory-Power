@@ -19,10 +19,8 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ItemPortableCrafting extends Item {
 
-	  	public ItemPortableCrafting(Properties id) {
-	  		
-	  		super(id);
-	        
+	  	public ItemPortableCrafting(Properties id) {	  		
+	  		super(id);	        
 	    }
 	  
 	  	@Override

@@ -131,8 +131,7 @@ public class PCTContainer extends Container {
 	}
 	
 	@Override
-	public void onContainerClosed(PlayerEntity playerIn)
-    {
+	public void onContainerClosed(PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
         PlayerInventory inv = playerIn.inventory;
         if (!this.world.isRemote)
@@ -166,8 +165,7 @@ public class PCTContainer extends Container {
     }
 	
 	@Override
-	public boolean canMergeSlot(ItemStack stack, Slot slotIn)
-    {
+	public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
         return slotIn.inventory != this.craft_result && super.canMergeSlot(stack, slotIn);
     }
 

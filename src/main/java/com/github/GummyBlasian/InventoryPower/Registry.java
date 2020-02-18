@@ -1,6 +1,9 @@
 package com.github.GummyBlasian.InventoryPower;
 
 import com.github.GummyBlasian.InventoryPower.GUI.Container.PFContainer;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.network.PacketBuffer;
 import org.apache.logging.log4j.Logger;
 
 import com.github.GummyBlasian.InventoryPower.Config.ConfigHelper;

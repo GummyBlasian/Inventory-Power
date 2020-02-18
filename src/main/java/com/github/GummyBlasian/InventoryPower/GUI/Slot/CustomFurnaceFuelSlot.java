@@ -2,7 +2,6 @@ package com.github.GummyBlasian.InventoryPower.GUI.Slot;
 
 import com.github.GummyBlasian.InventoryPower.GUI.Container.PFContainer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.AbstractFurnaceContainer;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -32,7 +31,7 @@ public class CustomFurnaceFuelSlot extends Slot {
 
     @Override
     public void onSlotChanged() {
-        container.addBurn(ForgeHooks.getBurnTime(getStack()));
+        //container.addBurn(ForgeHooks.getBurnTime(getStack()));
         if(isBucket(getStack())){
             putStack(new ItemStack(Items.BUCKET));
         } else {
